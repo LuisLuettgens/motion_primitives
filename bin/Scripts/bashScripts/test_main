@@ -1,0 +1,88 @@
+#!/bin/bash
+
+: '
+    This script is designed to automate the process of testing the performance of one or more set of motion primitives created by the script
+    create_prims. To use this script as designed it has to be called with the following inputs:
+
+        - path to a textfile that stores lines containing starting state (lon lat heading) and final position (lon lat)
+        - at least one path to a folder containing a set of motion primitives
+
+    The testing contains two parts, first the reachabilty of the set of primitives is tested by applying the a*-search with these prims on
+    each trajectory endpoint provided in the textfile. Key performance indicators, like the computation time and the spacial length of the
+    final trajectory, are tracked and saved to a file.
+    If the a* was successfull (%TODO not implemented yet) the second part of the evaluation launches. First, this script calls the python
+    script "cmp_dist.py" is called. This script computes a suitable amount of discretisation points for the reoptimization performed by
+    transWORHP. Further, the a*-search generated an initial guess, which was written to a file. Based on this initial guess transWORHP
+    tries to optimizies the trajectory. Again, key performance indicators of that optimization are stored to a file. Next, the key
+    performance values of both paths of the evaluation are merged, then the python script "visuresults.py" is called with the tested prim
+    directories and the result files (%TODO not implemented yet). This script generates a summary of the evaluation process.
+'
+
+counter=0
+primDirs=''
+
+for var in "$@"
+do
+if [[ $var = *"../../primDirs/motion_prims_"* ]];
+then
+    if [[ $counter -eq 0 ]];
+    then
+        primDirs=$var
+    else 
+        primDirs=$primDirs' '$var
+    fi
+    echo "prim dirs: $primDirs"
+    ((counter+=1))
+
+    touch ../../Evaluation/
+    touch ../../Evaluation/a_star_result$counter.txt
+    > ../../Evaluation/a_star_result$counter.txt
+    touch ../../Evaluation/evaluation$counter.txt
+    > ../../Evaluation/evaluation$counter.txt
+    touch ../../Evaluation/result$counter.txt
+    > ../../Evaluation/result$counter.txt
+fi
+done
+ 
+   
+    
+while IFS='' read -r line || [[ -n "$line" ]]; do
+    counter2=0
+    echo "###########################################"
+    echo ""
+        echo "Text read from $1: $line"
+
+    for var in "$@"
+        do
+        if [[ $var = *"../../primDirs/motion_prims_"* ]];
+        then
+        ((counter2+=1))
+        echo "-------------------------------------------"
+	#first set of motion primitives
+    echo "Starting the motion primitive search for $var ..."
+    ./../../main_arc $line $var ../../Evaluation/a_star_result$counter2.txt
+	echo ""        
+	echo "Launching the reoptimization for $var ..."
+	line2=$(tail -n 1 "../../Evaluation/a_star_result$counter2.txt")
+	
+	dist=`echo $line2 | cut -f 1 -d " "`
+	dist=`python ../pythonScripts/cmp_dist.py $dist`	
+	echo ""
+	echo "   For this optimization $dist discretisation points where choosen.	"
+	echo ""	
+	./../../main_motion_prims -n $dist -p $line ../../Evaluation/evaluation$counter2.txt
+    fi
+    done
+done < "$1"
+echo ""
+echo "All the Computations have finished!"
+echo ""
+echo "   The Summary is generated ..."
+
+echo ""
+
+for i in `seq 1 $counter`
+do
+    paste -d "" ../../Evaluation/a_star_result$i.txt ../../Evaluation/evaluation$i.txt > ../../Evaluation/result$i.txt
+done  
+python ../pythonScripts/visuresults.py $primDirs

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SHIP   number="1" version="1"></SHIP>
+<MODEL  number="1" version="1"></MODEL>
+
+<STATES number="1">
+   <DOUBLE name="x0"                    low="-1.0000000000e+20" upp="+1.0000000000e+20" init="-2.0000000000e+03"></DOUBLE>
+   <DOUBLE name="y0"                    low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+0.0000000000e+00"></DOUBLE>
+   <DOUBLE name="psi"                   low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+0.0000000000e+00"></DOUBLE>
+   <DOUBLE name="u"                     low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+5.0000000000e+00"></DOUBLE>
+   <DOUBLE name="v"                     low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+0.0000000000e+00"></DOUBLE>
+   <DOUBLE name="r"                     low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+0.0000000000e+00"></DOUBLE>
+</STATES>
+
+<CONTROLS number="1">
+   <DOUBLE name="delta"                 low="-5.5000000000e+01" upp="+5.5000000000e+01" init="-1.0000000000e+00"></DOUBLE>
+   <DOUBLE name="n"                     low="-2.0000000000e+02" upp="+2.0000000000e+02" init="+0.0000000000e+00"></DOUBLE>
+</CONTROLS>
+
+<PARAMS number="1">
+   <DOUBLE name="g"        idfy="TRUE"  low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+9.8066500000e+00">+9.8066500000e+00</DOUBLE>
+   <DOUBLE name="rho"      idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+1.0000000000e+03</DOUBLE>
+   <DOUBLE name="rhoA"     idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+1.2250000000e+00</DOUBLE>
+   
+   <DOUBLE name="L"        idfy="TRUE"  low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+2.9000000000e+02</DOUBLE>
+   <DOUBLE name="LWL"      idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+2.9644600000e+02</DOUBLE>
+   <DOUBLE name="LOA"      idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+2.9644600000e+02</DOUBLE>
+   <DOUBLE name="AF"       idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+1.3000000000e+03</DOUBLE>
+   <DOUBLE name="AL"       idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+6.3000000000e+03</DOUBLE>
+   <DOUBLE name="BOA"      idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+4.7500000000e+01</DOUBLE>
+   <DOUBLE name="dfor"     idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+1.6196000000e+01</DOUBLE>
+   <DOUBLE name="daft"     idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+1.5964000000e+01</DOUBLE>
+   <DOUBLE name="Cb"       idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+8.0500000000e-01</DOUBLE>
+   <DOUBLE name="xG"       idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+7.2430000000e+00</DOUBLE>
+   <DOUBLE name="Rg"       idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+6.6360000000e+01</DOUBLE>
+   <DOUBLE name="ndXup"    idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">-7.3700000000e-02</DOUBLE>
+   <DOUBLE name="ndXrr"    idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+4.2300000000e-02</DOUBLE>
+   <DOUBLE name="ndYvp"    idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">-7.8100000000e-01</DOUBLE>
+   <DOUBLE name="ndNrp"    idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">-3.9400000000e-02</DOUBLE>
+   <DOUBLE name="ndXvr"    idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+6.4820000000e-01</DOUBLE>
+   <DOUBLE name="ndXvv"    idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">-2.6100000000e-02</DOUBLE>
+   <DOUBLE name="ndYrp"    idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">-4.8800000000e-02</DOUBLE>
+   <DOUBLE name="ndNvp"    idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">-3.5700000000e-02</DOUBLE>
+   <DOUBLE name="b1"       idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+2.4000000000e-01</DOUBLE>
+   <DOUBLE name="b2"       idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+1.0000000000e+00</DOUBLE>
+   <DOUBLE name="b3"       idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+6.4000000000e-02</DOUBLE>
+   <DOUBLE name="b1p"      idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+5.0000000000e-01</DOUBLE>
+   <DOUBLE name="b2p"      idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+1.0000000000e+00</DOUBLE>
+   <DOUBLE name="b3p"      idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+1.0000000000e-01</DOUBLE>
+   <DOUBLE name="k"        idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+4.0000000000e-01</DOUBLE>
+   <DOUBLE name="a0"       idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+2.0700000000e-01</DOUBLE>
+   <DOUBLE name="a7"       idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+5.3100000000e+00</DOUBLE>
+   <DOUBLE name="a8"       idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+3.2180000000e+00</DOUBLE>
+   <DOUBLE name="a9"       idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">-6.7320000000e+00</DOUBLE>
+   <DOUBLE name="ndXHRu"   idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+1.6200000000e-03</DOUBLE>
+   <DOUBLE name="ndXHRuau" idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+4.0340000000e-02</DOUBLE>
+   <DOUBLE name="ndXHRuuu" idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+7.6590000000e-02</DOUBLE>
+   
+   <DOUBLE name="DP"       idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+7.9100000000e+00</DOUBLE>
+   <DOUBLE name="tP"       idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+1.9100000000e-01</DOUBLE>
+   <DOUBLE name="omP"      idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+5.3000000000e-01</DOUBLE>
+   <DOUBLE name="RotS"     idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+1.0000000000e+00</DOUBLE>
+   <DOUBLE name="prT0"     idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+1.0000000000e+00</DOUBLE>
+   <DOUBLE name="prT1"     idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+1.0000000000e+00</DOUBLE>
+   <DOUBLE name="prT2"     idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+1.0000000000e+00</DOUBLE>
+   <DOUBLE name="prT3"     idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+1.0000000000e+00</DOUBLE>
+   <DOUBLE name="prT4"     idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+1.0000000000e+00</DOUBLE>
+   <DOUBLE name="prT5"     idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+1.0000000000e+00</DOUBLE>
+   <DOUBLE name="prT6"     idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+1.0000000000e+00</DOUBLE>
+   <DOUBLE name="prT7"     idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+1.0000000000e+00</DOUBLE>
+   <DOUBLE name="prT8"     idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+1.0000000000e+00</DOUBLE>
+   <DOUBLE name="prT9"     idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+1.0000000000e+00</DOUBLE>
+   <DOUBLE name="prT10"    idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+1.0000000000e+00</DOUBLE>
+   <DOUBLE name="ndxP"     idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">-5.0000000000e-01</DOUBLE>
+   <DOUBLE name="ndyP"     idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+2.7590000000e-02</DOUBLE>
+   <DOUBLE name="ndYPTp"   idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">-3.0000000000e-02</DOUBLE>
+   <DOUBLE name="ndYPTm"   idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+4.1000000000e-01</DOUBLE>
+   <DOUBLE name="ndNPTp"   idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+1.5000000000e-02</DOUBLE>
+   <DOUBLE name="ndNPTm"   idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">-1.0500000000e-01</DOUBLE>
+   
+   <DOUBLE name="LagR"     idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+1.0000000000e+00</DOUBLE>
+   <DOUBLE name="AR"       idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+7.3500000000e+01</DOUBLE>
+   <DOUBLE name="ChordR"   idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+7.1500000000e+00</DOUBLE>
+   <DOUBLE name="omR"      idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+5.3000000000e-01</DOUBLE>
+   <DOUBLE name="kHR"      idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+1.0000000000e+00</DOUBLE>
+   <DOUBLE name="kPR"      idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+8.7000000000e-01</DOUBLE>
+   <DOUBLE name="ndxR"     idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">-5.0000000000e-01</DOUBLE>
+   <DOUBLE name="ndyR"     idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+2.7590000000e-02</DOUBLE>
+   <DOUBLE name="kLR"      idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+5.3000000000e+00</DOUBLE>
+   <DOUBLE name="kDR"      idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+2.5000000000e+00</DOUBLE>
+   <DOUBLE name="kNR"      idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+1.2000000000e-01</DOUBLE>
+   <DOUBLE name="kCLR"     idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+1.0000000000e+00</DOUBLE>
+   <DOUBLE name="kCDR"     idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+1.0000000000e-01</DOUBLE>
+   
+   <DOUBLE name="lift1"    idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+5.7890000000e-01</DOUBLE>
+   <DOUBLE name="lift2"    idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+2.9600000000e-01</DOUBLE>
+   <DOUBLE name="lift3"    idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">-2.3020000000e-01</DOUBLE>
+   <DOUBLE name="lift4"    idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">-3.5620000000e-01</DOUBLE>
+   <DOUBLE name="drag1"    idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+4.2500000000e-01</DOUBLE>
+   <DOUBLE name="drag2"    idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+3.0570000000e-01</DOUBLE>
+   <DOUBLE name="drag3"    idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+3.0570000000e-01</DOUBLE>
+   <DOUBLE name="drag4"    idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+4.2500000000e-01</DOUBLE>
+   <DOUBLE name="lia2"     idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+2.6400000000e-01</DOUBLE>
+   <DOUBLE name="lia3"     idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">-5.8100000000e-01</DOUBLE>
+   <DOUBLE name="lib2"     idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">-1.1870000000e+00</DOUBLE>
+   <DOUBLE name="lib3"     idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+2.5300000000e-01</DOUBLE>
+   <DOUBLE name="dra2"     idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+8.0980000000e-01</DOUBLE>
+   <DOUBLE name="dra3"     idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">-8.4530000000e-02</DOUBLE>
+   <DOUBLE name="drb2"     idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">-3.9700000000e-01</DOUBLE>
+   <DOUBLE name="drb3"     idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+5.4950000000e-07</DOUBLE>
+   <DOUBLE name="drc2"     idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+1.2940000000e-02</DOUBLE>
+   <DOUBLE name="drc3"     idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+8.4550000000e-02</DOUBLE>
+   <DOUBLE name="de1"      idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+7.8540000000e-01</DOUBLE>
+   <DOUBLE name="de2"      idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+8.7270000000e-01</DOUBLE>
+   <DOUBLE name="de3"      idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+2.2690000000e+00</DOUBLE>
+   <DOUBLE name="de4"      idfy="FALSE" low="-1.0000000000e+20" upp="+1.0000000000e+20" init="+2.9000000000e+02">+2.3560000000e+00</DOUBLE>
+</PARAMS>
+

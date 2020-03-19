@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SHIP   number="1" version="1"></SHIP>
+<MODEL  number="2" version="1"></MODEL>
+<PARAMS number="1">
+   <DOUBLE name="L"           >+2.9000000000e+02</DOUBLE>
+   <DOUBLE name="LWL"         >+2.9644600000e+02</DOUBLE>
+   <DOUBLE name="B"           >+4.7500000000e+01</DOUBLE>
+   <DOUBLE name="dfor"        >+1.6196000000e+01</DOUBLE>
+   <DOUBLE name="daft"        >+1.5964000000e+01</DOUBLE>
+   <DOUBLE name="Cb"          >+8.0500000000e-01</DOUBLE>
+   <DOUBLE name="xG"          >+7.2430000000e+00</DOUBLE>
+   <DOUBLE name="Rg"          >+6.6360000000e+01</DOUBLE>
+   <DOUBLE name="ndXup"       >-7.3700000000e-02</DOUBLE>
+   <DOUBLE name="ndXuu"       >-9.9950000000e-01</DOUBLE>
+   <DOUBLE name="ndXvr"       >+3.4820000000e-01</DOUBLE>
+   <DOUBLE name="ndXvv"       >-2.6100000000e-02</DOUBLE>
+   <DOUBLE name="ndXcacdd"    >-2.2500000000e-02</DOUBLE>
+   <DOUBLE name="ndXcacbd"    >-1.6942200000e-01</DOUBLE>
+   <DOUBLE name="ndYvp"       >+7.8100000000e-01</DOUBLE>
+   <DOUBLE name="ndYur"       >+5.0000000000e-01</DOUBLE>
+   <DOUBLE name="ndYuv"       >-5.0000000000e-01</DOUBLE>
+   <DOUBLE name="ndYvav"      >-5.0000000000e-01</DOUBLE>
+   <DOUBLE name="ndYcacdad"   >+4.6942200000e-02</DOUBLE>
+   <DOUBLE name="ndYcacbabad" >+2.3471100000e-01</DOUBLE>
+   <DOUBLE name="ndYT"        >-2.7000000000e-03</DOUBLE>
+   <DOUBLE name="ndNrp"       >-3.9400000000e-02</DOUBLE>
+   <DOUBLE name="ndNur"       >-1.0000000000e-01</DOUBLE>
+   <DOUBLE name="ndNuv"       >-1.0000000000e-01</DOUBLE>
+   <DOUBLE name="ndNanr"      >-1.0000000000e-01</DOUBLE>
+   <DOUBLE name="ndNcacd"     >-1.5082700000e-02</DOUBLE>
+   <DOUBLE name="ndNcacbabad" >+4.6942200000e-02</DOUBLE>
+   <DOUBLE name="ndNT"        >+1.0000000000e-03</DOUBLE>
+   <DOUBLE name="ndTuu"       >+1.0000000000e+00</DOUBLE>
+   <DOUBLE name="ndTun"       >+1.0000000000e+00</DOUBLE>
+   <DOUBLE name="ndTnan"      >+1.0000000000e+00</DOUBLE>
+   <DOUBLE name="ndCun"       >+1.0000000000e+00</DOUBLE>
+   <DOUBLE name="ndCnn"       >+2.1666200000e-02</DOUBLE>   
+   <DOUBLE name="tt"          >+1.9100000000e-01</DOUBLE>
+</PARAMS>
+

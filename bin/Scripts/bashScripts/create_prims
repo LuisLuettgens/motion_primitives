@@ -1,0 +1,35 @@
+#!/bin/bash
+
+
+read -p "Enter the angles that shall be created separated by 'space' : " input
+
+nmbr_motion_prims=$(ls | grep 'motion_prims_' | tr -dc '0-99\n')
+
+
+MaxSetId=0
+
+while read -r line; do
+    if [[ "$line" -gt "$MaxSetId" ]]
+    then 
+	MaxSetId=$line
+    fi
+done <<< "$nmbr_motion_prims"
+
+echo "There are motion prims folders up to motion_prims_$MaxSetId"
+NewPrimID=$(($MaxSetId+1))
+echo "Creating directory motion_prims_$NewPrimID ..."
+mkdir motion_prims_$NewPrimID
+
+for i in ${input[@]}
+do
+    upper_time_bound=100
+    create_prim_succ=255
+    echo "Computing a $i degree maneuver . . ."
+    while [ $create_prim_succ -eq 255 ]
+    do
+        ./create_motion_prims $i $upper_time_bound '-p'
+	create_prim_succ=$?
+	((upper_time_bound+=100))    
+    done
+    python parse2primitive.py $NewPrimID 
+done

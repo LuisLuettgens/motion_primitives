@@ -1,0 +1,14 @@
+<?xml encoding="UTF-8" standalone="yes" version="1.0"?>
+<!DOCTYPE ROBOTVIEWER SYSTEM "krobot.dtd">
+<ROBOTVIEWER>
+
+	<SCENE>
+        <PATH>./</PATH>
+	<MODEL id="shipviewer" scale="0.0002">QueenMary.obj</MODEL>
+        <!--MODEL id="shipviewer" scale="0.000006">shipviewer.obj</MODEL-->
+        <CAMERA pos="-0.2,-0.09,-5.1" rotx="0" roty="90" focus="50" />ship
+	<!--CAMERA pos="-0.0,-0.00,-0.3" rotx="0" roty="90" focus="50" /-->buggy
+	</SCENE>
+
+
+</ROBOTVIEWER>

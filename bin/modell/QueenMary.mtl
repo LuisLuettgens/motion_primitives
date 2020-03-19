@@ -1,0 +1,141 @@
+#  ==========================================================================
+#  Wavefront Material file
+#  Exported by Red-i Productions' "Riptide"
+#  (a free plugin for Cinema 4D PC & Mac, R7.3 or later)
+#  
+#  Red-i Productions
+#  http://skinprops.com
+#  
+#  ==========================================================================
+
+newmtl ChimBall
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.489412 0.539608 0.636863
+
+newmtl Chairs
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.000000 0.401569 0.000000
+
+newmtl QM_zabor_3
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.200784 0.000000 0.200784
+
+newmtl QM_kort
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.937255 1.000000 1.000000
+
+newmtl SideDeck
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.752941 0.752941 0.752941
+
+newmtl QM_zabor_2
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.800000 0.000000 0.000000
+
+newmtl UnderRafts
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.800000 0.401569 0.000000
+
+newmtl SideRafts
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 1.000000 0.066667 0.000000
+
+newmtl QM_bassein_water
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.000000 0.439216 0.800000
+
+newmtl QM_nos
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 1.000000 1.000000 1.000000
+
+newmtl QM_zad
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.800000 0.800000 0.800000
+
+newmtl QM_verh
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.602353 0.602353 0.602353
+
+newmtl CenterDeck
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.950000 0.950000 0.950000
+
+newmtl QM_bassein
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.800000 0.800000 0.800000
+
+newmtl QM_okna
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.800000 0.800000 0.800000
+
+newmtl QM_niz
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 1.000000 1.000000 1.000000
+
+newmtl QM_zabor
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.800000 0.800000 0.800000
+
+newmtl QM_elda_2
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.800000 0.800000 0.800000
+
+newmtl QM_elda_1
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.800000 0.800000 0.800000
+
+newmtl QM_truba
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.800000 0.800000 0.800000
+
+newmtl 24___Default
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.800000 0.800000 0.800000
+
+newmtl QM_body
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.800000 0.800000 0.800000

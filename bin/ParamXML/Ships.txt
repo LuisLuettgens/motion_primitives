@@ -1,0 +1,19 @@
+Ship 1 - Version 1
+2016.09.01
+Single-screw tanker
+HSVA Model 2507
+Source: Oltmann, P. und Sharma, S.D. 1984. Simulation of Combined Engine and 
+Rudder Maneuvers using an Improved Model of Hull-Propeller-Rudder Interactions. 
+Presented for the Fifteenth ONR Symposium on Naval Hydredynamics. Hamburg, 3-7 Semptember 1984.
+
+Ship 2 - Version 1
+2016.09.01
+Uni Rostock unmanned surface vehicle (yellow)
+
+Ship 3 - Version 1
+2016.09.01
+Uni Rostock unmanned surface vehicle (Catamaran)
+
+Ship 4 - Version 1
+2016.09.01
+Uni Rostock unmanned surface vehicle (yellow and orange)

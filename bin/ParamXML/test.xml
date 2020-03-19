@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SHIP   number="1" version="1"></SHIP>
+<MODEL  number="1" version="2"></MODEL>
+<PARAM  number="1"></PARAM>
+
+<HULL id="1">
+   <LPP         >+2.9000000000e+02</LPP>
+   <LWL         >+2.9644600000e+02</LWL>
+   <LOA         >+2.9000000000e+02</LWL>
+   <AREAF       >+1.3000000000e+03</AREAF>
+   <AREAL       >+6.3000000000e+03</AREAL>
+   <BEAM        >+4.7500000000e+01</BEAM>
+   <DRAFT       >+7.9100000000e+00</DRAFT>
+   <DISPLACEMENT>+1.8227200000e+08</DISPLACEMENT>
+   <PARAMS>
+      <DOUBLE name="ndRg"    >+2.2288000000e-01</DOUBLE>
+      <DOUBLE name="ndxG"    >-2.4976000000e-02</DOUBLE>
+      <DOUBLE name="ndXup"   >-7.3700000000e-02</DOUBLE>
+      <DOUBLE name="ndXrr"   >+4.2300000000e-02</DOUBLE>
+      <DOUBLE name="ndYvp"   >-7.8100000000e-01</DOUBLE>
+      <DOUBLE name="ndNrp"   >-3.9400000000e-02</DOUBLE>
+      <DOUBLE name="ndXvr"   >+6.4820000000e-01</DOUBLE>
+      <DOUBLE name="ndXvv"   >-2.6100000000e-02</DOUBLE>
+      <DOUBLE name="ndYrp"   >-4.8800000000e-02</DOUBLE>
+      <DOUBLE name="ndNvp"   >-3.5700000000e-02</DOUBLE>
+      <DOUBLE name="ndRTu"   >+1.6200000000e-03</DOUBLE>
+      <DOUBLE name="ndRTuau" >+4.0340000000e-02</DOUBLE>
+      <DOUBLE name="ndRTuuu" >+7.6590000000e-02</DOUBLE>
+      <DOUBLE name="b1"      >+2.4000000000e-01</DOUBLE>
+      <DOUBLE name="b2"      >+1.0000000000e+00</DOUBLE>
+      <DOUBLE name="b3"      >+6.4000000000e-02</DOUBLE>
+      <DOUBLE name="b1p"     >+5.0000000000e-01</DOUBLE>
+      <DOUBLE name="b2p"     >+1.0000000000e+00</DOUBLE>
+      <DOUBLE name="b3p"     >+1.0000000000e-01</DOUBLE>
+      <DOUBLE name="k"       >+4.0000000000e-01</DOUBLE>
+      <DOUBLE name="a0"      >+2.0700000000e-01</DOUBLE>
+      <DOUBLE name="a7"      >+5.3100000000e+00</DOUBLE>
+      <DOUBLE name="a8"      >+3.2180000000e+00</DOUBLE>
+      <DOUBLE name="a9"      >-6.7320000000e+00</DOUBLE>
+   </PARAMS>
+</HULL>
+
+<RUDDER id="1">
+   <XPOSITION>-1.4500000000e+02</XPOSITION>
+   <YPOSITION>+0.0000000000e+00</YPOSITION>
+   <AREA     >+7.3500000000e+01</AREA>
+   <CHORD    >+7.1500000000e+00</CHORD>
+   <ARATIO   >+1.4380000000e+00</ARATIO>
+   <PARAMS>
+      <DOUBLE name="kCLRo"    >+1.0000000000e+00</DOUBLE>
+      <DOUBLE name="kCDRo"    >+1.0000000000e+00</DOUBLE>
+      <DOUBLE name="kLR"      >+5.3000000000e+00</DOUBLE>
+      <DOUBLE name="kDR"      >+2.5000000000e+00</DOUBLE>
+      <DOUBLE name="kNR"      >+1.2000000000e-01</DOUBLE>
+   </PARAMS>
+   <INTERACTIONS>
+      <HULL id="1">
+         <PARAMS>
+            <DOUBLE name="omR">+5.3000000000e-01</DOUBLE>
+         </PARAMS>
+      </HULL>
+      <PROPELLER id="1">
+         <PARAMS>
+            <DOUBLE name="kHR"      >+1.0000000000e+00</DOUBLE>
+            <DOUBLE name="kPR"      >+8.7000000000e-01</DOUBLE>
+         </PARAMS>
+      </PROPELLER>
+   </INTERACTIONS>
+</RUDDER>
+
+<PROPELLER id="1">
+   <XPOSITION >-1.4300000000e+02</XPOSITION>
+   <YPOSITION >+0.0000000000e+00</YPOSITION>
+   <ROTSENSE  >1</ROTSENSE> 			
+   <NBRBLADES >5</NBRBLADES>
+   <DIAMETER  >+7.9300000000e+00</DIAMETER>
+   <PITCH     >+5.8929500000e+00<PITCH/>
+   <EAR       >+6.0000000000e-01<EAR/>
+   <VARPITCH  >False</VARPITCH>
+   <AZIMUTHING>False</AZIMUTHING>
+   <CONTRA    >False</CONTRA>
+   <PODDED    >False</PODDED>
+   <PUSHER    >True</PUSHER>
+   <PARAMS>
+      <DOUBLE name="pr1" >+1.0000000000e+00</DOUBLE>
+      <DOUBLE name="pr2" >+1.0000000000e+00</DOUBLE>
+      <DOUBLE name="pr3" >+1.0000000000e+00</DOUBLE>
+      <DOUBLE name="pr4" >+1.0000000000e+00</DOUBLE>
+      <DOUBLE name="pr5" >+1.0000000000e+00</DOUBLE>
+      <DOUBLE name="pr6" >+1.0000000000e+00</DOUBLE>
+      <DOUBLE name="pr7" >+1.0000000000e+00</DOUBLE>
+      <DOUBLE name="pr8" >+1.0000000000e+00</DOUBLE>
+      <DOUBLE name="pr9" >+1.0000000000e+00</DOUBLE>
+      <DOUBLE name="pr10">+1.0000000000e+00</DOUBLE>
+      <DOUBLE name="pr11">+1.0000000000e+00</DOUBLE>
+   </PARAMS>
+   <INTERACTIONS>
+      <HULL id="1">
+         <PARAMS>
+            <DOUBLE name="tt" >+5.3000000000e-01</DOUBLE>
+            <DOUBLE name="omP">+5.3000000000e-01</DOUBLE>
+         </PARAMS>
+      </HULL>
+   </INTERACTIONS>
+</PROPELLER>
+
+
+
+
+

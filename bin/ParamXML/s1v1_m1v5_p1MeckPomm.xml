@@ -1,0 +1,81 @@
+<STATES>
+	<DOUBLE name="x0"         init="-2.00000e+03" low="-1.00e+06"  upp="+1.00e+06" />
+	<DOUBLE name="y0"         init="+0.00000e+00" low="-1.00e+06"  upp="+1.00e+06" />
+	<DOUBLE name="psi"        init="+0.00000e+00" low="-1.00e+06"  upp="+1.00e+06" />
+	<!--DOUBLE name="u"          init="+5.00000e+00" low="-3.34"      upp="+3.34"     /-->1.00e+06+2.00e+06
+	<DOUBLE name="u"          init="+4.00000e+00" low="-4.5"      upp="4.5"     />
+	<DOUBLE name="v"          init="+0.00000e+00" low="-1.00e+06"  upp="+1.00e+06" />
+	<DOUBLE name="r"          init="+0.00000e+00" low="-1.00e+06"  upp="+1.00e+06" />
+</STATES>
+
+<CONTROLS>
+	<!--DOUBLE name="delta"      low="-0.35"  upp="+0.35"   dlow="-0.4"  dupp="+0.4" init="+0.0000000000e+00" /-->
+	<DOUBLE name="delta"      low="-0.61"  upp="+0.61"   dlow="-0.4"  dupp="+0.4" init="+0.0000000000e+00" />
+	<DOUBLE name="n"          low="-2.35"  upp="+2.35"   dlow="-3"    dupp="+3"   init="+0.0000000000e+00" />
+</CONTROLS>
+
+<PARAMS>
+	<DOUBLE name="g"          idfy="FALSE"  low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >+9.8066500000e+00</DOUBLE>
+	<DOUBLE name="rho"        idfy="FALSE"  low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >+1.0000000000e+03</DOUBLE>
+	<DOUBLE name="rhoA"       idfy="FALSE"  low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >+1.2250000000e+00</DOUBLE>
+	<DOUBLE name="m"          idfy="FALSE"  low="2.0"        scale="1.000e+07"  upp="2.5"       >2.272</DOUBLE>
+	<DOUBLE name="xG"         idfy="FALSE"  low="-10"        scale="1.000e+00"  upp="+10"       >-6.18865</DOUBLE>
+	<DOUBLE name="Rg"         idfy="FALSE"  low="+0"         scale="1.000e+00"  upp="+1.00e+00" >0.418853</DOUBLE>
+	<DOUBLE name="L"          idfy="FALSE"  low="+1.5"       scale="1.000e+02"  upp="+2.5"      >1.95</DOUBLE>
+	<DOUBLE name="d"          idfy="FALSE"  low="+4"         scale="1.000e+00"  upp="+6"        >4.95593</DOUBLE>
+	<DOUBLE name="LOA"        idfy="FALSE"  low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >+2.9644600000e+02</DOUBLE>
+	<DOUBLE name="BOA"        idfy="FALSE"  low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >+2.900000e+01</DOUBLE>
+	<DOUBLE name="AF"         idfy="FALSE"  low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >+1.3000000000e+03</DOUBLE>
+	<DOUBLE name="AL"         idfy="FALSE"  low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >+6.3000000000e+03</DOUBLE>
+	<DOUBLE name="Xup"        idfy="FALSE"  low="-1.00e+0"   scale="1.0e+00"    upp="+0.00e+0"  >-0.337656</DOUBLE>
+	<DOUBLE name="Yvp"        idfy="FALSE"  low="-1.00e+0"   scale="1.0e+00"    upp="+0.00e+0"  >-0.582988</DOUBLE>
+	<DOUBLE name="Yrp"        idfy="FALSE"  low="-1.00e+0"   scale="1.0e+00"    upp="+0.00e+0"  >-0.056814</DOUBLE>
+	<DOUBLE name="Nvp"        idfy="FALSE"  low="-1.00e+0"   scale="1.0e+00"    upp="+0.00e+0"  >-0.709306</DOUBLE>
+	<DOUBLE name="Nrp"        idfy="FALSE"  low="-1.00e+0"   scale="1.0e+00"    upp="+0.00e+0"  >-0.921613</DOUBLE>
+	<DOUBLE name="Xvv"        idfy="FALSE"  low="-1.00e+0"   scale="1.0e+00"    upp="+1.00e+0"  >-0.999998</DOUBLE>
+	<DOUBLE name="Xvr"        idfy="FALSE"  low="-1.00e+0"   scale="1.0e+00"    upp="+1.00e+0"  >0.999999</DOUBLE>
+	<DOUBLE name="Xrr"        idfy="FALSE"  low="-1.00e+0"   scale="1.0e+00"    upp="+1.00e+0"  >-0.175</DOUBLE>
+	<DOUBLE name="XHRu"       idfy="FALSE"  low="+0.00e+00"  scale="1.0e+00"    upp="+1.00e+01" >1.45458e-10</DOUBLE>
+	<DOUBLE name="XHRuau"     idfy="FALSE"  low="+0.00e+00"  scale="1.0e+00"    upp="+1.00e+01" >0.00638782</DOUBLE>
+	<DOUBLE name="XHRuuu"     idfy="FALSE"  low="+0.00e+00"  scale="1.0e+00"    upp="+1.00e+01" >0.256787</DOUBLE>
+	<DOUBLE name="k"          idfy="FALSE"  low="+0.00e+00"  scale="1.0e+00"    upp="+1.00e+01" >1.27794</DOUBLE>
+	<DOUBLE name="b1"         idfy="FALSE"  low="-1.00e+00"  scale="1.0e+00"    upp="+1.00e+00" >0.237517</DOUBLE>
+	<DOUBLE name="b2"         idfy="FALSE"  low="-1.00e+00"  scale="1.0e+00"    upp="+1.00e+00" >1</DOUBLE>
+	<DOUBLE name="b3"         idfy="FALSE"  low="-1.00e+00"  scale="1.0e+00"    upp="+1.00e+00" >-0.0774125</DOUBLE>
+	<DOUBLE name="b1p"        idfy="FALSE"  low="-1.00e+00"  scale="1.0e+00"    upp="+1.00e+00" >0.289707</DOUBLE>
+	<DOUBLE name="b2p"        idfy="FALSE"  low="-1.00e+00"  scale="1.0e+00"    upp="+1.00e+00" >0.999985</DOUBLE>
+	<DOUBLE name="b3p"        idfy="FALSE"  low="-1.00e+00"  scale="1.0e+00"    upp="+1.00e+00" >0.0796528</DOUBLE>
+	<DOUBLE name="a0"         idfy="FALSE"  low="-1.00e+01"  scale="1.0e+00"    upp="+1.00e+01" >0.39071</DOUBLE>
+	<DOUBLE name="a7"         idfy="FALSE"  low="-1.00e+01"  scale="1.0e+00"    upp="+1.00e+01" >-7.72866</DOUBLE>
+	<DOUBLE name="a8"         idfy="FALSE"  low="-1.00e+01"  scale="1.0e+00"    upp="+1.00e+01" >-8.11788</DOUBLE>
+	<DOUBLE name="a9"         idfy="FALSE"  low="-1.00e+01"  scale="1.0e+00"    upp="+1.00e+01" >-1.47207</DOUBLE>
+	<DOUBLE name="DP"         idfy="FALSE"  low="+0.00e+00"  scale="1.0"        upp="+5"        >4.10752</DOUBLE>
+	<DOUBLE name="tP"         idfy="FALSE"  low="+0.00e+00"  scale="1.000e-00"  upp="0.5"       >0.189893</DOUBLE>
+	<DOUBLE name="omP"        idfy="FALSE"  low="+0.1"       scale="1.000e-00"  upp="+0.800000" >0.37015</DOUBLE>
+	<DOUBLE name="prT1"       idfy="FALSE"  low="-1.00e+5"   scale="1e+01"      upp="1.00e+5"   >1.9105</DOUBLE>
+	<DOUBLE name="prT2"       idfy="FALSE"  low="-1.00e+5"   scale="1e+01"      upp="1.00e+5"   >-2.15542</DOUBLE>
+	<DOUBLE name="prT3"       idfy="FALSE"  low="-1.00e+5"   scale="1e+01"      upp="1.00e+5"   >-1.71342</DOUBLE>
+	<DOUBLE name="RotS"       idfy="FALSE"  low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >+1.000000e+00</DOUBLE>
+	<DOUBLE name="eps_shift"  idfy="FALSE"  low="-1.500000"  scale="1.000e-00"  upp="+1.500000" >-0.0170873</DOUBLE>
+	<DOUBLE name="eps_shift2" idfy="FALSE"  low="-1.500000"  scale="1.000e-00"  upp="+1.500000" >-0.00698039</DOUBLE>
+	<DOUBLE name="ndxP"       idfy="FALSE"  low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >-5.000000e-01</DOUBLE>
+	<DOUBLE name="ndyP"       idfy="FALSE"  low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >0.0275898</DOUBLE>
+	<DOUBLE name="ndYPTp"     idfy="FALSE"  low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >-0.03</DOUBLE>
+	<DOUBLE name="ndYPTm"     idfy="FALSE"  low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >0.41</DOUBLE>
+	<DOUBLE name="ndNPTp"     idfy="FALSE"  low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >0.015</DOUBLE>
+	<DOUBLE name="ndNPTm"     idfy="FALSE"  low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >-0.105</DOUBLE>
+	<DOUBLE name="AR"         idfy="FALSE"  low="40"         scale="1.00e+00"   upp="50"        >49.978</DOUBLE>
+	<DOUBLE name="ChordR"     idfy="FALSE"  low="-1.00+20"   scale="1.000e-00"  upp="+1.00e+20" >+7.1500000000e+00</DOUBLE>
+	<DOUBLE name="omR"        idfy="FALSE"  low="0"          scale="1.000e-00"  upp="+0.8"      >0.369578</DOUBLE>
+	<DOUBLE name="li1"        idfy="FALSE"  low="-1.00e+5"   scale="1e+01"      upp="1.00e+5"   >0.0881716</DOUBLE>
+	<DOUBLE name="li2"        idfy="FALSE"  low="-1.00e+5"   scale="1e+01"      upp="1.00e+5"   >-0.00401414</DOUBLE>
+	<DOUBLE name="dr1"        idfy="FALSE"  low="-1.00e+5"   scale="1e+01"      upp="1.00e+5"   >0.107662</DOUBLE>
+	<DOUBLE name="kHR"        idfy="FALSE"  low="0.0"        scale="1.000e-00"  upp="+1.00e+20" >0.558559</DOUBLE>
+	<DOUBLE name="kPR"        idfy="FALSE"  low="0.0"        scale="1.000e-00"  upp="+1.00e+20" >1.17276</DOUBLE>
+	<DOUBLE name="ndxR"       idfy="FALSE"  low="-0.4"       scale="1.000e-00"  upp="-0.4"      >-0.4</DOUBLE>
+    <DOUBLE name="Tfac"       idfy="FALSE"  low="0"          scale="1.000e-00"  upp="100"       >1</DOUBLE>
+	<DOUBLE name="eta"        idfy="FALSE"  low="0"          scale="1.000e-00"  upp="1"         >0.0778705</DOUBLE>
+	<DOUBLE name="CX0"        idfy="FALSE"  low="0"          scale="1.000e-00"  upp="100"       >1.1369</DOUBLE>
+	<DOUBLE name="CY0"        idfy="FALSE"  low="0"          scale="1.000e-00"  upp="100"       >0.918897</DOUBLE>
+	<DOUBLE name="xA0"        idfy="FALSE"  low="0"          scale="1.000e-00"  upp="100"       >1.28404e-06</DOUBLE>
+</PARAMS>

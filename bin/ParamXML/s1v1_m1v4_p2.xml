@@ -1,0 +1,106 @@
+<SHIP version="1"          number="1"         />
+<MODEL version="1"          number="1"         />
+<STATES number="1"         >
+	<DOUBLE name="x0"         init="-2.00000e+03" low="-1.00e+06"  upp="+1.00e+06" />
+	<DOUBLE name="y0"         init="+0.00000e+00" low="-1.00e+06"  upp="+1.00e+06" />
+	<DOUBLE name="psi"        init="+0.00000e+00" low="-1.00e+06"  upp="+1.00e+06" />
+	<DOUBLE name="u"          init="+5.00000e+00" low="-1.00e+06"  upp="+2.00e+06" />
+	<DOUBLE name="v"          init="+0.00000e+00" low="-1.00e+06"  upp="+1.00e+06" />
+	<DOUBLE name="r"          init="+0.00000e+00" low="-1.00e+06"  upp="+1.00e+06" />
+	<!--<DOUBLE name="delta"      init="+0.00000e+00" low="-1.00e+06"  upp="+1.00e+06" />
+	<DOUBLE name="n"          init="+0.00000e+00" low="-1.00e+06"  upp="+1.00e+06" />-->
+</STATES>
+<CONTROLS number="1"         >
+	<DOUBLE name="X"          init="-1.00000e+00" low="-1.00e+20"  upp="+1.00e+20" />
+	<DOUBLE name="Y"          init="+0.00000e+00" low="-1.00e+20"  upp="+1.00e+20" />
+	<DOUBLE name="N"          init="+0.00000e+00" low="-1.00e+20"  upp="+1.00e+20" />
+	<DOUBLE name="delta"      init="+0.00000e+00" low="-1.00e+20"  upp="+1.00e+20" />
+	<DOUBLE name="n"          init="+0.00000e+00" low="-1.00e+20"  upp="+1.00e+20" />
+	<DOUBLE name="pitch"      init="+0.00000e+00" low="-1.00e+20"  upp="+1.00e+20" />
+	<!--	<DOUBLE name="deltaC"     init="+0.00000e+00" low="-1.00e+20"  upp="+1.00e+20" />
+	<DOUBLE name="EOT"        init="+0.00000e+00" low="-1.00e+20"  upp="+1.00e+20" />
+	<DOUBLE name="pitch"      init="+0.00000e+00" low="-1.00e+20"  upp="+1.00e+20" />-->
+</CONTROLS>
+<PARAMS number="1"         >
+	<DOUBLE name="g"          idfy="FALSE"      init="+1"         low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >+9.8066500000e+00</DOUBLE>
+	<DOUBLE name="rho"        idfy="FALSE"      init="+1"         low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >+1.0000000000e+03</DOUBLE>
+	<DOUBLE name="rhoA"       idfy="FALSE"      init="+1"         low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >+1.2250000000e+00</DOUBLE>
+	<DOUBLE name="L"          idfy="FALSE"      init="+1"         low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >+1.9500000000e+02</DOUBLE>
+	<DOUBLE name="LWL"        idfy="FALSE"      init="+1"         low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >+2.9644600000e+02</DOUBLE>
+	<DOUBLE name="LOA"        idfy="FALSE"      init="+1"         low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >+2.9644600000e+02</DOUBLE>
+	<DOUBLE name="AF"         idfy="FALSE"      init="+1"         low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >+1.3000000000e+03</DOUBLE>
+	<DOUBLE name="AL"         idfy="FALSE"      init="+1"         low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >+6.3000000000e+03</DOUBLE>
+	<DOUBLE name="BOA"        idfy="FALSE"      init="+1"         low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >+4.7500000000e+01</DOUBLE>
+	<DOUBLE name="dfor"       idfy="FALSE"      init="+1"         low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >+1.6196000000e+01</DOUBLE>
+	<DOUBLE name="daft"       idfy="FALSE"      init="+1"         low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >+1.5964000000e+01</DOUBLE>
+	<DOUBLE name="Cb"         idfy="FALSE"      init="+1"         low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >+8.0500000000e-01</DOUBLE>
+	<DOUBLE name="xG"         idfy="FALSE"      init="+1"         low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >+7.2430000000e+00</DOUBLE>
+	<DOUBLE name="Rg"         idfy="FALSE"      init="+1"         low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >+6.6360000000e+01</DOUBLE>
+	<DOUBLE name="aa"         idfy="TRUE"      init="+1"         low="-1.00e+03"  scale="1.000e-00"  upp="+1.00e+03" >0.724759</DOUBLE>
+	<DOUBLE name="bb"         idfy="TRUE"      init="+1"         low="-1.00e+03"  scale="1.000e-00"  upp="+1.00e+03" >-0.516941</DOUBLE>
+	<DOUBLE name="cc"         idfy="TRUE"      init="+1"         low="-1.00e+03"  scale="1.000e-01"  upp="+1.00e+03" >-0.492347</DOUBLE>
+	<DOUBLE name="dd"         idfy="TRUE"      init="+1"         low="-1.00e+03"  scale="1.000e-01"  upp="+1.00e+03" >0.372848</DOUBLE>
+	<DOUBLE name="ee"         idfy="TRUE"      init="+1"         low="-1.00e+03"  scale="1.000e+01"  upp="+1.00e+03" >-0.146044</DOUBLE>
+	<DOUBLE name="ff"         idfy="TRUE"      init="+1"         low="-1.00e+03"  scale="1.000e-00"  upp="+1.00e+03" >-0.614726</DOUBLE>
+	<DOUBLE name="gg"         idfy="TRUE"      init="+1"         low="-1.00e+03"  scale="1.000e-02"  upp="+1.00e+03" >0.157962</DOUBLE>
+	<DOUBLE name="hh"         idfy="TRUE"      init="+1"         low="-1.00e+03"  scale="1.000e-01"  upp="+1.00e+03" >0.318814</DOUBLE>
+	<DOUBLE name="ii"         idfy="TRUE"      init="+1"         low="-1.00e+03"  scale="1.000e-03"  upp="+1.00e+03" >-0.189155</DOUBLE>
+	<DOUBLE name="jj"         idfy="TRUE"      init="+1"         low="-1.00e+03"  scale="1.000e-00"  upp="+1.00e+03" >-0.968696</DOUBLE>
+	<DOUBLE name="kk"         idfy="TRUE"      init="+1"         low="-1.00e+03"  scale="1.000e-01"  upp="+1.00e+03" >-0.196936</DOUBLE>
+	<DOUBLE name="XHRu"       idfy="TRUE"      init="+1"         low="+0.00e+00"  scale="1.000e-11"  upp="+1.00e+03" >0.896795</DOUBLE>
+	<DOUBLE name="XHRuau"     idfy="TRUE"      init="+1"         low="+0.00e+00"  scale="1.000e-12"  upp="+1.00e+03" >0.624329</DOUBLE>
+	<DOUBLE name="XHRuuu"     idfy="TRUE"      init="+1"         low="+0.00e+00"  scale="1.000e+00"  upp="+1.00e+03" >0.288486</DOUBLE>
+	<DOUBLE name="k"          idfy="TRUE"      init="+1"         low="+0.00e+00"  scale="1.000e-02"  upp="+1.00e+03" >0.186933</DOUBLE>
+	<DOUBLE name="b1"         idfy="TRUE"      init="+1"         low="-1.00e+03"  scale="1.000e+00"  upp="+1.00e+03" >0.113898</DOUBLE>
+	<DOUBLE name="b2"         idfy="TRUE"      init="+1"         low="-1.00e+03"  scale="1.000e+01"  upp="+1.00e+03" >0.26595</DOUBLE>
+	<DOUBLE name="b3"         idfy="TRUE"      init="+1"         low="-1.00e+03"  scale="1.000e-01"  upp="+1.00e+03" >0.28863</DOUBLE>
+	<DOUBLE name="b1p"        idfy="TRUE"      init="+1"         low="-1.00e+03"  scale="1.000e+01"  upp="+1.00e+03" >0.935967</DOUBLE>
+	<DOUBLE name="b2p"        idfy="TRUE"      init="+1"         low="-1.00e+03"  scale="1.000e+03"  upp="+1.00e+03" >0.68773</DOUBLE>
+	<DOUBLE name="b3p"        idfy="TRUE"      init="+1"         low="-1.00e+03"  scale="1.000e+02"  upp="+1.00e+03" >0.155391</DOUBLE>
+	<DOUBLE name="a0"         idfy="TRUE"      init="+1"         low="-1.00e+03"  scale="1.000e+01"  upp="+1.00e+03" >0.116621</DOUBLE>
+	<DOUBLE name="a7"         idfy="TRUE"      init="+1"         low="-1.00e+03"  scale="1.000e+00"  upp="+1.00e+03" >0.4037</DOUBLE>
+	<DOUBLE name="a8"         idfy="TRUE"      init="+1"         low="-1.00e+03"  scale="1.000e+01"  upp="+1.00e+03" >-0.548168</DOUBLE>
+	<DOUBLE name="a9"         idfy="TRUE"      init="+1"         low="-1.00e+03"  scale="1.000e+01"  upp="+1.00e+03" >-0.264301</DOUBLE>
+	<DOUBLE name="DP"         idfy="FALSE"      init="+1"         low="+0.00e+00"  scale="1.000e-00"  upp="+10"       >7</DOUBLE>
+	<DOUBLE name="tP"         idfy="TRUE"      init="+1"         low="+0.00e+00"  scale="1.000e-00"  upp="+1.00e+00" >0.726703</DOUBLE>
+	<DOUBLE name="omP"        idfy="TRUE"      init="+1"         low="+0.00e+00"  scale="1.000e-00"  upp="+0.800000" >8.68799e-12</DOUBLE>
+	<DOUBLE name="prT1"       idfy="TRUE"      init="+1"         low="-1.00e+5"   scale="1e+01"      upp="1.00e+5"   >1.83683</DOUBLE>
+	<DOUBLE name="prT2"       idfy="TRUE"      init="+1"         low="-1.00e+5"   scale="1e+01"      upp="1.00e+5"   >-1.92183</DOUBLE>
+	<DOUBLE name="prT3"       idfy="TRUE"      init="+1"         low="-1.00e+5"   scale="1e+01"      upp="1.00e+5"   >-1.77274</DOUBLE>
+	<DOUBLE name="RotS"       idfy="FALSE"      init="+1"         low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >+1.000000e+00</DOUBLE>
+	<DOUBLE name="eps_shift"  idfy="TRUE"      init="+1"         low="-1.500000"  scale="1.000e-00"  upp="+1.500000" >-0.00639918</DOUBLE>
+	<DOUBLE name="eps_shift2" idfy="TRUE"      init="+1"         low="-1.500000"  scale="1.000e-00"  upp="+1.500000" >-0.000589686</DOUBLE>
+	<DOUBLE name="ndxP"       idfy="FALSE"      init="+1"         low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >-5.000000e-01</DOUBLE>
+	<DOUBLE name="ndyP"       idfy="FALSE"      init="+1"         low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >+2.759000e-02</DOUBLE>
+	<DOUBLE name="ndYPTp"     idfy="TRUE"      init="+1"         low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >-0.03</DOUBLE>
+	<DOUBLE name="ndYPTm"     idfy="TRUE"      init="+1"         low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >0.41</DOUBLE>
+	<DOUBLE name="ndNPTp"     idfy="TRUE"      init="+1"         low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >0.015</DOUBLE>
+	<DOUBLE name="ndNPTm"     idfy="TRUE"      init="+1"         low="-1.00e+20"  scale="1.000e-00"  upp="+1.00e+20" >-0.105</DOUBLE>
+	<DOUBLE name="AR"         idfy="FALSE"      init="+1"         low="50"         scale="1.000e-00"  upp="100"       >+7.3500000000e+01</DOUBLE>
+	<DOUBLE name="ChordR"     idfy="FALSE"      init="+1"         low="-1.00+20"   scale="1.000e-00"  upp="+1.00e+20" >+7.1500000000e+00</DOUBLE>
+	<DOUBLE name="omR"        idfy="TRUE"      init="+1"         low="0"          scale="1.000e-00"  upp="+0.8"      >0.0154178</DOUBLE>
+	<DOUBLE name="li1"        idfy="TRUE"      init="+1"         low="-1.00e+5"   scale="1e+01"      upp="1.00e+5"   >0.0185572</DOUBLE>
+	<DOUBLE name="li2"        idfy="TRUE"      init="+1"         low="-1.00e+5"   scale="1e+01"      upp="1.00e+5"   >-0.00129782</DOUBLE>
+	<DOUBLE name="dr1"        idfy="TRUE"      init="+1"         low="-1.00e+5"   scale="1e+01"      upp="1.00e+5"   >0.0361268</DOUBLE>
+	<DOUBLE name="kHR"        idfy="TRUE"      init="+1"         low="0.0"        scale="1.000e-00"  upp="+1.00e+20" >0.824767</DOUBLE>
+	<DOUBLE name="kPR"        idfy="TRUE"      init="+1"         low="0.0"        scale="1.000e-00"  upp="+1.00e+20" >0.952803</DOUBLE>
+	<DOUBLE name="ndxR"       idfy="FALSE"      init="+1"         low="-1.00+20"   scale="1.000e-00"  upp="+1.00e+20" >-0.50000</DOUBLE>
+	<DOUBLE name="ndyR"       idfy="FALSE"      init="+1"         low="-1.00+20"   scale="1.000e-00"  upp="+1.00e+20" >+2.7590000000e-02</DOUBLE>
+	<DOUBLE name="Tfac"       idfy="TRUE"      init="+1"         low="0"          scale="1.000e-00"  upp="100"       >0.451278</DOUBLE>
+	<DOUBLE name="eta"        idfy="TRUE"      init="+1"         low="0"          scale="1.000e-00"  upp="1"         >0.682939</DOUBLE>
+	<DOUBLE name="CX0"        idfy="TRUE"       init="+1"         low="0"          scale="1.000e-00"  upp="100"       >1.10315</DOUBLE>
+	<DOUBLE name="CY0"        idfy="TRUE"       init="+1"         low="0"          scale="1.000e-00"  upp="100"       >0.188587</DOUBLE>
+	<DOUBLE name="xA0"        idfy="TRUE"       init="+1"         low="0"          scale="1.000e-00"  upp="100"       >0.000143158</DOUBLE>
+	<DOUBLE name="LagR"       idfy="FALSE"      init="+1"         low="0"          scale="1.000e-00"  upp="10"        >2.65317</DOUBLE>
+	<DOUBLE name="IEP"        idfy="FALSE"      init="+1"         low="0.01"       scale="1.000e+7"   upp="1e+2"      >3.5</DOUBLE>
+	<DOUBLE name="c1"         idfy="FALSE"      init="+1"         low="-1.00e+5"   scale="1e+5"       upp="1.00e+5"   >218.951</DOUBLE>
+	<DOUBLE name="c2"         idfy="FALSE"      init="+1"         low="-1.00e+5"   scale="1e+5"       upp="1.00e+5"   >-277.03</DOUBLE>
+	<DOUBLE name="c3"         idfy="FALSE"      init="+1"         low="-1.00e+5"   scale="1e+5"       upp="1.00e+5"   >230.785</DOUBLE>
+	<DOUBLE name="c4"         idfy="FALSE"      init="+1"         low="-1.00e+5"   scale="1e+5"       upp="1.00e+5"   >-342.878</DOUBLE>
+	<DOUBLE name="c5"         idfy="FALSE"      init="+1"         low="-1.00e+5"   scale="1e+5"       upp="1.00e+5"   >142.301</DOUBLE>
+	<DOUBLE name="c6"         idfy="FALSE"      init="+1"         low="-1.00e+5"   scale="1e+5"       upp="1.00e+5"   >115.983</DOUBLE>
+	<DOUBLE name="c7"         idfy="FALSE"      init="+1"         low="-1.00e+5"   scale="1e+5"       upp="1.00e+5"   >69.4679</DOUBLE>
+	<DOUBLE name="c8"         idfy="FALSE"      init="+1"         low="-1.00e+5"   scale="1e+5"       upp="1.00e+5"   >57.9632</DOUBLE>
+	<DOUBLE name="c9"         idfy="FALSE"      init="+1"         low="-1.00e+5"   scale="1e+5"       upp="1.00e+5"   >0</DOUBLE>
+	<DOUBLE name="c10"        idfy="FALSE"      init="+1"         low="-1.00e+5"   scale="1e+5"       upp="1.00e+5"   >0</DOUBLE>
+</PARAMS>

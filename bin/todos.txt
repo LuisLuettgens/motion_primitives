@@ -1,0 +1,62 @@
+=== AKTUELL ===
+
+
+=== MASTERARBEIT ===
+
+	=== VISUALISIERUNG ===
+
+		Zeitvergleich nur bei der schnittmenge der erfolgreichen A*-Suchen
+	
+
+===   ===   ===   ===   ===   ===   ===   ===   ===   ===   ===   ===   ===   ===   ===   ===   ===   ===   ===   ===
+   ===   ===   ===   ===   ===   ===   ===   ===   ===   ===   ===   ===   ===   ===   ===   ===   ===   ===   ===
+===   ===   ===   ===   ===   ===   ===   ===   ===   ===   ===   ===   ===   ===   ===   ===   ===   ===   ===   ===
+
+=== SEHR WICHTIG ===
+
+	Autobahnen im komplexen Graphen
+
+	in main arc ein start und end vetor der auch star und end prim id enthält erstellen
+
+	eddata aktuell motion_type zu prim_nr weil auch maneuver in edes können
+	
+	parsen in setprimitives muss auch den Graphen erstellen	
+
+	n_prim setzten und nicht ausrechnen wegen Rundungsfehlern
+
+
+=== ANMERKUNGEN/IDEEN ===
+
+	
+	sehr lange trims weil günstig in zielfunktion
+	
+	feiner diskretisieren weil zeit egal ist für evaluation
+
+
+=== WICHTIG ===	
+
+	präsentation machen
+
+	finde controls zu velocity automatisch
+	
+	trims auch mit zwischenpunkten
+
+
+=== IRGENDWANN ===
+	in visu results anzahl an verwendeten primitives anzeigen
+		- nutzungshäufigkeit anzeigen
+
+scripts gegen unsinnigen input absichern
+nicht zusammenhängende primitives ausprobieren
+automatisierte test_trajectories
+doku schreiben
+
+=== 4D extension ===
+	Unkompilierte files mit 4D extension:
+	
+	
+	Kompilierte files mit 4D extension:
+	- data_types.h
+	- pathcost.cpp/.h
+	- pathgrid.cpp/.h
+

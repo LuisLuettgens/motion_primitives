@@ -1,0 +1,96 @@
+#!/bin/bash
+
+WORKSPACE=$(pwd)
+
+
+cd AI_Data/
+AI_Dataset_n=$( ls | grep 'dataset_' | tr -dc '0-99\n')
+
+
+MaxSetId=0
+
+while read -r line; do
+    if [[ "$line" -gt "$MaxSetId" ]]
+    then 
+	MaxSetId=$line
+    fi
+done <<< "$AI_Dataset_n"
+
+#echo "There are $AI_Dataset_n datasets..."
+NewDSID=$(($MaxSetId+1))
+echo "Creating creating file $NewDSID ..."
+touch dataset_$NewDSID
+echo ""
+cd ..
+
+ANGLES_N=$1
+COUNTER=0
+
+random_angles=()
+
+ANGLE_DISCR=$(( 360 / $ANGLES_N ))
+
+isFirst=1	
+
+while [ "$ANGLES_N" -gt "0" ]; do
+	MIN_ANGLE=$(( $ANGLE_DISCR*$COUNTER ))
+	((COUNTER+=1))
+	MAX_ANGLE=$(( $ANGLE_DISCR*$COUNTER ))
+	RNDM_ANGLE=$(shuf -i $MIN_ANGLE-$MAX_ANGLE -n 1)
+	if [[ $isFirst = 1 ]];
+	then
+		random_angles+='-'$RNDM_ANGLE' '$RNDM_ANGLE
+		isFirst=0
+	else
+		random_angles+=' -'$RNDM_ANGLE' '$RNDM_ANGLE
+	fi
+	((ANGLES_N-=1))
+done
+
+
+
+CREATE_PRIM_INPUT=''
+
+
+function multiplicate {
+	isFirst=1
+        for var in ${random_angles} ;do
+                if [[ $isFirst = 1 ]];
+		then 
+			CREATE_PRIM_INPUT+=$var' -'$var
+			isFirst=0
+		else
+			CREATE_PRIM_INPUT+=' '$var' -'$var
+		fi
+        done
+}
+
+echo $random_angles
+
+multiplicate
+./create_prims -u3.0 s1v1_m1v5_p1MeckPomm.xml $random_angles
+
+cd primDirs/
+nmbr_motion_prims=$( ls | grep 'motion_prims_' | tr -dc '0-999\n')
+
+MaxSetId=0
+
+while read -r line; do
+    if [[ "$line" -gt "$MaxSetId" ]]
+    then 
+	MaxSetId=$line
+    fi
+done <<< "$nmbr_motion_prims"
+NewPrimID=$(($MaxSetId+1))
+echo "Launching test_main with motion_prims_$NewPrimID..."
+
+cd $WORKSPACE
+./test_main Scripts/bashScripts/test_trajectories_2 primDirs/motion_prims_5/
+
+touch $WORKSPACE/Evaluation/ai_file1.txt
+
+line=$(head -n 1 $WORKSPACE/Evaluation/ai_file1.txt)
+line=$CREATE_PRIM_INPUT' '$line
+echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+echo $line
+echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"

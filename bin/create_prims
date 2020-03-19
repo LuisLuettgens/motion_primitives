@@ -1,0 +1,134 @@
+#!/bin/bash
+
+: '
+    This script is deisgned to automate the procedure of creating new sets of motion primitives. To use this script as designed it has to be
+    called with the following inputs:
+
+        - the angles of all maneuvers that shall be included into the set of primitives
+	- -u$VELOCITY the default velocity that is used for the primitives
+	- the model file including the describtor (.txt,.xml etcl. )
+'
+
+
+: ' 
+    First of all the scripts checkes the number of existing motion primitive sets to create a new unique identifier for the current set of
+    primitives, after that the current default trim primitive (a line going 75m straight) is added to the new folder.
+'
+
+cd primDirs/
+nmbr_motion_prims=$( ls | grep 'motion_prims_' | tr -dc '0-99\n')
+
+
+MaxSetId=0
+
+while read -r line; do
+    if [[ "$line" -gt "$MaxSetId" ]]
+    then 
+	MaxSetId=$line
+    fi
+done <<< "$nmbr_motion_prims"
+
+echo "There are motion prims folders up to motion_prims_$MaxSetId"
+NewPrimID=$(($MaxSetId+1))
+echo "Creating directory motion_prims_$NewPrimID ..."
+mkdir motion_prims_$NewPrimID
+echo ""
+cd ..
+
+cp tp_01_straight.txt ./primDirs/motion_prims_$NewPrimID/
+
+: '
+    here alle inputs are parsed iteratively, upper_time_bound is a variable to obtain the shortest solution for a given turn possible. That
+    means, all the maneuvers start with fixed end time of 100 seconds, if an optimal trajectory cannot be computed for the current maximal
+    upper time bound it is increased by 100 seconds, on success the time bound is reseted. This guarantees that trajectories are as short as
+    possible. Once an optimal solution is found the transWORHP result is parsed by "parse2primitive.py" into the needed format and added to
+    the right folder.
+'
+
+PRINT_VEL=0
+FOUND_SHIP_MODEL=0
+velocity="nan(\"\")"
+
+former_low=''
+former_upp=''
+
+viewer="-p" # variable enables or disables visuaisation in transWORHP (default no viewer)
+
+model=''
+for i in "$@"
+do
+	if [[ $i = *"-viewer"* ]];
+	then
+    	viewer="placeholder"
+	fi
+    if [[ $i = *".xml" ]];
+    then
+		model=$i
+        echo "   Selecting the model is: $model"
+		FOUND_SHIP_MODEL=1
+	fi    
+done
+
+echo "$viewer"
+
+if [[ $FOUND_SHIP_MODEL = "0" ]];
+	then
+		echo "No ship model found! Please specifiy a file in ParamXML that shall be used as a ship model!"
+		exit
+fi
+
+for i in "$@"
+do
+    if [[ $i = "-u"* ]];
+    then
+	vel_direction=$(echo "$i" | tr -dc 'a-z')
+	#echo "velocity direction: $vel_direction"
+        velocity=$(echo "$i" | tr -dc ',.0-9')
+        velocity=$(echo "$velocity" | tr , .)
+        PRINT_VEL=1
+
+	echo "   Opening the file: $model..."	
+	echo "   Changing the box constraints of $vel_direction to $velocity..."
+
+	#former_upp=$(python -u Scripts/pythonScripts/xmlFile_set_u.py $model $velocity "<DOUBLE name=\"$vel_direction\"" upp)
+	#former_low=$(python -u Scripts/pythonScripts/xmlFile_set_u.py $model $velocity "<DOUBLE name=\"$vel_direction\"" low)
+    fi
+done
+
+echo "   Starting and end velocity of primitives is: $velocity"
+      
+
+for i in "$@"
+do
+	if [[ $i = "-u"* ]];
+    	then
+		echo ""
+	elif [[ $i = *".xml" ]];
+	then
+	echo ""
+	else
+	MaxSetId=$line
+        upper_time_bound=100
+        create_prim_succ=1
+        echo "   Computing a $i degree maneuver ..."
+        
+        while [ $create_prim_succ -eq 1 ]
+        do
+            echo ""
+            ./create_motion_prims -n 31 $i $upper_time_bound $viewer $velocity
+    	    create_prim_succ=$?
+    	    ((upper_time_bound+=100)) 
+        done    
+        echo ""
+        python parse2primitive.py $NewPrimID 
+	fi
+done
+
+
+echo -n "Changing the velocity values back to the default value...";
+echo -e "\e[0K\r   Changing the velocity values back to the default value... Done!"
+
+#former_upp=$(python Scripts/pythonScripts/xmlFile_set_u.py $model $former_upp "<DOUBLE name=\"u\"" upp)
+#former_low=$(python Scripts/pythonScripts/xmlFile_set_u.py $model $former_low "<DOUBLE name=\"u\"" low)
+
+echo "   Creation of Motion Primitives is done!"
