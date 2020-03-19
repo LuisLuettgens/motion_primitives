@@ -1,0 +1,5 @@
+#define TransWORHP_VERSION "0.5.0.43ce474"
+#define TransWORHP_VERSION_MAJOR 0
+#define TransWORHP_VERSION_MINOR 5
+#define TransWORHP_VERSION_PATCH 0
+#define TransWORHP_VERSION_TWEAK 43ce474

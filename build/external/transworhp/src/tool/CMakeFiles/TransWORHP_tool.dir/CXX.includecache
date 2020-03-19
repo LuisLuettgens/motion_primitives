@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/luis/Backup2018Seafile/galileonautic/external/transworhp/src/base/vectortools.h
+vector
+-
+iostream
+-
+set
+-
+
+/home/luis/Backup2018Seafile/galileonautic/external/transworhp/src/tool/toolregister.cpp
+windows.h
+/home/luis/Backup2018Seafile/galileonautic/external/transworhp/src/tool/windows.h
+toolregister.h
+/home/luis/Backup2018Seafile/galileonautic/external/transworhp/src/tool/toolregister.h
+../base/vectortools.h
+/home/luis/Backup2018Seafile/galileonautic/external/transworhp/src/base/vectortools.h
+
+/home/luis/Backup2018Seafile/galileonautic/external/transworhp/src/tool/toolregister.h
+

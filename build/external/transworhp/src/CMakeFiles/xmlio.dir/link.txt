@@ -1,0 +1,2 @@
+/usr/bin/ar qc libxmlio.a  CMakeFiles/xmlio.dir/xmlio/src/xmlio/conversion.cpp.o CMakeFiles/xmlio.dir/xmlio/src/xmlio/textout.cpp.o CMakeFiles/xmlio.dir/xmlio/src/xmlio/xmlerror.cpp.o CMakeFiles/xmlio.dir/xmlio/src/xmlio/xmlnode.cpp.o CMakeFiles/xmlio.dir/xmlio/src/xmlio/xmlparser.cpp.o
+/usr/bin/ranlib libxmlio.a
