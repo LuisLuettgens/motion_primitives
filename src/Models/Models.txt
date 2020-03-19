@@ -1,0 +1,8 @@
+Model 1.1
+2016.09.01
+Adapted from: P.Oltmann und S.D. Sharma, Simulation of Combined Engine and Rudder Maneuvers using an Improved Model of Hull-Propeller-Rudder Interactions, 1984.
+
+Model 2.1
+2016.09.01
+Adapted from: Katrien Eloot, Selection, Experimental Determination and Evaluation of a Mathematical Model fro Ship Manoeuvring in Shallow Water, 2005, page 7.
+
