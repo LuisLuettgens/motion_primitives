@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 744.09448819 1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="titelbild.svg"
+   inkscape:export-filename="D:\kendo\Handbuch\images\titelbild.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs4">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient4192">
+      <stop
+         style="stop-color:#f2f2f2;stop-opacity:1;"
+         offset="0"
+         id="stop4194" />
+      <stop
+         style="stop-color:#f2f2f2;stop-opacity:0;"
+         offset="1"
+         id="stop4196" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4192"
+       id="linearGradient4198"
+       x1="566.56543"
+       y1="828.41449"
+       x2="795.12762"
+       y2="274.66489"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.0627309,0,0,0.99989668,-10.360889,0.06252219)" />
+    <pattern
+       y="0"
+       x="0"
+       height="6"
+       width="6"
+       patternUnits="userSpaceOnUse"
+       id="EMFhbasepattern" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.57848045"
+     inkscape:cx="346.29002"
+     inkscape:cy="479.7717"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1366"
+     inkscape:window-height="705"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#b7b7c8;fill-opacity:1;stroke:none;stroke-width:1.62591875;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0.1;stroke-opacity:1"
+       id="rect3336"
+       width="743.133"
+       height="1051.3027"
+       x="0.81295937"
+       y="0.24654204" />
+    <rect
+       style="fill:url(#linearGradient4198);fill-opacity:1;stroke:#6f6f91;stroke-width:2.08228707;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0.1;stroke-opacity:1"
+       id="rect3338"
+       width="632.28705"
+       height="602.7901"
+       x="165.69151"
+       y="303.73331"
+       ry="0" />
+    <text
+       xml:space="preserve"
+       style="font-size:121.3125px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:DIN 1451 Mittelschrift;-inkscape-font-specification:DIN 1451 Mittelschrift"
+       x="155.4688"
+       y="216.94633"
+       id="text4162"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4164"
+         x="155.4688"
+         y="216.94633"
+         style="font-size:72px">TransWORHP</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:70px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:DIN 1451 Mittelschrift;-inkscape-font-specification:DIN 1451 Mittelschrift"
+       x="161.62282"
+       y="270.9599"
+       id="text4162-8"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4164-4"
+         x="161.62282"
+         y="270.9599"
+         style="font-size:40px">Benutzerhandbuch / user guide</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.91124535px;line-height:89.99999762%;font-family:'DIN 1451 Mittelschrift';-inkscape-font-specification:'DIN 1451 Mittelschrift, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="103.53789"
+       y="979.77362"
+       id="text4162-8-4"
+       sodipodi:linespacing="89.999998%"><tspan
+         sodipodi:role="line"
+         id="tspan4164-4-2"
+         x="103.53789"
+         y="979.77362"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.91124535px;line-height:89.99999762%;font-family:'DIN 1451 Mittelschrift';-inkscape-font-specification:'DIN 1451 Mittelschrift, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start">Steinbeis-Forschungszentrum für</tspan><tspan
+         sodipodi:role="line"
+         x="103.53789"
+         y="996.79376"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.91124535px;line-height:89.99999762%;font-family:'DIN 1451 Mittelschrift';-inkscape-font-specification:'DIN 1451 Mittelschrift, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start"
+         id="tspan4264">Optimierung, Steuerung und Regelung</tspan></text>
+    <g
+       id="g4159"
+       transform="matrix(0.97644642,0,0,0.97644652,57.526557,962.02909)">
+      <path
+         id="path4151"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         d="m 1.52339,37.75162 36.57625,0 0,-36.83625 -36.57625,0 0,36.83625 z"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path4153"
+         style="fill:#231f20;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         d="m 0,0 0,39.4375 39.4375,0 0,-39.4375 z m 2.5,2.5 34.4375,0 0,34.4375 -34.4375,0 z m 2.6875,2.90625 0,28.8125 28.8125,0 0,-28.8125 z M 22.75,8 l 2.78125,0 0,2.40625 1.59375,0 0,2.375 -1.59375,0 0,4.09375 c 0,0.39375 0.21375,0.625 0.625,0.625 l 0.96875,0 0,2.59375 -1.53125,0 c -2.0075,0.055 -2.875,-1.585 -2.875,-2.96875 l 0,-4.34375 -1.46875,0 0,-2.375 1.5,0 z m -7.40625,1.90625 c 1.645,0 2.97875,0.25876 3.96875,1.25 l -1.875,1.875 c -0.505,-0.505 -1.34,-0.59374 -2.125,-0.59375 -0.7475,0 -1,0.36875 -1,0.59375 0,0.1125 -0.035,0.45751 0.65625,0.53125 L 16.5,13.71875 c 2.1125,0.20625 3.03125,1.455 3.03125,3.0625 0,2.375 -2.00624,3.40625 -4.34375,3.40625 -1.515,0 -2.99124,-0.05375 -4.375,-1.4375 l 1.96875,-2 c 0.84125,0.84125 1.945,0.84375 2.46875,0.84375 0.44875,0 1.3125,-0.1325 1.3125,-0.65625 0,-0.28 -0.15125,-0.57 -0.75,-0.625 L 14.28125,16.15625 C 12.5425,15.9875 11.34375,15.21376 11.34375,13.25 c 0,-2.225 1.99875,-3.34374 4,-3.34375 z m -4.4375,12.0625 3.25,0 1.96875,5.21875 1.75,-5.21875 2.75,0 1.71875,5.21875 1.96875,-5.21875 3.25,0 -3.75,10.0625 -2.75,0 L 19.25,26.5 l -1.8125,5.53125 -2.78125,0 z"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cccccccccccccccccccccsscccscccccscccsccssccssccsscccccccccccccc" />
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,100 @@
+# Der Projektname
+project(TransWORHP-EXAMPLES)
+
+# Minimal benoetigte CMake-Version wenn z.B. bestimmte CMake-Kommandos benutzt werden
+cmake_minimum_required(VERSION 2.6)
+#set( CMAKE_VERBOSE_MAKEFILE on )
+
+
+# Zusätzliche include-Verzeichnisse
+include_directories(../include/xmlio/ )
+include_directories(/localdata/opt/local/include/ )
+include_directories(../include/glplot/ )
+include_directories(../include/core/ )
+include_directories(../include/ )
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O3")
+
+link_directories(${PROJECT_SOURCE_DIR}/../lib )
+
+
+link_libraries(TransWORHP SDL2 GL)
+add_definitions( -DTRANSWORHP_GRAPHICS )
+
+# Die ausfuehrbare Datei. Anstatt der Variablen koennen auch noch zusaetzliche Dateien angegeben werden
+
+# checked
+add_executable (chemie chemie.cpp)
+add_executable (spline spline.cpp)
+#add_executable (erzentlader erzentlader.cpp)
+#add_executable (oszillator oszillator.cpp)
+
+#add_executable (knickstab knickstab.cpp)
+#add_executable (knickstab_int knickstab_int.cpp)
+
+#add_executable (reentry reentry.cpp)
+#add_executable (reentry_neben reentry_neben.cpp)
+
+add_executable (rakete rakete.cpp)
+
+
+
+# unchecked
+#add_executable (oszillator_neben oszillator_neben.cpp)
+
+
+add_executable (laufkatze laufkatze.cpp laufkatze_base.cpp)
+#add_executable (laufkatze_ad laufkatze_ad.cpp laufkatze_base.cpp)
+#add_executable (laufkatze_int laufkatze_int.cpp laufkatze_base.cpp)
+#add_executable (laufkatze_expl laufkatze_expl.cpp laufkatze_base.cpp)
+
+#add_executable (laufkatze_scale laufkatze_scale.cpp)
+#add_executable (laufkatze_phase laufkatze_phase.cpp)
+#add_executable (laufkatze_zen laufkatze_zen.cpp)
+#add_executable (flugzeug flugzeug.cpp)
+#add_executable (laufkatze_regelung laufkatze_regelung.cpp laufkatze_base.cpp)
+#add_executable (laufkatze_mpc laufkatze_mpc.cpp laufkatze_base.cpp)
+
+#add_executable (constrspline constrspline.cpp)
+#add_executable (brachistochrone brachistochrone.cpp)
+#add_executable (roboter roboter.cpp)
+#add_executable (geoleo geoleo.cpp)
+#add_executable (magicdiff magicdiff.cpp)
+
+set_target_properties(
+	chemie
+	spline
+#	erzentlader
+#	oszillator
+#	knickstab
+#	knickstab_int
+
+#	reentry
+#	reentry_neben
+
+	rakete
+
+	laufkatze
+#	laufkatze_ad
+#	laufkatze_int
+#	laufkatze_expl
+#	laufkatze_scale
+#	laufkatze_phase
+#	laufkatze_zen
+#	laufkatze_mpc
+#	laufkatze_regelung
+
+#	oszillator_neben
+
+#	brachistochrone
+#	roboter
+#	constrspline
+	
+#	geoleo
+#	magicdiff
+
+#	flugzeug
+
+		PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/../example_release
+)
+

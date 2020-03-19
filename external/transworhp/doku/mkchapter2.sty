@@ -1,0 +1,61 @@
+\makeatletter
+
+\def\chapter{\@ifstar\unnumberedchapter\numberedchapter}
+\def\numberedchapter{\@ifnextchar[%]
+  \numberedchapterwithtwoarguments\numberedchapterwithoneargument}
+\def\unnumberedchapter{\@ifnextchar[%]
+  \unnumberedchapterwithtwoarguments\unnumberedchapterwithoneargument}
+\def\numberedchapterwithoneargument#1{\numberedchapterwithtwoarguments[#1]{#1}}
+\def\unnumberedchapterwithoneargument#1{\unnumberedchapterwithtwoarguments[#1]{#1}}
+\def\numberedchapterwithtwoarguments[#1]#2{%
+  \ifhmode\par\fi
+  \removelastskip
+  \vskip 12ex\goodbreak
+  \newpage
+  \setcounter{page}{1}
+  \refstepcounter{chapter}%
+  \noindent
+  \begingroup
+  \leavevmode\bfseries\raggedright
+\centering{\LARGE  \thechapter~%}%\\[.5em]
+%\centering{
+	\LARGE #2}\\[.2em]
+  \endgroup
+\hrulefill
+  \vskip 0ex\nobreak
+  \addcontentsline{toc}{chapter}{%
+    \protect\numberline{\thechapter}%
+    #1}%
+	\chaptermark{#1}
+ %\formular
+   }
+
+\def\unnumberedchapterwithtwoarguments[#1]#2{%
+  \ifhmode\par\fi
+  \removelastskip
+  \vskip 12ex\goodbreak
+  \newpage
+%  \setcounter{page}{1}
+%  \refstepcounter{chapter}%
+  \noindent
+  \begingroup
+  \leavevmode\bfseries\raggedright 
+\centering{\LARGE #2}\\[.5em]
+  \endgroup
+\hrulefill
+  \vskip 0ex\nobreak
+% \addcontentsline{toc}{chapter}{%
+%    \protect\numberline{\thechapter}%
+%   #1}%
+	\chaptermark{#1}
+  }
+
+
+
+\makeatother
+
+
+
+
+
+

@@ -1,0 +1,31 @@
+<!-- Raketenwagen Problem -->
+
+<? xml version ="1.0" encoding =" UTF -8" ?>
+<problem>
+	<!-- Zielobjekt -->
+	<objective>t</objective>
+	
+	<!-- Zustaende -->
+	<state name="x0">
+		<term>x1*t</term>
+		<start>4</start>
+		<final>0</final>
+	</state>
+
+	<state name="x1">
+		<term>u*t</term>
+		<start>-1</start>
+		<final>0</final>
+	</state>
+
+	<!-- Steuerungen -->
+	<control name="u">
+		<boundaries lower="-1" upper="1"/>
+	</control>
+
+	<!-- Parameter -->
+	<param name="t" >
+		<boundaries lower="1" upper="10"/>
+		<initialguess>3</initialguess>
+	</param>
+</problem>

@@ -1,0 +1,60 @@
+<!-- Spline Problem mit Rand- und Nebenbedingungen -->
+
+<? xml version ="1.0" encoding =" UTF -8" ?>
+<problem>
+	<!-- Zielobjekt -->
+	<objective>x2(end)</objective>
+	
+	<!-- Zustaende -->
+	<state name="x0">
+		<term>x1</term>
+		<start>0</start>
+		<final>0</final>
+	</state>
+
+	<state name="x1">
+		<term>u</term>
+		<start>1</start>
+		<final>1</final>
+	</state>
+
+	<state name="x2">
+		<term>u*u</term>
+		<start>0</start>
+		<boundaries lower="0"/>
+	</state>
+
+
+	<!-- Steuerungen -->
+	<control name="u">
+		<initialguess>0.5</initialguess>
+		<boundaries lower="-6" upper="6"/>
+	</control>
+
+	<!-- Nebenbedingungen -->
+	<neben>
+		<term>x0+x1</term>
+		<boundaries lower="-100" upper="100"/>
+	</neben>
+
+	<!-- Randbedingungen -->
+	<rand>
+		<term>x0(0)</term>
+	</rand>
+
+	<rand>
+		<term>x1(0)-1</term>
+	</rand>
+
+	<rand>
+		<term>x2(0)</term>
+	</rand>
+
+	<rand>
+		<term>x0(end)</term>
+	</rand>
+
+	<rand>
+		<term>x1(end)-1</term>
+	</rand>
+</problem>

@@ -1,0 +1,681 @@
+#ifdef WIN32
+#include "windows.h"
+#endif
+
+//#include "glplot.h"
+//#include "gldisplay.h"
+#include "plot.h"
+#include <string>
+#include <iostream>
+#include "glthread.h"
+#include "xopt_eps.h"
+#include "conversion.h"
+#include <cstdlib>
+
+
+//Thread thread;
+double stopmark;
+int colormax = 10;
+
+XMLNode *glxml=0;
+
+void setxml_(XMLNode *xml) {glxml=xml;}
+
+std::string glplottitle="GLPlot";
+int nowindowplease = 0;
+/*
+extern "C" void update_() {
+if (gl) gl->change = 10;
+}
+
+
+
+
+extern "C" int createfromxml_(XMLNode *xml) {
+
+	if (gl==0)
+		gl = new GLDisplay(glplottitle,xml,1);
+		
+	if (DataNode==0) {
+		delete gl;
+		gl=0;
+	//	cout << "NO OUTPUT" << endl;
+		nowindowplease = 1;
+		return 0;
+
+	}
+	gl->CreateFromXML();
+
+	return 1;
+}
+
+extern "C" void initdisplay_() {
+
+	if (gl==0)
+		gl = new GLDisplay(glplottitle,glxml);
+
+}
+
+
+extern "C" void run_(threadf22 f) {
+
+	if (nowindowplease) {
+	void *p=0;
+		f(p);
+	}
+	else {
+		initdisplay_();
+
+		thread.Run(f,NULL);
+		//cout << "END thread.Run" << endl;
+
+		glutMainLoop();
+	}
+}
+extern "C" void run2_(threadf22 f, void *arg) {
+
+	if (nowindowplease) {
+		//void *p;
+		f(arg);
+	}
+	else {
+		initdisplay_();
+
+		thread.Run(f,arg);
+
+		glutMainLoop();
+	}
+}
+
+extern "C" void waitforever_() {
+
+	wait_();
+wait_();
+wait_();
+wait_();
+	exit(EXIT_SUCCESS);
+}
+
+extern "C" void wait_() {
+
+	if (gl)
+		gl->Wait();
+}
+
+
+extern "C" void createplot_(int &d, int &w, int &h, int &lo, int &hi) {
+
+if (nowindowplease) return;
+	BasePlot *plot = new GeneralPlot(d,w,h,lo,hi,gl->Size());
+	gl->AddPlot(plot);
+}
+
+extern "C" void addcomparecurve_(int &cmpstep, double *cmp) {
+
+if (!gl) return;
+	BasePlot *plot = gl->Last();
+	plot->AddCompareCurve(cmp,cmpstep);
+
+}
+
+extern "C" void addcomparecurve2_(int &cmpstep, double *cmp, double *cmptime) {
+
+if (!gl) return;
+BasePlot *plot = gl->Last();
+	if (plot) {
+		plot->AddCompareCurve2(cmptime,cmp,cmpstep);
+	}
+}
+
+
+extern "C" void createphaseplot_(int &d1,int &d2,int &w,int &h,
+	                                 int &lo1, int &hi1, int &lo2, int &hi2) {
+
+if (nowindowplease) return;
+	BasePlot *plot = new PhasePlot(d1,d2,w,h,lo1,hi1,lo2,hi2,gl->Size());
+	gl->AddPlot(plot);
+}
+
+
+
+extern "C" void createuserplot_(Funktionenzeiger func,int &w,int &h,
+	                                int &lo1, int &hi1, int &lo2, int &hi2) {
+
+if (nowindowplease) return;
+	BasePlot *plot = new UserPlot(func,w,h,lo1,hi1,lo2,hi2,gl->Size());
+	gl->AddPlot(plot);
+
+}
+
+extern "C" void createuserplotunbe_(FunktionenzeigerU func,int &w,int &h,
+	                                int &lo1, int &hi1, int &lo2, int &hi2) {
+
+if (nowindowplease) return;
+	BasePlot *plot = new UserPlot(func,w,h,lo1,hi1,lo2,hi2,gl->Size());
+	gl->AddPlot(plot);
+
+}
+
+extern "C" void createindexuserplot_(FunktionenzeigerI func, int &w,int &h,
+	                                     int &lo1, int &hi1, int &lo2, int &hi2,
+	                                     int &index) {
+if (nowindowplease) return;
+	BasePlot *plot = new UserPlot(func,w,h,lo1,hi1,lo2,hi2,gl->Size(),index);
+	gl->AddPlot(plot);
+
+}
+
+
+extern "C" void createdataplot_(char *s, int &strl,Funktionenzeiger2 func,
+	                                int &w,int &h, int &lo, int &hi, int &index) {
+if (nowindowplease) return;
+	std::string buf2(s,strl);
+	BasePlot *plot = new DataPlot(buf2,func,w,h,lo,hi,index,gl->Size());
+	gl->AddPlot(plot);
+
+}
+
+extern "C" void createdata2plot_(char *s, int &strl,Funktionenzeiger2 func,
+	                                int &w,int &h, int &lo, int &hi, int &index1, int &index2) {
+if (nowindowplease) return;
+	std::string buf2(s,strl);
+	BasePlot *plot = new Data2Plot(buf2,func,w,h,lo,hi,index1,index2, gl->Size());
+	gl->AddPlot(plot);
+
+}
+
+
+extern "C" void createmultidataplot_(char *s, int &strl,Funktionenzeiger2 func,
+	                                     int &w,int &h, int &lo, int &hi, int *index) {
+
+if (nowindowplease) return;
+	std::string buf2(s,strl);
+	BasePlot *plot = new DataPlot(buf2,func,w,h,lo,hi,index,gl->Size());
+	gl->AddPlot(plot);
+
+}
+
+
+extern "C" void createtabularplot_(int &n, int &m, double *val, char *heads,
+	                                   int &w,int &h) {
+if (nowindowplease) return;
+	BasePlot *plot = new TabularPlot(n,m,val,heads,w,h,gl->Size());
+	gl->AddPlot(plot);
+
+}
+
+extern "C" void creatematrixplot_(double *s,int &w,int &h, int &dim1, int &dim2) {
+
+if (nowindowplease) return;
+	BasePlot *plot = new MatrixPlot(s,w,h,dim1,dim2,gl->Size());
+	gl->AddPlot(plot);
+
+}
+
+
+extern "C" void createsparseplot_(void *s,int &w,int &h) {
+if (nowindowplease) return;
+	BasePlot *plot = new SparsePlot((WorhpMatrix *)s,w,h);
+	gl->AddPlot(plot);
+
+}
+
+extern "C" void createthreedplot_(int &w,int &h) {
+if (nowindowplease) return;
+	BasePlot *plot = new ThreeDPlot(w,h);
+	gl->AddPlot(plot);
+
+}
+
+
+extern "C" void plot_(int &len, int &ndgl, int &nsteuer, int &nneben,
+	                      double *t, double *x, double *u, double *g) {
+
+
+	if (!gl)
+		return;
+
+gl->change=100;
+
+	//if (stop==0) {
+	gl->ds.SetData(len,ndgl,nsteuer,nneben,t,x,u,g);
+
+
+	gl->setpparam();
+
+	/ *	} else {
+			gl->dstop.SetData(len,ndgl,nsteuer,nneben,t,x,u,g);
+		}
+	* /
+
+	double tf = gl->ds.GetTF();
+
+	for (unsigned int i=0;i<gl->Size();i++) {
+		gl->Get(i)->SetMaxTime(tf);
+	}
+
+	gl->AutoScale();
+}
+
+
+
+extern "C" void plotunbe_(int &len, int &ndgl, int &nsteuer, int &nneben, int &nunbe,
+	                      double *t, double *x, double *u, double *g, double *unknown) {
+
+	
+
+	if (!gl)
+		return;
+
+
+	gl->ds.UNKNOWN.SetVector(1,nunbe,unknown);
+
+	//if (stop==0) {
+	gl->ds.SetData(len,ndgl,nsteuer,nneben,t,x,u,g);
+
+	
+
+	gl->setpparam();
+
+	/ *	} else {
+			gl->dstop.SetData(len,ndgl,nsteuer,nneben,t,x,u,g);
+		}
+	* /
+
+	for (unsigned int i=0;i<gl->Size();i++) {
+		gl->Get(i)->SetMaxTime(gl->ds.GetTF());
+	}
+
+	gl->AutoScale();
+}
+
+extern "C" void ploti_(int &len, int &ndgl, int &nsteuer, int &nneben,
+	                       double *t, double *x, double *u, double *g, int *ii) {
+
+	if (!gl)
+		return;
+
+	//if (stop==0) {
+	//gl->ds[*ii].SetData(len,ndgl,nsteuer,nneben,t,x,u,g);
+	/ *	} else {
+			gl->dstop.SetData(len,ndgl,nsteuer,nneben,t,x,u,g);
+		}
+	* /
+
+	for (unsigned int i=0;i<gl->Size();i++) {
+		//gl->Get(i)->SetMaxTime(gl->ds[i].GetTF());
+	}
+
+	gl->AutoScale();
+}
+
+
+extern "C" void controldata_(int &i) {
+
+	if (!gl)
+		return;
+
+	BasePlot *plot = gl->Last();
+	plot->ControlData(i);
+
+}
+
+extern "C" void setusercontrol_(FunktionenzeigerC func) {
+
+	if (!gl)
+		return;
+
+	BasePlot *plot = gl->Last();
+	plot->SetUserControl(func);
+
+}
+
+
+
+
+
+extern "C" void drawline_(int &handle,double &x1, double &y1, double &x2,
+	                          double &y2, int &mode) {
+
+	BasePlot *plot = gl->Get(handle);
+
+	if (globEpswriter) {
+
+		float Y1 = globEpswriter->epsMapToY(y1);
+		float Y2 = globEpswriter->epsMapToY(y2);
+		float X1 = globEpswriter->epsMapFloatToX(x1);
+		float X2 = globEpswriter->epsMapFloatToX(x2);
+
+		globEpswriter->SetLineColorI(mode);
+		/ *
+				if (mode==0) {
+					globEpswriter->SetLineColor(Black);
+				} else if (mode==1) {
+					globEpswriter->SetLineColor(White);
+				} else if (mode==2) {
+					globEpswriter->SetLineColor(Green);
+				} else if (mode==4) {
+					globEpswriter->SetLineColor(Cyan);
+					// dick
+				} else if (mode==3) {
+					globEpswriter->SetLineColor(White);
+					// dick
+				}* /
+		globEpswriter->Line(X1,Y1,X2,Y2);
+		globEpswriter->SetLineColor(Black);
+
+	} else {
+		plot->DrawLine(x1,y1,x2,y2,mode);
+	}
+}
+
+
+extern "C" void setlinewidth_(int &handle, int &w) {
+	//BasePlot *plot = gl->Get(handle);
+
+	if (globEpswriter) {
+
+		globEpswriter->LineWidth(w/10.);
+	}
+}
+
+extern "C" void drawpolyline_(int &handle, double *x, double *y, int &n, int &mode) {
+
+	BasePlot *plot = gl->Get(handle);
+
+	if (globEpswriter) {
+
+
+		for (int i=0;i<n;i++) {
+			float Y1 = globEpswriter->epsMapToY(y[i]);
+			float X1 = globEpswriter->epsMapFloatToX(x[i]);
+			globEpswriter->AddPoint(X1,Y1);
+		}
+
+		globEpswriter->SetLineColorI(mode);
+		/ *if (mode==0) {
+			globEpswriter->SetLineColor(Black);
+		} else if (mode==1) {
+			globEpswriter->SetLineColor(White);
+		} else if (mode==2) {
+			globEpswriter->SetLineColor(Green);
+		} else if (mode==4) {
+			globEpswriter->SetLineColor(Cyan);
+			// dick
+		} else if (mode==3) {
+			globEpswriter->SetLineColor(White);
+			// dick
+		}* /
+
+		globEpswriter->Line();
+		globEpswriter->ClearPoints();
+
+		if (mode>0) {
+			globEpswriter->SetLineColor(Black);
+		}
+
+	} else {
+		plot->DrawPolyline(x,y,n,mode);
+
+	}
+
+}
+
+extern "C" void setcol_(int &handle, int &mode) {
+
+	BasePlot *plot = gl->Get(handle);
+
+	if (globEpswriter) {
+		globEpswriter->SetLineColor((cols)mode);
+
+	} else {
+		plot->SetColor((cols)mode);
+	}
+
+
+}
+
+
+
+extern "C" void drawdot_(int &handle,double &x, double &y, int &mode) {
+
+	BasePlot *plot = gl->Get(handle);
+
+
+	if (globEpswriter) {
+
+		float Y = globEpswriter->epsMapToY(y);
+		float X = globEpswriter->epsMapFloatToX(x);
+
+
+		if (mode==0) {
+			globEpswriter->SetLineColor(Black);
+		} else if (mode==1) {
+			globEpswriter->SetLineColor(White);
+		} else if (mode==2) {
+			globEpswriter->SetLineColor(Green);
+		} else if (mode==4) {
+			globEpswriter->SetLineColor(Cyan);
+			// dick
+		} else if (mode==3) {
+			globEpswriter->SetLineColor(White);
+			// dick
+		}
+		globEpswriter->Line(X-1,Y,X,Y);
+
+	} else {
+		plot->DrawLine(x,y,x+1,y+1,mode);
+
+	}
+
+}
+
+
+
+
+extern "C" void drawrect_(int &handle,double &x1, double &y1,
+	                          double &x2, double &y2, double &x3, double &y3,
+	                          double &x4, double &y4, int &mode) {
+
+	struct Punkt {
+		float x;
+		float y;
+	};
+
+	//BasePlot *plot = gl->Get(handle);
+	/ *
+		if (globEpswriter) {
+	 
+			Punkt points[5];
+	 
+			points[0].x=globEpswriter->epsMapFloatToX(x1);
+			points[0].y=globEpswriter->epsMapToY(y1);
+	 
+			points[1].x=globEpswriter->epsMapFloatToX(x2);
+			points[1].y=globEpswriter->epsMapToY(y2);
+	 
+			points[2].x=globEpswriter->epsMapFloatToX(x3);
+			points[2].y=globEpswriter->epsMapToY(y3);
+	 
+			points[3].x=globEpswriter->epsMapFloatToX(x4);
+			points[3].y=globEpswriter->epsMapToY(y4);
+	 
+			points[4].x=points[0].x;
+			points[4].y=points[0].y;
+	 
+			if (mode==0)
+				for (int i=0;i<4;i++) {
+					globEpswriter->Line(points[i].x,points[i].y,
+					                    points[i+1].x,points[i+1].y);
+				}
+			else  {}
+	 
+		}
+		else* /
+	{
+
+		/ *		XPoint points[5];
+		 
+				points[0].x=x1;
+				points[0].y=y1;
+				points[1].x=x2;
+				points[1].y=y2;
+				points[2].x=x3;
+				points[2].y=y3;
+				points[3].x=x4;
+				points[3].y=y4;
+				points[4].x=points[0].x;
+				points[4].y=points[0].y;
+		* /
+		//plot->DrawPolyline(x,y,n,mode);
+
+		/ *		if (mode==0)
+					XDrawLines(dpy->GetDisplay(), dpy->GetPixmap(), win->GetGC(), points, 5, CoordModeOrigin);
+				else {
+					win->SetForeground(white);
+					XFillPolygon(dpy->GetDisplay(), dpy->GetPixmap(), win->GetGC(), points, 5, Convex,CoordModeOrigin);
+					win->SetForeground(red);
+				}
+		* /
+	}
+}
+
+
+extern "C" void drawtext_(int &handle, char *text, int &strl) {
+
+	BasePlot *plot = gl->Get(handle);
+
+	if (globEpswriter) {
+		std::string t(text);
+		globEpswriter->TextAlign(5,15,t,1,2);
+	} else {
+		plot->DrawString(5,15,std::string(text,strl));
+	}
+}
+
+
+extern "C" void drawdoublepos_(int &handle, double &val, double &x, double &y) {
+
+	BasePlot *plot = gl->Get(handle);
+
+	double vv = val;
+	std::string t = ToString(vv,5,2);
+
+	if (globEpswriter) {
+		//std::string t(text);
+		globEpswriter->TextAlign(plot->MapFloatToX(x),plot->MapToY(y),t,1,2);
+	} else {
+		plot->DrawString(plot->MapFloatToX(x),plot->MapToY(y),t);
+	}
+}
+
+extern "C" void drawtextpos_(int &handle, char *text, int &strl, double &x, double &y) {
+
+	BasePlot *plot = gl->Get(handle);
+
+	if (globEpswriter) {
+		std::string t(text,strl);
+		globEpswriter->TextAlign(plot->MapFloatToX(x),plot->MapToY(y),t,1,2);
+	} else {
+		plot->DrawString(plot->MapFloatToX(x),plot->MapToY(y),std::string(text,strl));
+	}
+
+}
+
+
+
+extern "C" void tileplots_() {
+
+	if (gl)
+		
+
+	gl->TilePlots();
+
+}
+
+
+extern "C" void autoscale_() {
+
+	if (gl)
+		
+
+	gl->AutoScale();
+
+}
+
+
+extern "C" int isdisplay_() {
+
+	if (gl)
+		return 1;
+	return 0;
+}
+
+
+extern "C" void colormax_(int &h) {
+
+	colormax = h;
+}
+
+extern "C" void sethue_(double &h) {
+
+	gl->hue = h;
+}
+
+extern "C" void addkey_(int &k, action a) {
+	gl->AddKey(k,a);
+}
+
+
+extern "C" void setheader_(char *s, int mode) {
+	if (!gl)
+		return;
+
+	std::string buf2(s);
+	gl->SetHeader(buf2,mode);
+}
+
+extern "C" void setmaxtime_(double &mode) {
+	if (!gl)
+		return;
+
+	BasePlot *plot = gl->Last();
+	plot->SetMaxTime2(mode);
+}
+
+
+extern "C" void noautochange_() {
+	if (!gl)
+		return;
+
+	gl->autochange=0;
+
+}
+
+extern "C" void settitle_(char *name) {
+    glutSetWindowTitle(name);
+    SDL_WM_SetCaption(title.c_str(), 0);
+
+}
+
+
+
+extern "C" void redflag_() {
+
+if (!gl)
+		return;
+
+	BasePlot *plot = gl->Last();
+	plot->redflag = 1;
+
+}
+
+extern "C" void closeall_() {
+
+if (!gl)
+		return;
+
+gl->CloseAll();
+
+}
+*/

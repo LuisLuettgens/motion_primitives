@@ -1,0 +1,22 @@
+#
+# TransWORHP Examples
+#
+# Just type make.
+#
+
+all:    make-example   make-tutorial    make-tutorial-mini
+
+clean:  clean-example  clean-tutorial   clean-tutorial-mini
+
+	
+# BUILD_TYPE may be changed between Debug or Release!
+make-%: % %/build
+	cd $</build && cmake -DCMAKE_BUILD_TYPE=Release ..
+	cd $</build && make
+
+clean-%: %
+	rm -rf $</build
+
+%/build:
+	mkdir $@
+

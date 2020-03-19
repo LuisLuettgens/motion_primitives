@@ -1,0 +1,42 @@
+<!-- Grundaufbau -->
+
+<? xml version ="1.0" encoding =" UTF -8" ?>
+<problem>
+	<!-- Zielobjekt -->
+	<objective></objective>
+	<!-- Laufzeit -->
+	<runtime end="1"/>
+	
+	<!-- Zustaende -->
+	<state name="">
+		<term></term>
+		<start></start>
+		<final></final>
+		<boundaries lower="" upper=""/>
+		<initialguess></initialguess>
+	</state>
+
+	<!-- Steuerungen -->
+	<control name="">
+		<boundaries lower="" upper=""/>
+		<initialguess></initialguess>
+	</control>
+
+	<!-- Parameter -->
+	<param name="">
+		<boundaries lower="" upper=""/>
+		<initialguess></initialguess>
+	</param>
+
+	<!-- Nebenbedingungen -->
+	<neben name="">
+		<term></term>
+		<boundaries lower="" upper=""/>
+	</neben>
+
+	<!-- Randbedingungen -->
+	<rand name="">
+		<term></term>
+		<boundaries lower="" upper=""/>
+	</rand>
+</problem>

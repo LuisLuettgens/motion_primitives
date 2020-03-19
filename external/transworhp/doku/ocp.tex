@@ -1,0 +1,1423 @@
+\chapter{Optimale Steuerung}
+
+\begin{paracol}{2}
+
+Während bei Problemen der Nichtlinearen Optimierung ein Vektor von Variablen bestimmt wird, um eine Zielfunktion zu minimieren,
+sucht man bei Problemen der Optimalen Steuerung nach Vektoren von Funktionen (und Vektoren von Variablen), die ein Zielfunktional minimieren.
+\switchcolumn
+
+{\color{english} 
+While a vector of variables has to be determined for nonlinear programming problems in order to minimize an objective function, for optimal control problems a vector of functions (and additional variables) has to minimize an objective functional.
+}
+\end{paracol}
+
+\section{Aufgabenstellung}
+\label{aufopt}
+
+% \begin{parcolumns}[rulebetween=true]{2}
+%  
+% \colchunk{{\color{blue} Bevor das Optimalsteuerungsproblem formuliert wird, sollen
+% zuerst einige Begriffe eingeführt werden.}
+% }
+% 
+% \colchunk{Let {\it\color{red} us introduce some ... before formulating the optimal control }problem 
+% }
+% 
+% \colplacechunks
+% 
+% \end{parcolumns}
+% 
+% 
+% ...
+% \begin{Parallel}{5cm}{5cm}
+%     \ParallelLText{{\color{blue} Bevor das Optimalsteuerungsproblem formuliert wird, sollen
+% zuerst einige Begriffe eingeführt werden.}}
+%     \ParallelRText{Let {\it\color{red} us introduce some ... before formulating the optimal control }problem }
+% \end{Parallel}
+
+
+\begin{paracol}{2}
+Bevor das Optimalsteuerungsproblem formuliert wird, sollen
+zuerst einige Begriffe eingeführt werden.
+
+\switchcolumn
+
+{\color{english} Let us introduce some terms before formulating the optimal control problem.}
+\end{paracol}
+
+
+\begin{paracol}{2}[\subsection*{Systemvariablen \hfill\color{english} Variables of the System}]
+
+Der Zustand eines Systems zu einem Zeitpunkt $t \in [t_0;t_f]$ 
+lasse sich durch einen Vektor 
+\[x(t) = (x_1(t),\dots,x_n(t))^T \in \R^n\]
+ausdrücken, der {\em Zustandsvektor} genannt wird. 
+Für $i=1,\dots,n$ heißen seine Einträge $x_i(t)$ die {\em Zustandsvariablen}.
+
+\switchcolumn
+
+{\color{english}The state of a system at time $t \in [t_0;t_f]$ 
+may be expressed by a vector
+\[x(t) = (x_1(t),\dots,x_n(t))^T \in \R^n\]
+which is called {\em state vector}. 
+For  $i=1,\dots,n$ its entries  $x_i(t)$ are called {\em state variables}.
+}
+
+\switchcolumn*
+
+Speziell für den Anfangszeitpunkt $t_0 \in \R$ nennt man $x(t_0)$ 
+den {\em Anfangszustand}, und für den Endzeitpunkt $t_f \in \R$ 
+entsprechend $x(t_f)$ den {\em Endzustand}.
+Ohne Einschränkung wird $t_0 = 0$ angenommen. 
+Die Endzeit $t_f$ kann
+fest vorgegeben oder frei wählbar sein. 
+
+\switchcolumn
+
+{\color{english}
+Especially for the initial time $t_0 \in \R$ we call $x(t_0)$ 
+the  {\em initial state}, and for the final time $t_f \in \R$ 
+analogously $x(t_f)$ the {\em final state}.
+Without limitation we assume $t_0 = 0$.  
+The final time $t_f$ can be fixed or free. 
+}
+
+\switchcolumn*
+
+Das Systemverhalten soll über einen {\em Steuervektor}
+\[u(t) = (u_1(t),\dots,u_m(t))^T \in \R^m\]
+kontrolliert werden, der aus den {\em Steuervariablen} oder kurz
+{\em Steuerungen} $u_j(t)$, $j=1,\dots,m$ besteht.
+
+\switchcolumn
+{\color{english}
+
+The behavior of the system has to be controlled using a {\em control vector}
+\[u(t) = (u_1(t),\dots,u_m(t))^T \in \R^m,\]
+consisting of {\em control variables} or simply
+{\em controls} $u_j(t)$, $j=1,\dots,m$.
+}
+
+\switchcolumn*
+
+Dabei sei $x \in C^1_p([0;t_f],\R^n)$ ein Vektor stückweise
+stetig differenzierbarer
+Funktionen und die Komponenten von $u \in C^0_p([0;t_f],\R^m)$ 
+seien stückweise stetig. 
+
+\switchcolumn
+{\color{english}
+
+Here, $x \in C^1_p([0;t_f],\R^n)$ is a vector of piecewise continuously differentiable functions, and the components of $u \in C^0_p([0;t_f],\R^m)$ are piecewise continuous.
+}
+
+\switchcolumn*
+
+Zusätzlich kann das Systemverhalten noch von {\em freien Parametern} 
+\[p = (p_1,\dots,p_{\widehat p})^T \in \R^{\widehat p}\]
+abhängen, die ebenfalls bestimmt werden müssen.
+
+\switchcolumn
+{\color{english}
+
+Additionally the behaviour of the system can depend on {\em free parameters} 
+\[p = (p_1,\dots,p_{\widehat p})^T \in \R^{\widehat p},\]
+which have to be determined as well.
+}
+
+\end{paracol}
+
+
+\begin{paracol}{2}[\subsection*{Systemdynamik \hfill\color{english} Dynamic of the System}]
+
+Die Änderungen, die der Systemzustand über die Zeit erfährt, lassen sich über
+ein System von Differentialgleichungen erster Ordnung
+\switchcolumn
+
+{\color{english}
+The changes in time of the state of the system can be expressed by a system of differential equations of first order
+}
+\end{paracol}
+\begin{equation}\label{systemdynamik}
+	\dot x(t) = f(x(t),u(t),p,t),\quad t\in [0; t_f],
+\end{equation}
+\begin{paracol}{2}
+der {\em Dynamik des Systems}, ausdrücken. {Wie gewohnt bezeichnet 
+$\dot x(t)$ die Ableitung einer Variablen $x(t)$ nach der Zeit.}
+Dabei sei die stetige Funktion $f : \R^n\times \R^m \times \R^{\widehat p} \times [0;t_f] 
+\rightarrow \R^n$ bezüglich $x$, $u$ und $p$ stetig differenzierbar. 
+
+\switchcolumn
+
+{\color{english}
+the {\em dynamic of the system}. {As usual $\dot x(t)$ denotes the derivative of a function $x(t)$ with respect to time.}
+Here, the continuous function $f : \R^n\times \R^m \times \R^{\widehat p} \times [0;t_f] 
+\rightarrow \R^n$ is continuously differentiable with respect to $x$, $u$ and $p$. 
+
+}
+\switchcolumn*
+
+
+Erfüllt ein Tupel $(x(t),u(t),p)$ die Systemdynamik
+(\ref{systemdynamik}), so heißt es {\em Lösung des Systems}.
+\switchcolumn
+{\color{english}
+
+A tupel $(x(t),u(t),p)$ holding the dynamic of the system
+(\ref{systemdynamik}), is called {\em solution of the system}.
+
+}
+\end{paracol}
+
+
+\twoexplain
+{Hängt die Funktion
+$f$ nicht explizit von der Zeit ab, also $f = f(x(t),u(t), p)$, wie es bei mechanischen Problemen oft der Fall ist, so spricht von von einem {\em autonomen} System.
+}
+{If the function $f$ does not depend explicitly on time, i.e. $f = f(x(t),u(t), p)$, as it is common for mechanical problems, the system is called {\em autonomous}.
+}
+
+
+\subsection*{Randbedingungen \hfill\color{english} Boundary Conditions}
+
+\begin{paracol}{2}
+
+Der Anfangszustand $x(0)$ und der Endzustand $x(t_f)$ des Systems, oder nur
+einzelne Komponenten davon, können über 
+{\em Randbedingungen} vorgeschrieben werden.
+Allgemein werden die Bedingungen über eine stetig differenzierbare Funktion 
+$\omega: \R^n \times \R^n \times \R^{\widehat p} \rightarrow \R^r$ gefordert ($r\leq 2n$):
+\switchcolumn
+{\color{english}
+The initial state $x(0)$ or the final state $x(t_f)$ of the system, or just individual components of these, can be limited with {\em boundary conditions}.
+Generally, these conditions are formulated using a continuously differentiable function
+$\omega: \R^n \times \R^n \times \R^{\widehat p} \rightarrow \R^r$ ($r\leq 2n$):
+}
+\end{paracol}
+\begin{equation}
+\label{randbedingungen}
+	\omega(x(0),x(t_f),p) = 0
+\end{equation}
+
+\twoexplain{In der Praxis kennt man oft den vorgeschriebenen Anfangszustand
+$x_0 \in \R^n$
+explizit. Hier genügt die Möglichkeit der Angabe von Randbedingungen in der
+Form
+\[
+\begin{array}{rcl}
+ x(0) &=& x_0, \\
+ \omega(x(t_f),p) &=& 0,
+\end{array}
+\]
+mit $\omega: \R^n \times \R^{\widehat p} \rightarrow \R^r, r\leq n$.
+}{In practical problems the initial state $x_0 \in \R^n$ is often known explicitly. In these cases boundary conditions are formulated in the form
+\[
+\begin{array}{rcl}
+ x(0) &=& x_0, \\
+ \omega(x(t_f),p) &=& 0,
+\end{array}
+\]
+with $\omega: \R^n \times \R^{\widehat p} \rightarrow \R^r, r\leq n$.
+}
+
+\subsection*{Steuer- und Zustandsbeschränkungen\hfill\color{english} Control and State Constraints}
+
+Zusätzlich können für jeden Zeitpunkt $t$ 
+über Ungleichungsnebenbedingungen Beschränkungen an die
+Steuerungen $u(t)$ und die Zustände $x(t)$ vorgegeben werden.
+Über eine hinreichend oft stetig differenzierbare 
+Funktion $g: \R^n \times \R^m \times \R^{\widehat p} \rightarrow \R^l$
+formuliert man {\em gemischte Beschränkungen} derart, dass
+\begin{equation}\label{steuerbeschraenkungen}
+	g(x(t),u(t),p) \leq 0, \quad t \in [0;t_f].
+\end{equation}
+Tritt die Steuerung $u(t)$ in einer Ungleichungsnebenbedingung
+nicht explizit auf,
+\[g_i(x(t),p) \leq 0, \quad t \in [0;t_f], ~i \in \{1,\dots,l\},\]
+mit $g_i: \R^n \rightarrow \R$, so
+spricht man von {\em Zustandsbeschränkungen}.
+
+Hängt hingegen die Ungleichungsnebenbedingung nur von der Steuerung $u(t)$ ab,
+dann heißt 
+\[ g_i(u(t)) \leq 0, \quad t \in [0;t_f], ~i \in \{1,\dots,l\},\]
+mit $g_i: \R^m \rightarrow \R$ eine {\em Steuerbeschränkung}.
+Oft sind die Steuerungen $u_i(t)$ einfachen Box-Beschränkungen 
+\[ u_{i,{\rm min}} \leq u_i(t) \leq u_{i,{\rm max}},\quad 
+t \in [0;t_f], ~ i=1,\dots,m,\]
+unterworfen. Dann bezeichnet 
+\[U := [ u_{1,{\rm min}}; u_{1,{\rm max}}] \times \dots \times
+[ u_{m,{\rm min}}; u_{m,{\rm max}}] \subset \R^m\]
+den zulässigen {\em Steuerbereich}.
+
+
+\subsection*{Die Zielfunktion}
+
+Die Kostenfunktion 
+\begin{equation}\label{zielfunktional}
+I[x,u] = \phi(x(t_f),p) + \int\limits_0^{t_f} f_0(x(t),u(t),p,t) dt
+\end{equation}
+wird als {\em Zielfunktion} bezeichnet.
+Dabei seien $\phi:\R^n \times \R^{\widehat p}\rightarrow \R$
+und $f_0:\R^n \times \R^m \times \R^{\widehat p}\times [0;t_f]
+\rightarrow \R$ stetig differenzierbare Funktionen bezüglich aller Argumente.
+
+Diese Darstellung der Zielfunktion wird als Bolza-Form bezeichnet.
+Natürlich kön\-nen auch die Fälle $\phi\equiv 0$ (Lagrange-Form) 
+oder $f_0\equiv 0$ (Mayer-Form) auftreten.
+Insbesondere lässt sich die Zielfunktion (\ref{zielfunktional}) in diese
+Spezialfälle umtransformieren.
+
+%Eine weitere ?¯Å¼Â½quivalente
+%Darstellung der Zielfunktion, die als {\sc Tschebycheff}-Form bezeichnet
+%wird, wird ebenfalls in dieser Arbeit verwendet:
+%$$ I[u] = \max_{t\in[0;t_f]} f_0(x(t),u(t),t).$$
+
+\explain{
+Speziell bei mechanischen Vorgängen treten in der Zielfunktion
+nur Funktionen $f_0 = f_0(x(t),u(t),p)$ auf, die nicht direkt von der Zeit abhängen.
+}
+
+\subsection*{Optimaler Steuerprozess}
+
+Der {\em optimale Steuerprozess} bezeichnet das Problem, 
+Steuerungen $u(t)$ so zu bestimmen, dass die vorgegebene 
+Zielfunktion (\ref{zielfunktional}) unter Einhaltung der Systemdynamik
+(\ref{systemdynamik}) und den {\em Zulässigkeitsbedingungen}
+(\ref{randbedingungen}) und (\ref{steuerbeschraenkungen}) minimiert wird.
+
+\begin{equation}
+\label{P}
+\begin{array}{rrcl}
+\min\limits_{x,u,p,t_f}& I[x,u]  &=& \displaystyle
+	\phi(x(t_f),p) + \int\limits_0^{t_f} f_0(x(t),u(t),p,t) dt \\
+\text{unter}& \dot x(t) & = & f(x(t),u(t),p),\\
+&\omega(x(0),x(t_f),p) &=& 0,\\
+&g(x(t),u(t),p) &\leq& 0, \quad t \in [0;t_f].
+\end{array}
+\end{equation}
+
+Lösungen des Problems (\ref{P}) lassen sich für feste Verfahrzeit $t_f$ wie folgt charakterisieren:
+
+\Def{{\bf Zulässige Lösung und optimale Lösung.}~~%%\label{optimaleL}
+Erfüllt eine Lösung $(x^\star,u^\star,p^\star)$ des Systems, bestehend aus einem Parametervektor
+$p^\star\in\R^{\widehat p}$,
+der
+Steuerung $u^\star:[0;t_f]\rightarrow\R^m$, und der daraus resultierenden
+Trajektorie $x^\star:[0;t_f]\rightarrow\R^n$
+die für (\ref{P}) genannten Zulässigkeitsbedingungen, so heißt die Lösung 
+{\em zulässig}.
+Erfüllt die zulässige Lösung $(x^\star,u^\star,p^\star)$ außerdem
+$$ I[x^\star, u^\star] \leq I[x,u] $$
+für alle zulässigen Lösungen $(x,u,p)$, mit $p\in\R^{\widehat p}$, $u:[0;t_f]\rightarrow\R^m$ und 
+$x:[0;t_f]\rightarrow\R^n$, dann heißt sie {\em optimale Lösung}.
+}
+
+In diesem Fall bezeichnet der Vektor $x^\star$ die {\em optimale Trajektorie} 
+und $u^\star$ die {\em optimale Steuerung} des Problems (\ref{P}).
+
+Ist in der Aufgabenstellung die Endzeit $t_f$ frei wählbar, muss zusätzlich noch die Endzeit optimal bestimmt werden. Durch Einführung eines weiteren freien Parameters $p_{0}$ kann jedoch das System auf ein System mit fester Endzeit transformiert werden.
+
+Statt
+\[ \dot x(t) = f(x(t), u(t), p) \text{ ~~~~für } t\in [0,t_f] \]
+verwende nun
+\[ \dot x(t) = f(x(t), u(t), p) \cdot p_0 \text{ ~~~~für } t\in [0,1].  \]
+
+
+\if{0}
+\section{Berechnung optimaler Steuerungen durch indirekte Verfahren}
+\label{notwendig123}
+
+Zur L?¶sung von Optimalsteuerungsproblemen haben sich zwei 
+Klassen von Verfahren herausgebildet, die in diesem und dem n?¤chsten Abschnitt
+kurz vorgestellt werden.
+
+Bei {\em indirekten Verfahren} versucht man, das Optimalsteuerungsproblem (\ref{P})
+auf ein Randwertproblem %der Form 
+%
+%\begin{equation}
+%\label{RWP}
+%\begin{array}{rcl}
+  %\dot \xi & = & \varrho(\xi,t),\quad t\in[0;t_f]\\
+ %\kappa(\xi(0),\xi(t_f)) & = & 0,\\
+%\end{array}
+%\end{equation}
+%
+zur?¼ckzuf?¼hren. Dabei werden die notwendigen Bedingungen der 
+Optimalsteuerungstheorie verwendet, 
+wie sie in den S?¤tzen \ref{notw1} und \ref{notw2} formuliert werden, um
+die Steuerung $u$ aus dem Problem (\ref{P}) zu eliminieren.
+
+Das so erhaltene Randwertproblem kann dann mit speziellen Randwertprobleml?¯Å¼Â½sern
+gel?¶st werden.
+
+\subsection{Notwendige Optimalit?¤tsbedingungen des un\-be\-schr?¤nk\-ten Problems}
+
+Es werde zun?¤chst eine unbeschr?¤nkte Variante des Problems (\ref{P}) 
+betrachtet, in dem nur
+Steuerbeschr?¤nkungen erlaubt sind, die vereinfachend mit $u \in U$ bezeichnet
+werden sollen.
+
+% \TOD{Ich wuerde nur das Maximumprinzip erwaehnen, also den letzten Absatz ersatzlos streichen.
+% Grund: Variationsprobleme sind i. Allg. keine Optimalsteuerungsprobleme. Deine Darstellung suggeriert
+% einen Beweis des Maximumprinzips, der so nicht geht. Der ist sehr sehr kompliziert.
+% 
+% Ist $(x^\star,u^\star)$ eine optimale L?¯Å¼Â½sung des unbeschr?¯Å¼Â½nkten
+% %\footnote{F?¯Å¼Â½r beschr?¯Å¼Â½nkte Optimalsteuerprozesse lassen sich die Steuerbeschr?¯Å¼Â½nkungen (\ref{steuerbeschraenkungen}) in ?¯Å¼Â½hnlicher Weise ankoppeln.}
+% autonomen Problems
+% (\ref{P}), dann lassen sich
+% Koeffizienten $\lambda_0\in\real_0^+$,
+% $\rho\in\real^r$ und $\lambda \in
+% C_p^1([0;t_f],\real^n)$ angeben, so dass mit
+% $(x^\star,u^\star,\lambda_0,\lambda,\rho)$
+% das {\em erweiterte Funktional}
+% \[ \hat I[x,u]=%,\lambda_0,\lambda,\sigma] = 
+% \lambda_0 I[x,u]+\rho^T\omega(x(0),x(t_f))+  \int\limits_0^{t_f} 
+% \lambda^T (f(x,u)-\dot x) dt
+% \]
+% minimiert wird. Wendet man die \Euler-\Lagrange schen 
+% Differentialgleichungen auf den so entstandenen erweiterten Integranden an,
+% erh?¯Å¼Â½lt man die in Satz \ref{notw1} formulierten adjungierten
+% Differentialgleichungen, die die Einf?¯Å¼Â½hrung der \Hamilton-Funktion 
+% motivieren.
+% }
+
+\Def{Hamilton-Funktion}{
+\label{hamilton}
+Mit $\lambda_0 \in \R_0^+$ und $\lambda \in
+C_p^1([0;t_f],\R^n)$ hei?Ÿt die Funktion
+\[ H(x,u,\lambda_0,\lambda) := \lambda_0 f_0(x,u) + \lambda^T f(x,u)\]
+die {\em Hamilton-Funktion}.
+F?¯Å¼Â½r $t \in [0;t_f]$ bezeichnet man $\lambda(t)$ als die zu $x(t)$ 
+{\em adjungierte Variable}.
+}
+
+Das Minimumprinzip von Pontryagin
+ist im nachfolgenden zentralen Satz formuliert:
+
+\begin{stz}[Notwendige Bedingungen des unbeschr?¤nkten Problems]
+\label{notw1}
+~~Das unbeschr?¤nkte 
+Problem (\ref{P}) besitze mit $(x^\star,u^\star)$ eine optimale L?¯Å¼Â½sung. Dann
+existieren $\lambda_0\in \R_0^+$, $\rho\in\R^r$ und 
+$\lambda\in C_p^1([0;t_f],\R^n)$, die nicht alle verschwinden,
+so dass folgende Gleichungen gelten:
+\begin{enumerate}
+\item Minimumbedingung 
+	\[ 
+	H(x^\star(t),u^\star(t),\lambda_0,\lambda(t)) = \min\limits_{u\in U} 
+	H(x^\star(t),u(t),\lambda_0,\lambda(t)),\]
+\vspace{-.2cm}\hfill $ {\rm f"ur~fast~alle~} t\in[0;t_f]$
+\item Adjungierte Differentialgleichungen
+	\[ \dot\lambda^T(t) = -\nabla_x H(x^\star(t),u^\star(t),\lambda_0,\lambda(t)),
+	\quad {\rm f"ur~fast~alle~} t\in[0;t_f]\]
+\item Transversalit?¯Å¼Â½tsbedingungen
+	\[ \lambda(0)^T = 
+	-\nabla_{x(0)} \left ( \rho^T\omega(x^\star(0),x^\star(t_f)) \right )\]
+	\[ \lambda(t_f)^T = 
+	\nabla_{x(t_f)}\left (\lambda_0 \phi(x^\star(t_f)) +
+	\rho^T\omega(x^\star(0),x^\star(t_f)) \right )\]
+\item Speziell bei autonomen Problemen gilt
+	\[ H(x^\star(t),u^\star(t),\lambda_0,\lambda(t)) = {\rm const.}, 
+	\quad {\rm f"ur~alle~} t\in[0;t_f].\]
+\item Bei freier Verfahrzeit $t_f$ gilt f?¯Å¼Â½r die optimale Verfahrzeit $t_f^\star$
+	\[ H(x^\star(t_f^\star),u^\star(t_f^\star),\lambda_0,\lambda(t_f^\star)) = 0.\]
+\end{enumerate}
+
+\end{stz}
+
+\beweis{Ein Beweis dieses Satzes wird z.B. in Pontryagin et al. 
+\cite{Pontrjagin} oder auch in Ioffe und Tihomirov \cite{Ioffe} angegeben.
+}
+
+?¯Å¼Â½ber die Minimumbedingung wird versucht, Bedingungen f?¯Å¼Â½r die
+Steuerungen herzuleiten, um sie aus dem Problem (\ref{P}) zu eliminieren.
+Dabei spielt die Regularit?¯Å¼Â½t der auszuwertenden Funktion eine wichtige Rolle:
+
+\Def{regul?¯Å¼Â½re Hamilton-Funktion}{
+Die Hamilton-Funktion $H$ hei?¯Å¼Â½t regul?¯Å¼Â½r bzgl. einer optimalen L?¯Å¼Â½sung $x^\star(t), \lambda^\star(t)$, wenn es ein $\vareps>0$ gibt, so dass f?¯Å¼Â½r die Menge
+\[ D_\vareps := \{ (x,\lambda,t) : \| x-x^\star(t) \| <\vareps, \| \lambda-\lambda^\star(t) \|<\vareps, t\in[0,t_f] \} \]
+gilt: Die Funktion $H(x,\cdot,\lambda_0,\lambda)$ hat eine eindeutig bestimmte Minimalstelle
+\[ u^\star(x,\lambda) = \arg \min{u\in U} H(x(t),u(t),\lambda_0,\lambda(t)), \quad \mbox{f?¯Å¼Â½r~alle~} (x,\lambda,t)\in D_\vareps. \]
+}
+
+Probleme, bei denen die Steuerung linear in der Zielfunktion auftritt, besitzen keine regul?¯Å¼Â½re Hamilton-Funktion. 
+
+Im Fall einer regul?¯Å¼Â½ren Hamilton-Funktion ist die optimale Steuerung der eindeutig bestimmte Wert $u(t) = u^\star(x(t),\lambda(t))$. Verl?¯Å¼Â½uft die Steuerung $u(t)$ im Inneren von $U$ f?¯Å¼Â½r eine Umgebung um $t$, so l?¯Å¼Â½sst sich $u(t)$ aus 
+\[\nabla_u H(x,u,\lambda_0,\lambda(t)) = 0, \quad \nabla_u^2 H(x,u,\lambda_0,\lambda(t)) > 0\]
+berechnen, wobei der Operator $\nabla_u^2$ die Hesse-Matrix bezeichnet.
+Beim Auf\-l?¯Å¼Â½sen nach $u$ entscheidet sich auch, ob $\lambda_0>0$ oder $\lambda_0=0$ gilt.
+Falls $\lambda_0>0$ ist, kann ohne Einschr?¯Å¼Â½nkung $\lambda_0=1$ gew?¯Å¼Â½hlt werden, wodurch die anderen adjungierten Variablen entsprechend skaliert werden.
+ In den Anwendungsf?¯Å¼Â½llen dieser Arbeit l?¯Å¼Â½sst sich $\lambda_0 > 0$ direkt nachweisen.
+
+
+% Wird eine Komponente $u_i(t), ~i\in 1,\dots,m$ ?¯Å¼Â½ber einem Teilintervall $I\subset[0,t_f]$ durch den zul?¯Å¼Â½ssigen Steuerbereich $U$ beschr?¯Å¼Â½nkt, l?¯Å¼Â½sst sich $u_i$ durch die Beschr?¯Å¼Â½nkungen ausdr?¯Å¼Â½cken, die $U$ definieren. Im Fall einer Box-Beschr?¯Å¼Â½nkung
+%  $u_{i,{\rm min}} \leq u_i(t) \leq u_{i,{\rm max}} $ gilt
+% $u_i(t) = u_{i,{\rm min}}$ oder $u_i(t) = u_{i,{\rm max}}$. Dass $u_i(t)$ auf den verbleibenden 
+% freien Teilst?¯Å¼Â½cken weiterhin gem?¯Å¼Â½?¯Å¼Â½ $\nabla_u H = 0 $ berechnet werden darf, sichert der folgende Satz.
+% 
+% \begin{stz}[Optimalit?¯Å¼Â½tsprinzip von \Bellman]
+% \label{bellman}
+% Liegt $(t_1,x_1)$ auf der L?¯Å¼Â½sung, d.h. $x_1 = x^\star(t_1)$, so ist die optimale Steuerung f?¯Å¼Â½r das Teilst?¯Å¼Â½ck $[t_1,t_f]$ gegeben durch $ u^\star(t)$, $t_1\le t \le t_f.$
+% %
+% %Die Teilsteuerungen $u^\star|_{[t_1,t_f]}$ sind optimal f?¯Å¼Â½r das Teilst?¯Å¼Â½ck $[t_1,t_f]$ mit Anfangszustand $x_1$.
+% \end{stz}
+% {\bf Beweis:} Beweise finden sich bei Bellman \cite{Belman1957} oder Aseev et. al. \cite{Asee2007}.
+% \qed
+
+
+\subsection{Notwendige Optimalit?¯Å¼Â½tsbedingungen des be\-schr?¯Å¼Â½nk\-ten Problems}
+
+Um schlie?¯Å¼Â½lich beschr?¯Å¼Â½nkte Probleme, wie sie in (\ref{P})
+formuliert sind, in ?¯Å¼Â½hnlicher Weise behandeln zu k?¯Å¼Â½nnen,
+ben?¯Å¼Â½tigt man die folgenden Definitionen:
+
+\defin{Ordnung einer Beschr?¯Å¼Â½nkung}{
+Die {\em Ordnung $q$ einer Zustandsbeschr?¯Å¼Â½nkung} $g_i(x(t))\leq 0$ bzgl. des
+Differentialgleichungssystems $f$ ist der kleinste
+Ableitungsgrad, so dass 
+	$\frac{d^q}{dt^q}g_i(x(t))$
+die Steuerung explizit enth?¯Å¼Â½lt, d.\,h.
+\[
+\begin{array}{rcl}
+\displaystyle \nabla_u \frac{d^r}{dt^r}g_i(x(t)) &\equiv& 0, \quad r=1,\dots,q-1,\\[.3cm]
+\displaystyle \nabla_u \frac{d^q}{dt^q}g_i(x(t)) &\not\equiv& 0.
+\end{array}
+\]
+Die Ordnung $q$ einer gemischten Beschr?¯Å¼Â½nkung $g_i(x(t),u(t))\leq 0$ ist $0$.
+}
+~
+
+\Def{Erweiterte Hamilton-Funktion}{
+Mit $\lambda_0 \in \R_0^+$, $\lambda \in
+C_p^1([0;t_f],\R^n)$ und $\mu \in
+C_p^0([0;t_f],\R^l)$  hei?¯Å¼Â½t die Funktion
+\[ \tilde H(x,u,\lambda_0,\lambda,\mu) := \lambda_0 f_0(x,u) + \lambda^T f(x,u)+
+\mu^T g(x,u),\]
+die {\em erweiterte Hamilton-Funktion}.
+F?¯Å¼Â½r $t \in [0;t_f]$ bezeichnet man $\mu(t)$ als die {\em Multiplikatorfunktion}
+ zur
+Beschr?¯Å¼Â½nkung $g$.
+}
+~
+
+\Def{Randst?¯Å¼Â½ck, Verbindungspunkt, Kontaktpunkt}{~\\
+Das be\-schr?¯Å¼Â½nk\-te Problem (\ref{P}) besitze mit $(x^\star,u^\star)$ eine optimale L?¯Å¼Â½sung. 
+
+Sei $k\in\{1,\dots,l\}$. Ein Intervall $[t_a;t_b]\subset[0;t_f]$ mit $t_a<t_b$ 
+hei?¯Å¼Â½t {\em Randst?¯Å¼Â½ck
+ der $k$-ten Komponente} $g_k(x,u)$, wenn $g_k(x^\star,u^\star)=0$
+ f?¯Å¼Â½r $t\in[t_a;t_b]$ gilt.
+Der Punkt $t_a$ bzw. $t_b$ hei?¯Å¼Â½t {\em Auf-} bzw. {\em Absprungpunkt} des
+Randst?¯Å¼Â½cks $[t_a;t_b]$ von $g_k(x,u)$, wenn ein $\delta>0$ existiert mit 
+$g_k(x(t_a-\vareps),u(t_a-\vareps))<0$ bzw. $g_k(x(t_b+\vareps),u(t_b+\vareps))<0$ 
+f?¯Å¼Â½r alle $\vareps\in]0;\delta[$.\\
+Auf- und Absprungpunkte werden auch {\em Verbindungspunkte} genannt.\\
+$[t_a;t_b]$ hei?¯Å¼Â½t {\em Randst?¯Å¼Â½ck der Beschr?¯Å¼Â½nkung} $g(x,u)\leq 0$, wenn
+$[t_a;t_b]$ Randst?¯Å¼Â½ck von $g_k(x,u)$ ist f?¯Å¼Â½r alle $k=1,\dots,l$.
+
+Sei $k\in\{1,\dots,l\}$, so dass die $k$-te Komponente $g_k(x)$ eine
+Zustandsbeschr?¯Å¼Â½nkung ist.
+Ein Punkt $t_a\in ]0;t_f[$ hei?¯Å¼Â½t {\em Kontaktpunkt der $k$-ten Komponente} 
+$g_k(x)$, wenn ein $\delta>0$ existiert mit $g_k(x(t_a))=0$ und
+$g_k(x(t_a\pm\vareps))<0$ f?¯Å¼Â½r alle $\vareps\in]0;\delta[$.
+}~
+
+
+Eine Erweiterung von Satz \ref{notw1} auf Probleme mit einer Beschr?¯Å¼Â½nkung der
+Ordnung $q$ gibt Bedingungen f?¯Å¼Â½r Kontaktpunkte oder Randst?¯Å¼Â½cke einer L?¯Å¼Â½sung 
+an.
+
+\begin{stz}[Notwendige Bedingungen des beschr?¯Å¼Â½nkten Problems]
+\label{notw2}~\\
+Das Problem (\ref{P}) mit einer Beschr?¯Å¼Â½nkung ($l=1$) der Ordnung $q$
+besitze mit $(x^\star,u^\star)$ eine optimale L?¯Å¼Â½sung. 
+Weiter sei die Gleichung $\frac{d^p}{dt^p}g(x,u)=0$ eindeutig auf"|l?¯Å¼Â½sbar nach
+$u=u(x)$ mit einer $C^{p+1}$-Funktion $u(x)$, und auf jedem Randst?¯Å¼Â½ck f?¯Å¼Â½r die
+Randsteuerung $u(t)$ gelte
+$$ \nabla_u \frac{d^p}{dt^p}g(x(t),u(t))\neq 0,\quad t\in[t_a;t_b].$$
+Au?¯Å¼Â½erdem gelte $u^\star(t)\in{\rm int~} U$ f?¯Å¼Â½r $t\in]t_a;t_b[$.
+
+Dann existieren $\lambda_0\in \R_0^+$, $\rho\in\R^r$ und 
+$\lambda\in C_p^1([0;t_f],\R^n)$, 
+$\mu \in C_p^0([0;t_f],\R)$  
+die nicht alle verschwinden,
+so dass folgende Gleichungen gelten:
+
+\begin{enumerate}
+\item Minimumbedingung 
+	\[ \tilde H(x^\star(t),u^\star(t),\lambda_0,\lambda(t),\mu(t)) = 
+	\min\limits_{u\in U} \tilde H(x^\star(t),u(t),\lambda_0,\lambda(t),\mu(t)),\]
+\vspace{-.2cm}	$\hfill	\quad {\rm f"ur~fast~alle~} t\in[0;t_f]$
+\item Adjungierte Differentialgleichungen
+	\[ \dot\lambda^T(t) = -\nabla_x 
+	\tilde H(x^\star(t),u^\star(t),\lambda_0,\lambda(t),\mu(t)),
+	\quad {\rm f"ur~fast~alle~} t\in[0;t_f]\]
+\item Transversalit?¯Å¼Â½tsbedingungen
+	\[ \lambda(0)^T = 
+	-\nabla_{x(0)} \left( \rho^T\omega(x^\star(0),x^\star(t_f)) \right )
+	\]
+	\[ \lambda(t_f)^T = 
+	\nabla_{x(t_f)}\left (\lambda_0 \phi(x^\star(t_f)) +
+	\rho^T\omega(x^\star(0),x^\star(t_f)) \right )
+	\]
+%\item Speziell bei autonomen Problemen gilt
+%	$$ \tilde H(x^*(t),u^*(t),\lambda_0,\lambda(t),\mu) = {\rm const.}, 
+%	\quad {\rm f"ur~alle~} t\in[0;t_f]$$
+\item Ist in $t_i$ ein Verbindungs- oder Kontaktpunkt,
+	so gelten die Sprungbedingungen
+	\[ \lambda(t_i^+)^T = \lambda(t_i^-)^T - \nu(t_i) \nabla_x g(x(t),u(t))
+	\Bigr | _{t_i}\]
+	mit einem Multiplikator $\nu(t_i) \in \R_0^+$. 
+	Ist $g$ von der Ordnung $0$, so gilt $\nu(t_i)=0$.
+\item Bei freier Verfahrzeit gilt
+	\[ \tilde H(x^\star(t_f^\star),u^\star(t_f^\star),\lambda_0,\lambda(t_f^\star),\mu(t_f^\star)) = 0.\]
+\end{enumerate}
+
+\end{stz}
+\beweis{ Der Fall einer gemischten Beschr?¯Å¼Â½nkung wird in Neustadt
+\cite{Neustadt} bewiesen. F?¯Å¼Â½r Zustandsbeschr?¯Å¼Â½nkungen sei auf den Beweis in
+Maurer \cite{Maurer2} hingewiesen.}
+
+Eine verallgemeinerte Version dieses Satzes f?¯Å¼Â½r Kombinationen von gemischten Beschr?¯Å¼Â½nkungen und Zustandsbeschr?¯Å¼Â½nkungen ist noch nicht bewiesen, vgl. Hartl, Sethi und Vickson \cite{Hartl1995}.
+
+
+
+Unter weiteren Annahmen an die Konvexit?¯Å¼Â½t der Funktionen im Steuerprozess und an die Hamilton-Funktion
+lassen sich auch hinreichende Optimalit?¯Å¼Â½tsbedingungen formulieren, 
+vgl. Feichtinger und Hartl \cite{Feichtinger1986}.
+
+\fi
+
+\section{Berechnung optimaler Steuerungen durch direkte Verfahren}
+
+\label{direktev}
+
+Bei {\em direkten Verfahren} wird durch eine Diskretisierung der
+Steuerungen und eventuell der Zustandsvariablen das unendlich dimensionale
+Optimalsteuerungsproblem (\ref{P}) durch ein nichtlineares Optimierungsproblem
+%(\ref{eq:nlp1}) 
+mit endlich vielen Parametern approximiert. 
+
+\subsection{Diskretisierung}
+\label{diskretisierung}
+
+Das Prinzip, mit dem sich das Integral der Zielfunktion und die
+Differentialgleichungen von Problem (\ref{P}) %von Seite \pageref{P} 
+numerisch
+auswerten lassen, besteht darin, an ausgewählten Stützstellen Näherungswerte
+für das Integral und die rechte Seite der Differentialgleichungen zu
+bestimmen.
+
+Für die nicht notwendigerweise äquidistanten Stützstellen $t_i$ gelte
+\[0 = t_1 \leq t_2 \leq \dots \leq t_l = t_f, \quad l\in\N. \]
+Die Näherungen der Steuerung $u(t_i)$ und des Zustands $x(t_i)$ an den 
+Gitterpunkten $t_i$ seien mit $u^i$ bzw. $x^i$ bezeichnet:
+\[ u^i \approx u(t_i), \quad x^i \approx x(t_i)\]
+ 
+Eine einfache 
+Näherung für das Integral der Zielfunktion zwischen zwei Sützstellen $t_i$ und
+$t_{i+1}$ ist dann beispielsweise gegeben durch
+\[ \int\limits_{t_i}^{t_{i+1}} 
+f_0(x(t),u(t),p)dt \approx (t_{i+1}-t_i) f_0(x^i,u^i,p). \]
+
+Allgemeiner erhält man daraus mit dem 
+{\em Eulerschen Polygonzugverfahren}%\footnote{Alternativ können auch Verfahren höherer Ordnung, wie das Runge-Kutta-Verfahren angewandt werden.} 
+die
+Iterationsvorschrift für $i=1,\dots,l-1$:
+\[ \int\limits_{t_1}^{t_{i+1}} f_0(x(t),u(t),p)dt \approx 
+	\int\limits_{t_1}^{t_i} f_0(x(t),u(t),p)dt +
+	(t_{i+1}-t_i) f_0(x^i,u^i,p) \]
+
+Wählt man das Euler-Verfahren als {\em Integrationsverfahren} zur Lösung
+des Differentialgleichungssystems,
+besitzt die durch Diskretisierung approximierte Form von (\ref{P}) die
+freien Parameter $(u^i)_{i=1,\dots,l}$ für die Steuerung 
+ und $(x^i)_{i=1,\dots,l}$ für den Zustand und lautet mit $h_i := t_{i+1}-t_i$, $i=1,\dots,l-1$:
+\begin{equation}
+\label{PEINS}
+\begin{array}{rrcl}
+\min\limits_{x,u,p}&  \multicolumn{3}{l}{\phi(x^l) + 
+	\sum\limits_{i=1}^{l-1} h_i f_0(x^i,u^i,p)}\\
+\text{unter}& x^{i+1} & = & x^i + h_i f(x^i,u^i,p),\quad i = 1,\dots,l-1\\
+& \omega(x^1,x^l,p) &=& 0 \\
+& g(x^i,u^i,p) &\leq & 0,\quad i=1,\dots,l
+\end{array}
+\end{equation}
+
+Somit erhält man ein nichtlineares Optimierungsproblem
+\begin{equation}
+\label{NLP}
+\begin{array}{rrcl}
+\min\limits_{z}&  \multicolumn{3}{l}{f(z)}\\
+\text{unter}& g_i(z) \le 0 & i=1,\dots,k
+\end{array}
+\end{equation}
+Dieses kann z.B. mit WORHP gelöst werden (TODO Referenz).
+
+
+\subsection{Integration der Systemdynamik}
+
+Das Euler-Verfahren lässt sich mit $f_i := f(x^i,u^i,p)$, $i = 1,\dots,l$ kompakter schreiben in der Form
+\[ 0  = x^{i+1} - x^i - h_i f_i\]
+
+Da mit WORHP ohnehin bereits Gleichungssysteme gelöst werden, können auch implizite Verfahren ohne Mehraufwand eingesetzt werden.
+
+Das Trapezverfahren besitzt ${\cal O}(h^2)$:
+\begin{equation} 
+0 = x^{i+1} - x^i - \frac{h_i}{2} (f_i + f_{i+1}) 
+\label{int1}
+\end{equation}
+
+
+Das Hermite-Simpson-Verfahren benötigt eine weitere Funktionsauswertung an der Zwischenstelle 
+$t_{i+\frac{1}{2}} = \frac{1}{2}(t_i + t_{i+1}) $
+und besitzt ${\cal O}(h^4)$:
+
+\begin{equation} 
+\begin{array}{rcll}
+ 0 &=&\displaystyle  x^{i+\frac{1}{2}} -\frac{1}{2}(x^{i+1} + x^{i}) - \frac{h_i}{8} (f_{i}-f_{i+1}) \\
+ 0 &=&\displaystyle  x^{i+1} - x^i - \frac{h_i}{6} (f_{i+1} + 4f_{i+\frac{1}{2}} + f_{i})
+\end{array}
+\label{int2}
+\end{equation}
+
+
+
+
+
+
+
+
+\explain{
+Das Hermite-Simpson-Verfahren lässt sich durch dieses Butcher-Tableau darstellen:
+
+$$\begin{array}{c|ccc}
+0& 0 & 0 & 0 \\   
+1/2 & 5/24 & 1/3 & -1/24 \\
+1 & 1/6 & 2/3 & 1/6 \\\hline
+  & 1/6 & 2/3 & 1/6 \\
+  \end{array}
+$$
+
+Ausgeschrieben heißt das:
+$$
+\begin{array}{rcl}
+f_i &=& f(x^i,t^i) \\
+f_{i+\frac{1}{2}} &=&\displaystyle f(\underbrace{x^i + \frac{5}{24} h_i f_i + \frac{1}{3} h_i f_{i+\frac{1}{2}} -  \frac{1}{24} h_i f_{i+1}}_{x^{i+\frac{1}{2}}}  ,t^i + \frac{h_i}{2}) \\
+f_{i+1} &=&\displaystyle f(\underbrace{x^i + \frac{1}{6} h_i f_i + \frac{2}{3} h_i f_{i+\frac{1}{2}} +  \frac{1}{6} h_i f_{i+1} }_{x^{i+1}} ,t^i + h_i) \\
+x^{i+1} &=&\displaystyle x^i + \frac{h_i}{6} (f_{i} + 4f_{i+\frac{1}{2}} + f_{i+1}) \\
+\end{array}
+$$
+
+Dabei ist die letzte Zeile die Simpson-Regel.
+
+
+Aus erster Klammer folgt:
+$$x^{i+\frac{1}{2}} = x^i + \frac{5}{24} h_i f_i + \frac{1}{3} h_i f_{i+\frac{1}{2}} -  \frac{1}{24} h_i f_{i+1}$$
+
+Aus zweiter Klammer folgt:
+$$f_{i+\frac{1}{2}} = \frac{3}{2h_i} \left(x_{i+1} -x_i -\frac{h_i}{6}f_i - \frac{h_i}{6}f_{i+1}  \right) $$
+
+Einsetzen von Gleichung 2 in Gleichung 1 ergibt die Hermite-Gleichung:
+$$x^{i+\frac{1}{2}} = \frac{1}{2} x^i + \frac{1}{2} x^{i+1} + \left(\frac{5}{24}-\frac{1}{12}\right) h_i f_i + \left(-\frac{1}{24}-\frac{1}{12}\right) h_i f_{i+1}$$
+
+
+
+}
+
+
+\newpage
+\subsubsection{Struktur der Systemdynamik}
+
+\explain{Die gegebene Darstellung der Integrationsschemata liefert dünn-besetzte Strukturen in den Ableitungsmatrizen.}
+
+Integriere z.B. dieses System $l=5$ diskreten Punkten:
+$$\begin{array}{rcl} 
+\dot x_1 &=& x_2 \\
+\dot x_2 &=& u \\
+\dot x_3 &=& u^2 \\
+ \end{array}
+$$
+
+Das (NLP) besitzt dann diesen Variablenvektor 
+
+$$x = \left(\begin{array}{c} x^1  \\ u^1 \\x^2 \\ u^2 \\\dots \\x^l\\u^l\end{array}
+\right)
+\text{~mit~} x^i = \left(\begin{array}{c} x_1^i  \\ x_2^i \\x_3^i \end{array}
+\right)
+$$
+
+Da in Gleichung (\ref{int1}) nur Variablen zum diskreten Punkt $i$ und $i+1$ verbunden werden, hat die Jacobi-Matrix der Nebenbedingungen diese Gestalt:
+$$
+\left(
+\begin{array}{lllllllllllllllllllllllllllllllllllllllllll}
+\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times\\
+\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times\\
+\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times\\
+&&&&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times\\
+&&&&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times\\
+&&&&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times\\
+&&&&&&&&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times\\
+&&&&&&&&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times\\
+&&&&&&&&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times\\
+&&&&&&&&&&&&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times\\
+&&&&&&&&&&&&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times\\
+&&&&&&&&&&&&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times&\cellcolor{hicol}\times\\
+\end{array}\right)
+$$
+Außerdem besitzt auch die Ableitung der rechten Seite des  Differentialgleichungssystems eine interne Struktur:
+$$
+\left(
+\begin{array}{cccc}
+0 &\times& 0&  0\\
+0  &0  & 0&  \times\\
+0  &0 &  0 & \times\\
+\end{array}\right)
+$$
+Dass lässt sich auf die Jacobi-Matrix übertragen. Leitet man Gleichung (\ref{int1}) nach $x^i$ bzw. $x^{i+1}$ ab, entstehen (negative und positive) Einheitsmatrizen, die sich mit der eben genannten Struktur überlagern:
+$$
+\left(
+\begin{array}{lllllllllllllllllllllllllllllllllllllllllll}
+\cellcolor{hicol}-1&\cellcolor{hicol}\times&\cellcolor{hicol}&\cellcolor{hicol}&\cellcolor{hicol}   1&\cellcolor{hicol}\times&\cellcolor{hicol}&\cellcolor{hicol}\\
+\cellcolor{hicol}&\cellcolor{hicol}-1&\cellcolor{hicol}&\cellcolor{hicol}\times    &\cellcolor{hicol}&\cellcolor{hicol}1&\cellcolor{hicol}&\cellcolor{hicol}\times\\
+\cellcolor{hicol}&\cellcolor{hicol}&\cellcolor{hicol}-1&\cellcolor{hicol}\times    &\cellcolor{hicol}&\cellcolor{hicol}&\cellcolor{hicol}1&\cellcolor{hicol}\times\\
+&&&&\cellcolor{hicol}-1&\cellcolor{hicol}\times&\cellcolor{hicol}&\cellcolor{hicol}&\cellcolor{hicol}   1&\cellcolor{hicol}\times&\cellcolor{hicol}&\cellcolor{hicol}\\
+&&&&\cellcolor{hicol}&\cellcolor{hicol}-1&\cellcolor{hicol}&\cellcolor{hicol}\times    &\cellcolor{hicol}&\cellcolor{hicol}1&\cellcolor{hicol}&\cellcolor{hicol}\times\\
+&&&&\cellcolor{hicol}&\cellcolor{hicol}&\cellcolor{hicol}-1&\cellcolor{hicol}\times    &\cellcolor{hicol}&\cellcolor{hicol}&\cellcolor{hicol}1&\cellcolor{hicol}\times\\
+&&&&&&&&\cellcolor{hicol}-1&\cellcolor{hicol}\times&\cellcolor{hicol}&\cellcolor{hicol}&\cellcolor{hicol}   1&\cellcolor{hicol}\times&\cellcolor{hicol}&\cellcolor{hicol}\\
+&&&&&&&&\cellcolor{hicol}&\cellcolor{hicol}-1&\cellcolor{hicol}&\cellcolor{hicol}\times    &\cellcolor{hicol}&\cellcolor{hicol}1&\cellcolor{hicol}&\cellcolor{hicol}\times\\
+&&&&&&&&\cellcolor{hicol}&\cellcolor{hicol}&\cellcolor{hicol}-1&\cellcolor{hicol}\times    &\cellcolor{hicol}&\cellcolor{hicol}&\cellcolor{hicol}1&\cellcolor{hicol}\times\\
+&&&&&&&&&&&&\cellcolor{hicol}-1&\cellcolor{hicol}\times&\cellcolor{hicol}&\cellcolor{hicol}&\cellcolor{hicol}   1&\cellcolor{hicol}\times&\cellcolor{hicol}&\cellcolor{hicol}\\
+&&&&&&&&&&&&\cellcolor{hicol}&\cellcolor{hicol}-1&\cellcolor{hicol}&\cellcolor{hicol}\times    &\cellcolor{hicol}&\cellcolor{hicol}1&\cellcolor{hicol}&\cellcolor{hicol}\times\\
+&&&&&&&&&&&&\cellcolor{hicol}&\cellcolor{hicol}&\cellcolor{hicol}-1&\cellcolor{hicol}\times    &\cellcolor{hicol}&\cellcolor{hicol}&\cellcolor{hicol}1&\cellcolor{hicol}\times\\
+
+
+\end{array}\right)
+$$
+
+
+
+
+Analog lässt sich auch die Dünn-Besetztheit des Hermite-Simpson-Verfahrens angeben.
+
+
+
+
+
+
+
+
+\subsection{Integration des Lagrange-Terms }
+	\label{intlag1}
+Ein Optimalsteuerungsproblem mit Zielfunktional 
+\[I[x,u] = \phi(x(t_f),p) + \int\limits_0^{t_f} f_0(x(t),u(t),p,t) \,dt\]
+lässt sich stets in Mayer-Form umwandeln ($f_0\equiv 0$).
+
+Alternativ lässt es sich der Lagrange-Term auch diskretisiert berechnen.
+Verwende die Kurzschreibweise $f_0^i := f_0(x^i,u^i,p,t_i)$, $i = 1,\dots,l$.
+
+Bei Euler-Verfahren:
+\[ I[x,u] = \phi(x^l,p) +  \sum\limits_{i=1}^{l-1} h_i f_0^i\]
+
+Beim Trapezverfahren:
+\[ I[x,u] = \phi(x^l,p) +  \sum\limits_{i=1}^{l-1} \frac{h_i}{2} \left(f_0^i+f_0^{i+1}\right)\]
+
+Beim Hermite-Simpson-Verfahren:
+\[ I[x,u] = \phi(x^l,p) +  \sum\limits_{i=1}^{l-1} \frac{h_i}{6} \left(f_0^i+4f_0^{i+\frac{1}{2}} + f_0^{i+1}\right)\]
+
+
+Auswertung an den Zwischen-Stützstellen des Hermite-Simpson-Verfahrens:
+
+
+$$\int\limits_{t_i}^{t_{i+\frac{1}{2}}} f_0(x(t),u(t),p,t)\,dt \approx
+	        \frac{h_i}{24} \left(5 f_0^i + 8 f_0^{i+\frac{1}{2}} -f_0^{i+1}\right) 
+$$
+
+
+\explain{Die Zahl der Optimierungsvariablen des (NLP) lässt sich reduzieren, wenn Mehrfach-Schießen eingeführt wird.}
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Approximation der Steuerungen und des Zustands}
+
+Durch die Transformation des Optimalsteuerproblems auf ein diskretes 
+Problem ist eine Lösung lediglich an den Stützstellen verfügbar. 
+Um Werte der Lösung zwischen den Stützstellen zu berechnen, interpoliert man 
+die Lösung geeignet.
+
+Es sei $D_i(t)$ eine Basis von kubischen Splines.
+
+Approximiere ($n_1=2l$)
+$$x(t) \approx \widetilde x(t) = \sum_{i=1}^{n_1} \gamma_i D_i(t)$$
+
+Der Spline soll durch die Stützstellen laufen
+$$\widetilde x(t_i) = x^i, i=1,...,l$$
+und die rechte Seite des Differentialgleichungssystems erfüllen
+$$\dot {\widetilde x(t_i)} = f_i, i=1,...,l$$
+
+Ebenso für Steuerungen
+$$u(t) \approx \widetilde u(t) = \sum_{i=1}^{n_2} \beta_i C_i(t)$$
+
+Trapez-Verfahren: $C_i(t)$ sind lineare B-Splines mit $n_2=l$
+
+$$\widetilde u(t_i) = u^i, k=1,...,l$$
+
+Hermite-Simpson: quadratische B-Spline: $n_2 = 2l-1$
+
+$$\widetilde u(t_i) = u^i, i=1,...,l$$
+
+$$\widetilde u(t_{i+1/2}) = u^{i+1/2}, i=1,...,l-1$$
+
+
+\subsection{Fehlerabschätzung}
+
+\explain{Aus der Bachelorarbeit von Matthias Rick, angepasst nach aktuellem Stand von \TransWORHP}
+
+\explain{
+Vorteil: Direkte Vefahren brauchen keine notwendigen Bedingungen (Pontryagin). 
+
+Nachteil: Genauigkeit der Lösung kann nicht mit notwendigen Bedingungen überprüft werden.
+}
+
+
+Hier: Annahme, dass $\widetilde u(t)$ optimal ist. Nur für $h_k\rightarrow 0$ gehen die KKT-Bedingungen des NLP  in die notwendigigen Bedinungen des OCP über. Schätze Fehler zwischen $\widetilde x(t)$ und $x(t)$ ab. Fehlerabschätzung für $u(t)$ als $C^0$-Spline, $x(t)$ als $C^1$-Spline aus Spline-Lösung $\widetilde u(t)$, $\widetilde x(t)$.
+
+Im Folgenden bezeichne $x(t_k)$ die exakte Lösung, $\tilde{x}(t_k)$ eine durch Splines genäherte Lösung und $x_k$ die diskrete Lösung an der Stelle $t_k$. Analoges gilt für die Steuerung $u$.
+
+
+Werden Optimalsteuerungsprobleme mit \TransWORHP gelöst, so erhält man diskrete Punkte als Lösung. Als \emph{globalen Diskretisierungsfehler} an der Stelle $t_k$ bezeichnet man die Abweichung dieser von der exakten Lösung
+%
+\begin{align*}
+	\left| x_k - x(t_k) \right|.
+\end{align*}
+%
+Der \emph{lokale Diskretisierungsfehler} ist die Differenz der berechneten Lösung $x_{k+1}$ und der Lösung der Differentialgleichung, die durch den vorherigen Punkt verläuft. Hierbei bezeichne $t_{k+1}$ die Stelle $t_k + h_k$.
+
+Die Fehlerordnung ergibt sich als $\mathcal{O}(h^p)$, wobei $p$ die Ordnung des Diskretisierungsverfahren bezeichne, für den globalen und $\mathcal{O}(h^{p+1})$ für den lokalen Fehler. Beispiele für die Ordnung der Diskretisierungsverfahren sind $p=2$ für das Trapezverfahren und $p=4$ für Hermite-Simpson. Der Diskretisierungsfehler ist nach \cite{Betts} Betts allgemein von der Form
+%
+\begin{align*}
+	\epsilon_k \approx ||c_k h^{p+1}||,
+\end{align*}
+%
+wobei $c_k$ geeignete Faktoren sind. Man erkennt, dass für $h \to 0$ der Fehler gegen Null strebt. Dies motivierte den Ansatz, eine sehr hohe Anzahl an Gitterpunkten zu wählen, um somit $h$ klein werden zu lassen und einen kleinen Fehler zu bekommen. Unter Umständen kann sich der Exponent noch um den Wert $r$ reduzieren, wenn Beschränkungen aktiv werden, sodass sich das Folgende ergibt
+%
+\begin{align} \label{eq:err}
+	\epsilon_k \approx ||c_k h^{p-r+1}||.
+\end{align}
+%
+Dieses Verhalten wird als \emph{Ordnungsreduktion} bezeichnet. Da sich in \TransWORHP diese Darstellung nicht findet, wird im Folgenden zwar auf die Reduktion eingegangen, allerdings bei der praktischen Umsetzung nicht betrachtet.
+
+Da die exakte Lösung nicht bekannt ist, benötigen wir eine Abschätzung für den Diskretisierungsfehler. Hierzu betrachten wir die exakte Lösung $x$ an der Stelle $t_{k+1}$
+
+\begin{align*}
+	x(t_{k+1}) = x(t_k+h_k) &= x(t_k) + \int_{t_k}^{t_k+h_k} \dot{x}(t) \dt\\
+	&=  x(t_k) +  \int_{t_k}^{t_k+h_k} f(x(t),u(t),t) \dt.
+\end{align*}
+%
+Unter dem Integral stehen die unbekannten Lösungen für $x$ und $u$, sodass wir diese durch Splines approximieren und uns eine neue Zustandsfunktion $\hat{x}(t_{k+1})$ definieren als
+%
+\begin{align*}
+	\hat{x}(t_{k+1}) :=  x(t_k) +  \int_{t_k}^{t_k+h_k} f(\tilde{x}(t),\tilde{u}(t),t) \dt.
+\end{align*}
+%
+Zur besseren Lesbarkeit sei im Folgenden $\tilde{f}(t) := f(\tilde{x}(t),\tilde{u}(t),t)$.
+%
+\begin{align*}
+	\hat{x}(t_{k+1}) &=  x(t_k) + \int_{t_k}^{t_k+h_k} \tilde{f}(t) \dt\\
+	&=  x(t_k) + \int_{t_k}^{t_k+h_k} \dot{\tilde{x}}(t) \dt - \int_{t_k}^{t_k+h_k} \dot{\tilde{x}}(t) \dt + \int_{t_k}^{t_k+h_k} \tilde{f}(t) \dt\\
+	&=  x(t_k) + \tilde{x}(t_{k+1}) - \tilde{x}(t_k) - \int_{t_k}^{t_k+h_k} \dot{\tilde{x}}(t) - \tilde{f}(t) \dt
+\end{align*}
+%
+Wie man sich leicht überlegen kann, ist die Differenz $|x(t_k) - \tilde{x}(t_k)| = 0$, da dies eine Bedingung des Splines ist. Somit folgt
+%
+\begin{align*}
+	\tilde{x}(t_{k+1}) - \hat{x}(t_{k+1}) = \int_{t_k}^{t_k+h_k} \dot{\tilde{x}}(t) - \tilde{f}(t) \dt.
+\end{align*}
+%
+Nun lässt sich der Fehler konkret abschätzen. Dazu betrachten wir den Betrag jeder Komponente der Zustandsfunktion. So gilt für die $i$-te Komponente
+%
+\begin{align*}
+	\left| (\tilde{x}(t_{k+1}))_i - (\hat{x}(t_{k+1}))_i \right| &= \left| \int_{t_k}^{t_k+h_k} (\dot{\tilde{x}}(t))_i - (\tilde{f}(t))_i \dt \right| \\
+	&\leq \int_{t_k}^{t_k+h_k} \left| (\dot{\tilde{x}}(t))_i - (\tilde{f}(t))_i \right| \dt
+\end{align*}
+%
+Somit können wir den \emph{absoluten} lokalen Diskretisierungsfehler für die $i$-te Komponente im $k$-ten Intervall $\eta_{i,k}$ definieren als
+%
+\begin{align} \label{eq:eta}
+	\eta_{i,k} &:= \int_{t_k}^{t_{k+1}} \left| \varepsilon_i(t) \right| \dt\\
+	\text{wobei }
+	\varepsilon(t) &:=  \dot{\tilde{x}}(t) - f(\tilde{x}(t),\tilde{u}(t),t)\notag
+\end{align}
+%
+Weiterhin können wir den \emph{relativen} lokalen Diskretisierungsfehler $\epsilon_k$ im $k$-ten Intervall definieren. Dieser ergibt sich als das gewichtete Maximum über alle Komponenten als
+%
+\begin{align} \label{eq:relFehler}
+	\epsilon_k := \max_i	\frac{\eta_{i,k}}{\left(\omega_i + 1\right)}
+\end{align}
+%
+mit den Gewichten
+%
+\begin{align*}
+	 \omega_i := \max_k \left\{ \left| (\tilde{x}(t_k))_i \right|, \left| (\dot{\tilde{x}}(t_k))_i \right| \right\}.
+\end{align*}
+%
+In \eqref{eq:relFehler} sorgt die $1$ dafür, dass nicht durch Null geteilt wird, falls $\omega_i = 0$.
+
+\subsubsection{Ordnungsreduktion}
+
+Um die Ordnungsreduktion zu verdeutlichen, betrachten wir ein Intervall, in welches $I\in \N$ neue Punkte eingefügt werden sollen. Der Fehler im alten Intervall sei mit $\theta$ und der Fehler im neuen mit $\eta$ bezeichnet, welche sich nach \eqref{eq:err} ergeben. Nach \cite{Betts} Betts treffen wir die Annahme, dass die Konstanten $c$ und $r$ auf dem alten und dem neuen Intervall gleich sind. Damit ergeben sich
+%
+\begin{align*}
+	\theta = ch^{p-\hat{r}+1} \quad \text{und} \quad \eta = c\left(\frac{h}{1+I}\right)^{p-\hat{r}+1}.
+\end{align*}
+%
+Formt man beide Ausdrücke nach $c$ um und setzt sie gleich, ergibt sich
+%
+\begin{align*}
+	\hat{r} = p + 1 - \frac{\log(\theta) - \log(\eta)}{\log(1+I)}.
+\end{align*}
+%
+Da die Ordnungsreduktion eine ganze Zahl sein soll, wird sie wie folgt abgeschätzt
+%
+\begin{align*}
+	r = \max\{0, \min\{\text{runden}(\hat{r}),p\}\}.
+\end{align*}
+%
+Damit gilt beispielsweise für die Reduktion beim Trapezverfahren, dass $r \in \{0,1,2\}$.
+
+\explain{Diese Berechnung ist nicht in \TransWORHP integriert. Es ist allerdings möglich über das XML-File eine globale Reduktion der Ordnung anzugeben.}
+
+\subsubsection{Neues Gitter}
+
+Das vorrangige Ziel ist es, dass der Fehler auf dem neuen Gitter kleiner ist als auf dem vorherigen Gitter. Damit man allerdings schon vorher abschätzen kann, wie sich der Fehler in einem Intervall durch das Hinzufügen einer gewissen Anzahl an Punkten ändert, wird eine Abschätzung hergeleitet.
+
+Setzt man \eqref{eq:err} und \eqref{eq:relFehler} gleich, so erhalten wir
+%
+\begin{align*}
+	\lVert c_k \rVert = \frac{1}{h^{p-r_k+1}} \max_i \frac{\eta_{i,k}}{\left(\omega_i + 1\right)}
+\end{align*}
+%
+wobei $r_k$ die Ordnungsreduktion im $k$-ten Intervall bezeichnet. Werden nun $I_k$ Punkte dem Intervall zugefügt, so gilt für den Fehler der neuen Intervalle
+%
+\begin{align} \label{eq:progFehler}
+	\epsilon_k \approx \lVert c_k \rVert \left(\frac{h}{1+I_k}\right)^{p-r_k+1} = \max_i	\frac{\eta_{i,k}}{\left(\omega_i + 1\right)} \left(\frac{1}{1+I_k}\right)^{p-r_k+1}.
+\end{align}
+%
+Dies ist eine Abschätzung, mit der man vorhersagen kann, wie sich der Fehler im neuen Intervall verringert, wenn $I_k$ Punkte eingefügt werden. Wie bereits angemerkt, wird in TransWORHP keine Ordnungsreduktion betrachtet, sodass sich \eqref{eq:progFehler} vereinfacht zu
+%
+\begin{align*}
+	\epsilon_k \approx \lVert c_k \rVert \left(\frac{h}{1+I_k}\right)^{p+1} = \max_i	\frac{\eta_{i,k}}{\left(\omega_i + 1\right)} \left(\frac{1}{1+I_k}\right)^{p+1}.
+\end{align*}
+
+Zuletzt können wir den durchschnittlichen Fehler $\overline{\epsilon}$ über alle Intervalle definieren. Dieser ist der Mittelwert aller relativen Fehler
+%
+\begin{align*}
+	\overline{\epsilon} := \frac{1}{N_t} \sum_{k = 1}^{N_t} \epsilon_k.
+\end{align*}
+%
+Dieser Wert ist nützlich um zu bestimmen, wie gleichverteilt der Fehler über alle Intervalle ist.
+
+\subsection{Fehlerabschätzung 2}
+
+Eine weitere Möglichkeit den Diskretisierungsfehler abzuschätzen besteht darin das Problem auf zwei Arten zu diskretisieren. Hierzu müssen zwei verschiedene Verfahren gewählt werden, die sich in ihrer Ordnung unterscheiden. Es muss hierbei darauf geachtet werden, dass das Verfahren, für welches der Fehler bestimmt wird, eine nidrigere Ordnung hat als das andere Verfahren. Somit lässt sich beispielsweise das Euler-Verfahren mit dem Trapez-Verfahren abschätzen.
+
+Die konkrete Fehlerabschätzung ist dann das Maximum der Differenz der einzelnen Komponenten der Dynamik.
+
+\begin{align*}
+	\epsilon_k = \max_i \left| (x(t_k+h_k))^{[1]}_i - (x(t_k+h_k))^{[2]}_i \right|, \quad \text{im } k\text{-ten Intervall}
+\end{align*}
+
+wobei ${[\cdot]}$ die verschiedenen Verfahren andeuten soll.
+
+Auf diese Weise lässt sich der Fehler deutlich schneller ausrechnen. Allerdings funktioniert das Verfahren nur, wenn es ein Verfahren höherer Ordnung gibt. Deshalb lässt sich in \TransWORHP der Fehler für das Hermite-Simpson-Verfahren nicht auf diese Art bestimmen.
+
+\subsection{Gitteranpassung}
+
+Der Algorithmus der Gitteranpassung gliedert sich in mehrere Schritte, die im Weiteren genau erklärt werden, wobei sich an \cite{Betts} Betts orientiert wurde. Der erste Schritt sieht dabei wie folgt aus
+
+\begin{enumerate}
+	\item Diskretisiere Problem mit äquidistantem Gitter
+	\item Berechne Diskretisierungsfehler
+	\item Füge neue Gitterpunkte ein
+\end{enumerate}
+
+\subsubsection{Diskretisierung}
+
+Zunächst muss das Problem diskretisiert werden, was bereits ausführlich beschrieben wurde. Als Startgitter wählt man eine relativ grobe Folge von Gitterpunkten, um den Rechenaufwand zu Beginn gering zu halten. Anschließend wird das Problem auf diesem Gitter mit \TransWORHP gelöst.
+
+\subsubsection{Berechnung des Diskretisierungsfehlers}
+
+Sobald eine erste Lösung des Problems besteht, wird der Diskretisierungsfehler nach \eqref{eq:relFehler} berechnet. Dazu muss zunächst der Zustand durch einen kubischen und die Steuerung durch einen linearen Spline approximiert werden. Für die Steuerung ist der Funktionswert am linken und rechten Gitterpunkt bekannt, sodass ein linearer Spline erzeugt werden kann. Beim Zustand sind ebenfalls die Funktionswerte bekannt, allerdings wird für einen kubischen Spline die Steigung an den entsprechenden Stellen benötigt, welche wir aus der Dynamik des Systems am linken und rechten Punkt erhalten.
+
+Anschließend wird \eqref{eq:eta} ausgewertet. Um einen möglichst genauen Wert für das Integral zu erhalten, verwenden wir das Romberg-Verfahren.
+
+\subsubsection{Erstellung des neuen Gitters}
+
+Als nächstes wird das geschickte Einfügen von neuen Gitterpunkten behandelt. Dies ist der entscheidende Schritt des gesamten Algorithmus und wird daher ausführlich beschrieben.
+
+Man muss sich zunächst überlegen, wie viele Punkte maximal ins neue Gitter eingefügt werden sollen, denn es ist sicherlich nicht sinnvoll mit einem Gitter mit beispielsweise $N_t = 10$ Punkten zu starten und auf ein Gitter mit $N_t = 1000$ zu wechseln, denn dies würde die bestehenden Intervallen zu fein werden lassen. Deshalb ist es ein sinnvoller Ansatz, dass man das neue Gitter höchstens doppelt so fein werden lässt. Dies bedeutet, dass sich aus $N_t$ Punkten höchstens $2\cdot N_t-1$ Punkte ergeben können. Das wäre genau dann der Fall, wenn jedes Intervall halbiert würde.
+
+In der Praxis stellt man fest, dass es Intervalle geben wird, in denen der Fehler deutlich größer ist, sodass dort eine feinere Diskretisierung wünschenswert ist. Um zu verhindern, dass die maximale Anzahl an neuen Punkten in ein einziges Intervall eingefügt wird, führen wir eine Schranke $M_1$ ein, die den Höchstwert an neuen Punkten pro Intervall festlegt. Nach \cite{Betts} Betts wählen wir $M_1 = 5$. Eine Folge dieser Beschränkung ist, dass das neue Gitter in einem Schritt nicht zwangsläufig maximal fein wird, d.h. $2\cdot N_t-1$ Punkte hat. Dies ist gewünscht, da bei zu kleinen Schrittweiten auch verstärkt numerische Probleme auftreten können. Es werden nun solange Punkte in das Intervall mit dem größten Diskretisierungsfehler eingefügt, bis
+%
+\begin{align} \label{eq:abbruch}
+\begin{split}
+	&\text{mindestens } M' \text{ Punkte eingefügt wurden, wobei } M' \geq \min \{M_1, 0.1 \cdot N_t\} \textbf{ und}\\
+	&\qquad \text{der maximaler Fehler ist kleiner als Schranke oder}\\
+	&\qquad \text{der geschätzter Fehler ist kleiner als } 0.1 \cdot \text{Schranke oder}\\
+	&\qquad N_t-1 \text{ Punkte wurden eingefügt oder}\\
+	&\qquad M_1 \text{ wurden in ein Intervall eingefügt}
+\end{split}
+\raisetag{1.8cm}
+\end{align}
+
+wobei man beachten muss, dass sich der Fehler in einem Intervall durch das Hinzufügen zusätzlicher Punkte entsprechend \eqref{eq:progFehler} verändert.
+
+Sobald man weiß, wie viele Punkte in welches Intervall eingefügt werden sollen, stellt sich die Frage, an welcher Stelle die Punkte eingefügt werden. Wird beispielsweise festgestellt, dass in ein Intervall $I_k$ neue Punkte eingefügt werden sollen, so könnte man die Punkte normal-, exponential- oder auch gleichverteilt einfügen. Wir entscheiden uns dazu, die neuen Gitterpunkte gleichverteilt, d.h. äquidistant einzufügen, da wir innerhalb des Intervalls kein Wissen über die Struktur einbringen können.
+
+\subsubsection{Erneute Optimierung}
+
+Nachdem das neue Gitter erstellt wurde, wird das Problem erneut mit \TransWORHP gelöst. Um die Konvergenz zu beschleunigen, wird die bereits im vorherigen Schritt berechnete Lösung als Startschätzung genommen, sodass im besten Fall nur wenige Iterationen notwendig sind. Je nach Feinheit des Gitters stellt man fest, dass \TransWORHP bereits nach einem Schritt eine optimale Lösung berechnet. Dabei ist zu beachten, dass an den neuen Stützstellen die bereits bestimmte Lösung durch \TransWORHP interpoliert wird. Anschließend wird erneut der Diskretisierungsfehler bestimmt und neue Punkte eingefügt. Dies wird solange wiederholt, bist der größte Fehler über alle Intervalle kleiner als eine vorgegebene Schranke ist.
+
+Der beschriebe Vorgang ist als Ablaufdiagramm in Abbildung \ref{fig:ablauf}, welche sich im Anhang befindet, aufgezeigt. Im Weiteren wird der Algorithmus an Beispielen getestet.
+
+\subsubsection{Ablaufdiagramm}
+
+\tikzstyle{decision} = [diamond, draw, text centered, node distance=2.5cm, inner sep=0pt, text width=8em]
+\tikzstyle{block} = [rectangle, draw, text centered, minimum width=10em, text width=12em]
+\tikzstyle{block2} = [rectangle, draw, text centered, rounded corners, minimum width=10em, text width=12em]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{cloud} = [draw, ellipse, node distance=2.5cm]
+
+\begin{figure}
+\centering
+\begin{tikzpicture}[node distance = 1.8cm, auto, scale=0.8, transform shape]
+	% Place nodes
+	\node [block2] (anfang) {Start};
+	\node [block, below of=anfang] (init) {Startgitter festlegen};
+	\node [block, below of=init] (start) {Erste Lösung mit TransWORHP};
+	\node [block, below of=start] (rechne) {Berechne Diskretisierungsfehler nach \eqref{eq:relFehler}};
+	\node [block, below of=rechne] (suche) {Suche Intervall $\alpha$ mit größtem Fehler};
+	\node [block, below of=suche] (einfuegen) {Füge einen Punkt in Intervall $\alpha$ hinzu};
+	\node [decision, below of=einfuegen, node distance=3cm] (abbruch) {Abbruchkriterium\\ nach \eqref{eq:abbruch}};
+	\node [decision, below of=abbruch, node distance=5cm] (fertig) {größter Fehler\\ $<$\\ Schranke};
+	\node [block, below of=fertig, node distance=4cm] (stop) {Optimale Lösung};
+	\node [block, left of=einfuegen, node distance=6cm] (update) {Update des\\ Fehlers nach \eqref{eq:progFehler}};
+	\node [block, right of=einfuegen, node distance=6cm] (upWORHP) {Neue Rechnung mit TransWORHP, wobei die alte Lösung als Startschätzung dient};
+	\node [block2, below of=stop] (ende) {Ende};
+	% Draw edges
+	\path [line] (anfang) -- (init);
+	\path [line] (init) -- (start);
+	\path [line] (start) -- (rechne);
+	\path [line] (rechne) -- (suche);
+	\path [line] (suche) -- (einfuegen);
+	\path [line] (einfuegen) -- (abbruch);
+	\path [line] (abbruch) -| node[below] {Nein}(update);
+	\path [line] (abbruch) -- node {Ja}(fertig);
+	\path [line] (fertig) -| node[minimum width=2cm, below] {Nein}(upWORHP);
+	\path [line] (fertig) -- node {Ja}(stop);
+	\path [line] (update) |- (suche);
+	\path [line] (upWORHP) |- (rechne);
+	\path [line] (stop) -- (ende);
+\end{tikzpicture}
+\caption{Ablaufdiagramm der Gitteranpassung}
+\label{fig:ablauf}
+\end{figure}
+
+
+
+\if{0}
+
+
+Um die Problemgr?¯Å¼Â½?¯Å¼Â½e weiter zu reduzieren, k?¯Å¼Â½nnen alternativ ausschlie?¯Å¼Â½lich die 
+diskretisierten Steuervariablen 
+%(und eventuell die unbekannten Anfangswerte der Zustandsvariablen) 
+als Optimierungsparameter verwendet werden, 
+da sich die Werte der Zustandsvariablen bei bekanntem Anfangswert
+ ?¯Å¼Â½ber die Steuervariablen berechnen 
+lassen. Ein m?¯Å¼Â½gliches {\em Integrationsverfahren} ist wieder mit dem 
+Euler-Verfahren gegeben:
+\begin{equation}
+\label{Euler}
+\begin{array}{rcl}
+	x^1(u) &:=& x_0\\
+	x^{i+1}(u) &:=& x^i(u) + (t_{i+1}-t_i) f(x^i(u),u^i),\quad i=1,\dots\,l-1
+\end{array}
+\end{equation}
+mit $u:=(u^1,\dots,u^l)^T$.
+Damit ergibt sich folgende Approximation des Problems (\ref{P}) 
+mit den freien Parametern $(u^i)_{i=1,\dots,l}$:
+
+\begin{equation}
+\label{PZWEI}
+\begin{array}{rrcl}
+\min&  \multicolumn{3}{c}{\phi(x^l(u)) + 
+	\sum\limits_{i=1}^{l-1}(t_{i+1}-t_i) f_0(x^i(u),u^i)}\\
+{\rm unter} & \omega(x^l(u)) &=& 0, \\
+& g(x^i(u),u^i) &\leq & 0,\quad i=1,\dots,l.
+\end{array}
+\end{equation}
+
+{Ein 
+m?¯Å¼Â½glicherweise freier Anfangswert in $x^1$ wird gleichzeitig
+mit den freien Parametern optimiert.}
+
+Eine L?¯Å¼Â½sung der Problemapproximationen (\ref{PEINS}) und (\ref{PZWEI})
+kann ?¯Å¼Â½ber die Fortran-Routine 
+NUDOCCCS von B?¯Å¼Â½skens \cite{Bueskens1998}
+berechnet werden, in der auch weitere Verfahren h?¯Å¼Â½herer Ordnung
+implementiert sind. Malanowski, B?¯Å¼Â½skens und Maurer \cite{Malan} 
+formulieren Bedingungen, unter denen 
+die L?¯Å¼Â½sung des mit dem Euler-Verfahren
+approximierten Problems gegen die L?¯Å¼Â½sung des Optimalsteuerprozesses 
+konvergiert. 
+
+NUDOCCCS greift auf eine Optimierungsroutine zur L?¯Å¼Â½sung eines nichtlinearen Optimierungsproblems zur?¯Å¼Â½ck, vgl. Abschnitt \ref{secoptim2},
+und erlaubt verschiedene Kombinationen von 
+% FEHLT:
+Interpolations- und
+%
+Integrationsverfahren. 
+In dieser Arbeit werden die Steuerungen durch eine lineare Interpolation
+angen?¯Å¼Â½hert. Die Zustandsvariablen ergeben sich aus den
+Steuerungen ?¯Å¼Â½ber eine numerische Integration mit einem 
+Runge-Kutta-Verfahren der Ordnung~4.
+
+\fi
+
+
+
+\if{0}
+% checken FEHLT
+
+\begin{figure}
+\begin{center}
+%\parbox{7cm}{\input{zeichnungen/LineareInt}}
+\end{center}
+\caption{St?¯Å¼Â½ckweise lineare Interpolation der Steuerung} 
+\label{LineareInt}
+\end{figure}
+
+% \TOD{Bzgl. geeignet zueinander passender Diskretisierungen gibt es neuere Literatur (u.a. Felgenhauer ?);
+% 
+% ???
+% Felgenhauer, U.: Diskretisierung von Steuerungsproblemen unter stabilen Optimalit?¯Å¼Â½tsbedingungen.
+% Habilitationsschrift. BTU Cottbus 1999
+% 
+% Maurer fragen.
+% }
+
+Werden stetige L?¯Å¼Â½sungen f?¯Å¼Â½r die Steuerung erwartet, 
+ist die st?¯Å¼Â½ckweise lineare Interpolation der Steuerung eine schnelles und
+effizientes Verfahren der Ordnung $O(h^2)$, wobei $h$ die maximale Schrittweite $h:=\max\limits_{i=
+1,\dots,l-1}(t_{i+1}-t_i)$ bezeichnet, vgl. Abbildung~\ref{LineareInt}:
+\[ u_{\rm app}(t) := u^i + (u^{i+1}-u^i)\frac{t-t_i}{t_{i+1}-t_i},
+	\quad {\rm f"ur~}t\in [t_i,t_{i+1}], \quad i=1,\dots,l-1\]
+Verfahren h?¯Å¼Â½herer Ordnung, die von stetig differenzierbaren Steuerungen
+ausgehen, erreichen zwar eine hohe Genauigkeit, erfordern jedoch mehr
+Rechenzeit w?¯Å¼Â½hrend der L?¯Å¼Â½sung und einen h?¯Å¼Â½heren Rechenaufwand bei der 
+Bestimmung von Intervall\-innen\-punkten.
+Zus?¯Å¼Â½tzlich kann die Fehlerordnung an Auf- und Absprungpunkten nicht beibehalten
+werden.
+
+%\TOD{Der letzte Satz vor 5.3.3: Ist das so richtig?}
+
+\subsection{Approximation des Zustandes}
+
+F?¯Å¼Â½r das Problem \ref{PZWEI} wurden die 
+diskretisierten Zustandsvariablen ?¯Å¼Â½ber das Euler-Integrationsverfahren 
+(\ref{Euler}) durch Funktionen ersetzt, die von den Steuerungen abh"an\-gen.
+
+Alternativ kann das Anfangswertproblem 
+\[ \dot x = f(x(t),u(t)),\quad x(0) = x_0\]
+auch mit dem Runge-Kutta-Verfahren der Ordnung 4 nach England
+gel?¯Å¼Â½st werden.
+Mit $h_i = t_{i+1}-t_i$ liefert das Einschrittverfahren
+\[\begin{array}{rrcl}
+&	x^{i+1} & := & x^i + \frac{1}{6}(t_{i+1}-t_i) (z_1+4z_3+z_4) \\
+{\rm mit} & z_1 & = & f(x^i,u_{\rm app}(t_i)), \\
+ 	& z_2 & = & f(x^i+\frac{h_i}{2}z_1,u_{\rm app}(t_i+\frac{h_i}{2})), \\
+	& z_3 & = & f(x^i+\frac{h_i}{4}(z_1+z_2),u_{\rm app}(t_i+\frac{h_i}{2})),\\
+	& z_4 & = & f(x^i-h_i(z_2+2z_3),u_{\rm app}(t_{i+1})),\\
+\end{array}
+\]
+f?¯Å¼Â½r $i=1,\dots,l-1$ den Wert f?¯Å¼Â½r $x^{i+1}$ mit der Fehlerordnung $O(h^4)$.
+Mit vier Funktionsaufrufen f?¯Å¼Â½r jeden Integrationsschritt stellt dieses
+Verfahren einen akzeptablen Kompromiss zwischen schneller Auswertung und 
+Genauigkeit dar.
+
+%Die Werte f?¯Å¼Â½r $u(t)$ zwischen den St?¯Å¼Â½tzstellen lassen sich mit
+%den bekannten Interpolationsverfahren bestimmen.
+
+
+
+
+\section{Vergleich beider Verfahren}
+\label{vergleich}
+
+
+Bei nichtlinearen Problemen bieten die direkten und die indirekten Verfahren 
+nur die M?¯Å¼Â½glichkeit, lokale Minima anzugeben, 
+globale Minima lassen sich im Allgemeinen nicht bestimmen.
+
+Die indirekten Verfahren verlangen vom Benutzer gute Kenntnisse der
+Theorie optimaler Steuerprozesse zur Aufstellung der notwendigen Bedingungen,
+z.\,B. bei der Bestimmung der adjungierten Differentialgleichungen.
+Auch h?¯Å¼Â½ngt das L?¯Å¼Â½sungsverhalten empfindlich von der Startsch?¯Å¼Â½tzung f?¯Å¼Â½r den
+Zustand und die adjungierten Variablen ab, die in der Regel keine physikalische
+Bedeutung besitzen.\footnote{Bei wirtschaftswissenschaftlichen Anwendungen werden die Adjungierten oft als Schattenpreise interpretiert, und sind auch  hier numerisch schlecht sch?¯Å¼Â½tzbar.
+}
+Schlie?¯Å¼Â½lich erfordert die Formulierung des 
+Randwertproblems Vorkenntnisse ?¯Å¼Â½ber die Struktur der L?¯Å¼Â½sung, vor allem ?¯Å¼Â½ber die
+Anzahl und Art der kritischen Punkte.
+
+Etwas Hilfe beim Anwenden der indirekten Verfahren wird durch
+Formelmanipulationsprogramme wie 
+automatisches Differenzieren beim Aufstellen der adjungierten
+Differentialgleichungen geleistet. Konvergiert das Verfahren,
+erh?¯Å¼Â½lt man eine sehr genaue L?¯Å¼Â½sung und mit den adjungierten
+Variablen noch zus?¯Å¼Â½tzliche Informationen ?¯Å¼Â½ber die Struktur der optimalen
+L?¯Å¼Â½sung.
+
+Die direkten Verfahren hingegen erfordern keine theoretischen Grundlagen vom
+Anwender. Die adjungierten Differentialgleichungen m?¯Å¼Â½ssen nicht aufgestellt
+werden und auch keine Startsch?¯Å¼Â½tzungen f?¯Å¼Â½r die adjungierten Variablen oder die
+kritischen Punkte angegeben werden. Auf schlechte Startsch?¯Å¼Â½tzungen der
+Steuervariablen reagieren sie wegen ihres relativ gro?¯Å¼Â½en Konvergenzradius
+nicht so anf?¯Å¼Â½llig wie die indirekten Verfahren. 
+% FEHLT :Eine bessere Startsch?¯Å¼Â½tzung hilft lediglich bei der Suche nach globalen Minima.
+Gro?¯Å¼Â½e Probleme lassen sich numerisch beispielsweise mit SQP-Verfahren
+sehr stabil und effektiv l?¯Å¼Â½sen. 
+
+Trotz des Ausnutzens von d?¯Å¼Â½nnbesetzten Matrixstrukturen ist der
+Speicherplatzbedarf durch die Diskretisierung bei direkten Verfahren
+h?¯Å¼Â½her. Die gegen?¯Å¼Â½ber den indirekten Verfahren l?¯Å¼Â½ngeren Rechenzeiten
+konnten in den letzten Jahren erheblich verk?¯Å¼Â½rzt werden. Der Vorsprung an 
+Genauigkeit, den die indirekten Verfahren hatten, spielt kaum eine Rolle mehr.
+
+Wesentliche Unterschiede beider Verfahren zeigen sich bei der ?¯Å¼Â½berpr?¯Å¼Â½fung der 
+Optimalit?¯Å¼Â½tsbedingungen: Bei indirekten Verfahren lassen sich die notwendigen
+Bedingungen recht leicht formulieren, f?¯Å¼Â½r die hinreichenden Bedingungen m?¯Å¼Â½ssen
+jedoch weitere Differentialgleichungen mit ihren Adjungierten zum Problem
+hinzugef?¯Å¼Â½gt werden, was das ?¯Å¼Â½berpr?¯Å¼Â½fen in den meisten F?¯Å¼Â½llen unm?¯Å¼Â½glich macht.
+Zwar erh?¯Å¼Â½lt man bei indirekten Verfahren gemeinsam mit der L?¯Å¼Â½sung die 
+adjungierten Variablen, die bei der Bewertung der L?¯Å¼Â½sung hilfreich sein k?¯Å¼Â½nnen,
+sie lassen sich aber auch bei den direkten Verfahren nachtr?¯Å¼Â½glich aus der
+Optimall?¯Å¼Â½sung berechnen. Au?¯Å¼Â½erdem erlauben
+die direkten Verfahren den Nachweis der notwendigen und hinreichenden
+Bedingungen f?¯Å¼Â½r das diskretisierte Problem, womit gleichzeitig eine wesentliche
+Voraussetzung f?¯Å¼Â½r die Anwendung einer parametrischen S.A. gegeben ist.
+Es muss darauf hingewiesen werden, dass eine m?¯Å¼Â½gliche ?¯Å¼Â½bertragbarkeit auf kontinuierliche Probleme nur im Fall der Konvergenz der diskretisierten gegen die kontinuierliche L?¯Å¼Â½sung gesichert ist.
+
+% % % \section{\SA\ f?¯Å¼Â½r Optimalsteuerprozesse}\label{saosp}
+% % % \addtochaptocc{5}{\SA\ f?¯Å¼Â½r Optimalsteuerprozesse}
+% % % 
+% % % In Abschnitt \ref{secsensea} wurden Ausdr?¯Å¼Â½cke f?¯Å¼Â½r die Sensitivit?¯Å¼Â½tsableitungen des nichtlinearen Optimierungsproblems entwickelt. Diese Resultate ?¯Å¼Â½bertr?¯Å¼Â½gt B?¯Å¼Â½skens \cite{Bueskens1998} auf den diskretisierten Steuerprozess (\ref{PZWEI}), um eine Sensitivit?¯Å¼Â½tsberechnung f?¯Å¼Â½r Optimalsteuerprozesse zu implementieren, 
+% % % 
+% % % Mit den direkten Methoden lassen sich so Sensitivit?¯Å¼Â½tsableitungen f?¯Å¼Â½r die Funktionen und Variablen des Optimalsteuerprozesses (\ref{P}) angeben, vgl. auch B?¯Å¼Â½skens und Maurer \cite{Bueskens2001b}.
+% % % %
+% % % Dabei wird die Differenzierbarkeit einer Optimall?¯Å¼Â½sung des kontinuierlichen Steuerprozesses bzgl. der St?¯Å¼Â½rparameter vorausgesetzt. F?¯Å¼Â½r skalarwertige Steuerungen mit skalarwertigen gemischten Nebenbedingungen konnten Maurer und Pesch \cite{Maurer1994, Maurer1994a} die Differenzierbarkeit zeigen, Malanowski und Maurer \cite{Malanowski1996, Malanowski1998} erweiterten die Aussagen auf vektorwertige Steuerungen mit gemischten Beschr?¯Å¼Â½nkungen. Ein allgemeiner Nachweis f?¯Å¼Â½r alle Klassen von Steuerprozessen wurde noch nicht erbracht.
+% % % 
+% % % 
+% % % Ausgehend von einer optimalen Steuerung $u^\star$ 
+% % % des ungest?¯Å¼Â½rten Problems seien die
+% % % aktiven Ungleichungsnebenbedingungen $g$ und die Randwerte $\omega$ zu den
+% % % Gleichungsrestriktionen $\tilde g$ zusammengefasst. Au?¯Å¼Â½erdem sei ohne Einschr?¯Å¼Â½nkung
+% % % die Integrandenfunktion der Zielfunktion $f_0 \equiv 0$, so dass der
+% % % diskretisierte Optimalsteuerprozess in der gest?¯Å¼Â½rten Form lautet:
+% % % 
+% % % \[ 
+% % % %\label{PTP}
+% % % \begin{array}{rl}
+% % % \min&  \phi(x^l(u,p),p)  \\
+% % % \unter& %\omega(x^N(u),p) & = & 0,\\
+% % %  \tilde g(x^i(u,p),u^i(p),p)  =  0,\quad i=1,\dots,l.\\
+% % % \end{array}
+% % % \]
+% % % 
+% % % F?¯Å¼Â½r $i=1,\dots,l$ bezeichnet dabei $u^i(p)$ die vom St?¯Å¼Â½rparameter $p$ abh?¯Å¼Â½ngige diskretisierte Steuerung, und $x^i(u,p)$ den durch das Integrationsverfahren aus $u^j(p),~j=1,\dots,i-1$ ermittelten Zustand.
+% % % 
+% % % Die \Lagrange-Funktion f?¯Å¼Â½r dieses nichtlineare Optimierungsproblem besitzt dann die Gestalt
+% % % \[\begin{array}{rcl}
+% % %  L(x(u),u,\tilde\lambda,p) &=& \phi(x^l(u,p),p)
+% % %  \\ &&+ \tilde\lambda^T
+% % % (\tilde g(x^1(u,p),u^1(p),p),\dots,(\tilde g(x^l(u,p),u^l(p),p)
+% % % \end{array}\]
+% % % mit den \Lagrange-Multiplikatoren 
+% % % $\tilde\lambda:\real^{n_p}\rightarrow\real^{m_0}$.
+% % % 
+% % % Da die diskretisierten Steuervariablen $u = (u^1,\dots,u^l)^T$ genau den 
+% % % Optimierungsvariablen des nichtlinearen Problems (\ref{eq:nlp3})
+% % % entsprechen,\footnote{F?¯Å¼Â½r den Fall, dass der Anfangswert 
+% % % $x^1$ frei ist, lassen
+% % % sich die Aussagen auf den erweiterten Optimierungsvektor
+% % % $\hat u = (u^1,\dots,u^l,x^1)$ ?¯Å¼Â½bertragen.
+% % % }
+% % % werden durch Folgerung~\ref{senseres} bereits die Sensitivit?¯Å¼Â½tsableitungen
+% % % der Steuervariablen gegeben (wobei im Folgenden wieder die Abk?¯Å¼Â½rzungen 
+% % % $L:=L(x^\star,u^\star,\tilde\lambda^\star,p_0)$, $\tilde g:=\tilde g(x^\star,u^\star,p_0)$ verwendet werden):
+% % % \begin{equation}
+% % %  \frac{du}{dp}(p_0) =-
+% % % \nabla_u^2 L^{-1} \nabla_{up} L
+% % % -  \nabla_u \tilde g^{-T} \nabla_p \tilde g
+% % % \label{eq:uuuu}
+% % % \end{equation}
+% % % 
+% % % Zwar wurden die diskretisierten Zust?¯Å¼Â½nde $x^i = x^i(u,p)$ aus dem
+% % % Optimierungsvektor entfernt, da sie jedoch Zugeh?¯Å¼Â½rigkeitsfunktionen darstellen,
+% % % erh?¯Å¼Â½lt man ?¯Å¼Â½ber Folgerung~\ref{zugehoer} oder auch direkt ?¯Å¼Â½ber die Kettenregel
+% % % die Sensitivit?¯Å¼Â½tsableitungen der Zust?¯Å¼Â½nde $x^i$ zu den Zeiten 
+% % % $t_i$ als
+% % % \begin{equation}
+% % %  \frac{dx^i}{dp}(p_0) := \frac{dx^i}{dp}(u(p),p)\Bigr |_{p=p_0}
+% % % = \nabla_u x^i \frac{du}{dp}(p_0) + \nabla_p x^i,\quad i=1,\dots,l.
+% % % \label{eq:xxxx}
+% % % \end{equation}
+% % % 
+% % % Unter Verwendung der ersten Gleichung aus Folgerung~\ref{senseziel}  und der eben entwickelten Zustandsableitung f?¯Å¼Â½r $i=l$ kann die Sensitivit?¯Å¼Â½t der Zielfunktion ermittelt werden.
+% % % \begin{equation}
+% % % \begin{array}{rrl}
+% % % \displaystyle\frac{d\phi}{dp}(p_0) &:=& \displaystyle \frac{d\phi}{dp}(x^l(u(p)),p)\Bigr |_{p=p_0}
+% % % = \displaystyle\nabla_{x^l}\phi \frac{dx^l}{dp}(p_0) + \nabla_p f\\[.4cm]
+% % % &=& \displaystyle\nabla_{x^l}\phi \left[ \nabla_u(x^l)\frac{du}{dp}(p_0) + \nabla_px^l
+% % % \right ] + \nabla_p \phi
+% % % \label{senseziel1}
+% % % \end{array}
+% % % \end{equation}
+% % % Die zweite Gleichung dieser Folgerung f?¯Å¼Â½hrt auf eine Darstellung, die ohne die 
+% % % Sensitivit?¯Å¼Â½ten der Steuerung auskommt:
+% % % \[\frac{d\phi}{dp}(p_0) = \nabla_p L = \nabla_p f + \tilde\lambda^{\star T}\nabla_p \tilde g \]
+% % % 
+% % % %Gem?¯Å¼Â½?¯Å¼Â½ Folgerung \ref{sensefunk2} lauten die Sensitivit?¯Å¼Â½tsableitungen zweiter
+% % % %Ordnung der Zielfunktion
+% % % %\begin{eqnarray}
+% % % %\frac{d^2\phi}{dp^2}(p_0) =
+% % % %%:= \frac{d^2\phi}{dp^2}(x^N(u(p)),p)\Bigr |_{p=p_0}
+% % % %&=& \frac{du}{dp}(p_0)^T\nabla_{up}L+\frac{d\Lambda}{dp}(p_0)^T\nabla_p\tilde g+
+% % % %	\nabla_p^2L,\nonumber\\
+% % % %&=& 2\frac{du}{dp}(p_0)^T\nabla_{up}L+\frac{du}{dp}(p_0)^T\nabla_u^2L
+% % % %	\frac{du}{dp}(p_0)+\nabla_p^2L.\nonumber
+% % % %\end{eqnarray}
+% % % 
+% % % 
+% % % Mit der Berechnung der L?¯Å¼Â½sung des ungest?¯Å¼Â½rten Steuerproblems
+% % % und der Auswertung der Sensitivit?¯Å¼Â½tsableitungen ({\em offline}), k?¯Å¼Â½nnen
+% % % Steuerkorrekturen angegeben werden, um St?¯Å¼Â½rungen in einem System in Echtzeit auszugleichen ({\em online}).
+% % % B?¯Å¼Â½skens und Gerdts \cite{Bueskens2003} zeigen dies am Beispiel eines Notlandeman?¯Å¼Â½vers eines Flugzeugs,
+% % % B?¯Å¼Â½skens und Knauer \cite{Bueskens2006} f?¯Å¼Â½r die Bahnplanung eines Industrieroboters.
+% % % 
+% % % In dieser Arbeit werden die theoretischen Ergebnisse der Sensitivit?¯Å¼Â½tsanalyse in Abschnitt \ref{anwendsense} zur L?¯Å¼Â½sung von Bilevel-Optimal\-steuerungsproblemen verwendet.
+% % % 
+% % % 
+
+
+\fi

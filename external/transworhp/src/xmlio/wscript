@@ -1,0 +1,60 @@
+#!/usr/bin/env python
+
+import os
+import sys
+import platform
+from waflib import Options, Configure
+Configure.autoconfig = True
+
+def options(ctx):
+	ctx.load('compiler_cxx')
+
+	gr = ctx.get_option_group('configure options')
+	gr.add_option('--release', action='store_true', help='build release binaries')
+	gr.add_option('--profiling', action='store_true', help='build profiling binaries')
+
+def configure(ctx):
+	ctx.load('compiler_cxx')
+	if Options.options.release:
+		ctx.env.CXXFLAGS = ['-O2']
+		ctx.env.append_value('DEFINES', ['NDEBUG'])
+	else:
+		ctx.env.CXXFLAGS = ['-g']
+	ctx.env.append_value('CXXFLAGS', [
+		'-std=c++14', '-Wall', '-Wextra', '-Wzero-as-null-pointer-constant',
+		'-Werror=unused-value', '-Werror=reorder', '-Werror=parentheses', '-Werror=init-self',
+		'-Werror=switch', '-Werror=return-type', '-Werror=type-limits',
+	])
+	ctx.check_cxx(cxxflags=['-Wsuggest-override'], msg="Checking for '-Wsuggest-override'",
+	              mandatory=False, uselib_store='TMP')
+	if Options.options.profiling:
+		ctx.env.append_value('CXXFLAGS', '-pg')
+	if ((os.getenv('CLICOLOR', '1') != '0' and sys.stdout.isatty()) or
+	    os.getenv('CLICOLOR_FORCE', '0') != '0'):
+		ctx.env.append_value('CXXFLAGS', ['-fdiagnostics-color'])
+	ctx.check_cxx(lib='boost_unit_test_framework-mt'
+		if platform.system().startswith('MINGW') else 'boost_unit_test_framework',
+		defines='BOOST_TEST_DYN_LINK', uselib_store='BOOST_TEST')
+	ctx.env.append_value('CXXFLAGS', ctx.env.CXXFLAGS_TMP)
+
+def test(ctx):
+	Options.options.targets = 'unittest'
+	Options.commands = ['build'] + Options.commands
+
+def build(ctx):
+	ctx.objects(
+		name='base',
+		source=ctx.path.ant_glob('src/xmlio/*.cpp'),
+	)
+	for binary in ['xmlcreate', 'xmlview', 'xmltext']:
+		ctx.program(
+			target=binary,
+			source=['src/applications/' + binary + '.cpp', 'src/applications/base.cpp'],
+			includes=['src/xmlio'],
+			use='base',
+		)
+	ctx.program(
+		target='unittest',
+		source=ctx.path.ant_glob('src/unittest/*.cpp'),
+		use='base BOOST_TEST',
+	)

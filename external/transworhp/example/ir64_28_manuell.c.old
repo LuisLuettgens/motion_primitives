@@ -1,0 +1,46 @@
+
+double cq3 = cos(x[5]);
+double sq3 = sin(x[5]);
+
+double cq2 = cos(x[4]);
+double sq2 = sin(x[4]);
+
+double a1 = s3[0] * cq3 + s3[2] * sq3;
+double a2 = s3[2] * cq3 - s3[0] * sq3;
+
+double a3 = sgw[0] * cq3 + sgw[2] * sq3;
+double a4 = sgw[2] * cq3 - sgw[0] * sq3;
+
+double a5 = s2[0] * cq2 + s2[2] * sq2;
+double a6 = s2[2] * cq2 - s2[0] * sq2;
+
+double  b1 = l2[2] * cq2;
+double b2 = l2[2] * sq2;
+
+double  c1 = a1*b1-a2*b2;
+double  c2 = a2*b1+a1*b2;
+
+M[0][0] = m[0]*s1[0]*s1[0]
+		  + m[1]*((a5+l1[0])*(a5+l1[0])+s2[1]*s2[1])
+		  + m[2]*((a1+b2+l1[0])*(a1+b2+l1[0]) + s3[1]*s3[1]) +
+		  mgw*(a3+l1[0])*(a3+l1[0]) + i1z + i2x*sq2*sq2 + i2z*cq2*cq2 + i3x*sq3*sq3 + i3z*cq3*cq3;
+M[0][1] = -m[1]*a6*s2[1] - m[2]*b1*s3[1];
+M[0][2] = -m[2]*a2*s3[1];
+M[1][0] = M[0][1];
+M[1][1] = m[1]*(s2[2]*s2[2] + s2[0]*s2[0]) + m[2]*l2[2]*l2[2] + i2y;
+M[1][2] = m[2]*c2 ;
+M[2][0] = M[0][2];
+M[2][1] = M[1][2];
+M[2][2] = m[2]*(s3[2]*s3[2] + s3[0]*s3[0]) + mgw*(sgw[2]*sgw[2]+sgw[0]*sgw[0])+i3y;
+
+double d1 = m[1]*(a5+l1[0])*a6 + m[2]*(a1+b2+l1[0])*b1 + (i2x-i2z)*sq2*cq2;
+double d2 = mgw*(a3+l1[0])*a4 + m[2]*(a1+b2+l1[0])*a2 + (i3x-i3z)*sq3*cq3;
+
+rs[0]  = 2.*x[0]*x[1]*d1 + 2.*x[0] *x[2]*d2 + x[1]*x[1]*(m[1]*a5*s2[1]+m[2]*b2*s3[1])+x[2]*x[2]*m[2]*a1*s3[1];
+rs[1] = -x[0] *x[0]*d1-x[2]*x[2]*m[2]*c1-g*(m[1]*a5+m[2]*b2);
+rs[2] = -x[0] *x[0]*d2+x[1]*x[1]*m[2]*c1-g*(m[2]*a1+mgw*a3);
+
+rs[0] = -rs[0];
+rs[1] = -rs[1];
+rs[2] = -rs[2];
+

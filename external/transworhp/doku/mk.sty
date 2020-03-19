@@ -1,0 +1,327 @@
+\makeatletter
+
+\newcommand\clearoddpage{\clearpage\@newodd}
+\newcommand\clearevenpage{\clearpage\@neweven}
+\newcommand\clearthispage{\null\clearpage}
+\newcommand\newoddpage{\@ifstar{\null}{}\newpage\@newodd}
+\newcommand\newevenpage{\@ifstar{\null}{}\newpage\@neweven}
+\newcommand\@newodd{\ifodd\c@page\else
+  \null\newpage\if@twocolumn\null\newpage\fi\fi}
+\newcommand\@neweven{\ifodd\c@page
+  \null\newpage\if@twocolumn\null\newpage\fi\fi}
+  
+
+\definecolor{headdark}{rgb}{.8,0.8,0.88}
+\definecolor{headbrite}{rgb}{.9,.9,.94}
+
+%\definecolor{headdark}{rgb}{.133,.337,0.19}
+%\definecolor{headbrite}{rgb}{.5961,.655,.0627}
+
+\definecolor{c1}{rgb}{.2,.6,.6}
+\definecolor{c2}{rgb}{.5,.1,.0}
+
+
+
+
+\fboxsep1mm
+
+\newcommand{\algorithm}[1]{
+\vskip 2ex
+\fcolorbox{headdark}{headbrite}{\hspace{1cm}\parbox[t]{10.5cm}{\sf #1}}\\[2ex]
+}
+
+\newcommand{\algorithmi}[1]{
+\algorithm{
+\begin{itemize}\itemsep=.2em\topsep=0pt\partopsep=0pt\parskip=0pt\parsep=0pt
+#1
+\end{itemize}
+}}
+
+\newcommand{\algorithme}[1]{
+\algorithm{
+\begin{enumerate}\itemsep=.2em\topsep=0pt\partopsep=0pt\parskip=0pt\parsep=0pt
+#1
+\end{enumerate}
+}}
+
+\let\lstname\today
+
+\def\lst@MakeCaption#1{%
+  \lst@ifdisplaystyle
+    \ifx #1t%
+        \ifx\lst@@caption\@empty\expandafter\lst@HRefStepCounter \else
+                                \expandafter\refstepcounter
+        \fi {lstlisting}%
+        \ifx\lst@label\@empty\else \label{\lst@label}\fi
+        \let\lst@arg\lst@intname \lst@ReplaceIn\lst@arg\lst@filenamerpl
+        \global\let\lst@name\lst@arg \global\let\lstname\lst@name
+        \lst@ifnolol\else
+            \ifx\lst@@caption\@empty
+                \ifx\lst@caption\@empty
+                    \ifx\lst@intname\@empty \else \def\lst@temp{ }%
+                    \ifx\lst@intname\lst@temp \else
+                        \addcontentsline{lol}{lstlisting}\lst@name
+                    \fi\fi
+                \fi
+            \else
+                \addcontentsline{lol}{lstlisting}%
+                    {\protect\numberline{\thelstlisting}\hspace*{2cm}\lst@@caption}%
+            \fi
+         \fi
+     \fi
+    \ifx\lst@caption\@empty\else
+        \lst@IfSubstring #1\lst@captionpos
+            {\begingroup \let\@@vskip\vskip
+             \def\vskip{\afterassignment\lst@vskip \@tempskipa}%
+             \def\lst@vskip{\nobreak\@@vskip\@tempskipa\nobreak}%
+             \par\@parboxrestore\normalsize\normalfont % \noindent (AS)
+             \ifx #1t\allowbreak \fi
+             \ifx\lst@title\@empty
+                 \lst@makecaption\fnum@lstlisting\lst@caption % (AS)
+             \else
+                 \lst@maketitle\lst@title % (AS)
+             \fi
+             \ifx #1b\allowbreak \fi
+             \endgroup}{}%
+    \fi
+  \fi}
+
+\newcommand{\ccode}[2]{%
+\lstinputlisting[style=cpp,caption={[#2]#2}, name={#1}]{../tutorial/#1}%
+}
+\newcommand{\cccode}[3]{%
+\lstinputlisting[style=cpp,caption={[#2]#2}, name={#1}, firstline=#3,
+firstnumber=1]{../tutorial/#1}%
+}
+\newcommand{\ccccode}[4]{%
+\lstinputlisting[style=cpp,caption={[#2]#2}, name={#1}, firstline=#3,
+lastline=#4, firstnumber=1]{../tutorial/#1}%
+}
+\newcommand{\nocode}[2]{%
+\lstinputlisting[style=none,caption={[#2]#2}, name={#1}]{../tutorial/#1}%
+}
+
+
+\def\lstlistingname{}
+\def\lstlistlistingname{Programmverzeichnis}
+\renewcommand{\thelstlisting}{{\tt  \lstname}}
+
+\newcommand{\mcode}[1]{%
+\lstinputlisting[style=makefile]{programme/#1}%
+}
+\newcommand{\mcodex}[3]{%
+\lstinputlisting[style=makefile,caption={[#2]#2}, name={#3},nolol]{programme/#1}%
+}
+\newcommand{\ccodex}[3]{%
+\lstinputlisting[style=cpp,caption={[#2]#2}, name={#3},nolol]{programme/#1}%
+
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Listings %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lstdefinestyle{cpp}{%
+   language=C++,
+%   extendedchars=true,
+%   showstringspaces=false,
+   basicstyle=\ttfamily,
+   commentstyle=\color{blue},
+   keywordstyle=\color[rgb]{0,.7,0}\bfseries,
+   numbers=left,
+   numberstyle=\footnotesize\sf\color{headdark},
+   backgroundcolor=\color{headbrite},
+   rulecolor=\color{headdark},
+   frame=single,
+   stringstyle=\color[rgb]{1,.4,1.},
+   framesep=5pt,
+   tabsize=4,
+}
+
+\lstdefinestyle{cppshort}{%
+   language=C++,
+%   extendedchars=true,
+%   showstringspaces=false,
+   basicstyle=\ttfamily,
+   commentstyle=\color{blue},
+   keywordstyle=\color[rgb]{0,.7,0}\bfseries,
+   numbers=none,
+   backgroundcolor=\color{headbrite},
+   rulecolor=\color{headdark},
+   frame=single,
+   stringstyle=\color[rgb]{1,.4,1.},
+   framesep=5pt,
+   tabsize=4,
+}
+\lstdefinestyle{none}{%
+   language=make,
+%   extendedchars=true,
+%   showstringspaces=false,
+   basicstyle=\ttfamily,
+   commentstyle=\color{blue},
+   keywordstyle=\color[rgb]{0,.7,0}\bfseries,
+   numbers=none,
+   backgroundcolor=\color{headbrite},
+   rulecolor=\color{headdark},
+   frame=single,
+   stringstyle=\color[rgb]{1,.4,1.},
+   framesep=5pt,
+   tabsize=4,
+}
+
+\lstdefinestyle{cppop}{%
+   language=make,
+%   extendedchars=true,
+%   showstringspaces=false,
+   basicstyle=\ttfamily,
+   commentstyle=\color{blue},
+   keywordstyle=\color[rgb]{0,.7,0}\bfseries,
+   numbers=none,
+   backgroundcolor=\color{white},
+   rulecolor=\color{headdark},
+   frame=single,
+   stringstyle=\color[rgb]{1,.4,1.},
+   framesep=5pt,
+   tabsize=4,
+}
+
+\lstdefinestyle{mat}{%
+   language=Matlab,
+%   extendedchars=true,
+  % showstringspaces=true,
+   basicstyle=\ttfamily,
+  commentstyle=\color[rgb]{0,.6,0},
+ %  stringstyle=\color[rgb]{0,.6,.56},
+   keywordstyle=\color[rgb]{0,0,.9}\bfseries,
+   numbers=none,
+   backgroundcolor=\color{white},
+   rulecolor=\color{headdark},
+   frame=single,
+   stringstyle=\color[rgb]{1,.4,1.},
+   framesep=5pt,
+   tabsize=4,
+}
+
+
+\lstdefinestyle{makefile}{%
+   language=make,
+   basicstyle=\ttfamily,
+   commentstyle=\color{blue},
+   backgroundcolor=\color{headbrite},
+   rulecolor=\color{headdark},
+   frame=single,
+   stringstyle=\color[rgb]{1,.4,1.},
+   framesep=5pt,
+   defaultdialect=[gnu]make,
+   numbers=none,
+%   classoffset=0,
+   identifierstyle=\bfseries\color{c1},
+   keywordstyle=\color{c2}\bfseries,
+   nolol,
+%  
+%   classoffset=1,
+%   keywordsprefix=\$,
+%   morekeywords={all},
+%   keywordstyle=\color{red},
+%
+%   classoffset=0,
+   showtabs=true,
+   tab=\color{headdark}\rightarrowfill,
+   tabsize=4,
+}
+
+
+
+\newcommand{\command}[1]{{\colorbox{headbrite}{\tt #1}}}
+
+\newcommand{\ccommand}[2]{\removelastskip\vskip
+1ex\begin{tabular}{p{0.35\textwidth}p{0.55\textwidth}}%
+\colorbox{headbrite}{\tt #1}& {#2}\end{tabular}\vskip 1ex}
+
+%\newcommand{\ccommand}[2]{\rlap{\colorbox{headbrite}{\tt #1}} \hspace{5cm} {\it #2}}
+%\newcommand{\ccommand}[2]{\hbox to5cm{\colorbox{headbrite}{\tt #1}} \hspace{5cm} {\it #2}}
+%\newcommand{\ccommand}[2]{\rlap{\hspace{5cm}\it #2}\rlap{\colorbox{headbrite}{\tt #1}} i}
+
+
+%\newcommand{\sidenote}[1]{\removelastskip\vskip 1ex\begin{tabular}{p{0.55\textwidth}}% \colorbox{headbrite}{#1} \end{tabular}\vskip 1ex}
+
+\newcommand{\sidenote}[1]{\marginpar{\colorbox{headbrite}{\begin{minipage}{3.5cm}\begin{flushleft}%
+\footnotesize #1 \end{flushleft}\end{minipage}}}}
+
+
+
+
+%\newcommand{\console}[1]{\hspace{-.75\tabcolsep}
+%\vskip 3ex\par\begin{tabular}{>{\columncolor{headdark}[.5\tabcolsep]}cl}&\parbox{.96\textwidth}%
+%{\vspace{-.4cm}\tt \% #1\vspace{-.28cm}}
+%\end{tabular}
+%\par\vskip 3ex}
+%\newcommand{\console}[1]{\vskip 1em \par\hspace{1cm}\fcolorbox{black}{headbrite}{
+%\parbox{10.8cm}{\small \tt  #1 \begin{verbatim}ert\end{verbatim}}
+%}\par\vskip 1em}
+
+\newenvironment{console}%
+{%
+\verbatim
+%\hspace{-1.5cm}\minipage{2.4cm}\includegraphics[width=10mm]{images/terminal}\endminipage
+\hspace{9mm}\minipage{125mm}
+\tabcolsep1mm\tabular{%
+>{\columncolor{headdark}[\tabcolsep]}p{0mm}%
+>{\columncolor{headbrite}[\tabcolsep]}l%
+>{\columncolor{headdark}[\tabcolsep]}p{0mm}%
+}%
+&\small\hspace{2mm}\minipage{10.7cm}\vspace*{.5em}}%
+{\vspace*{.5em} \endminipage&\endtabular\endminipage\minipage{2.4cm}\includegraphics[width=10mm]{images/terminal}\endminipage
+\endverbatim}
+\newenvironment{consoles}%
+{%
+\verbatim
+%\hspace{-1.5cm}\minipage{2.4cm}\includegraphics[width=10mm]{images/terminal}\endminipage
+\hspace{9mm}\minipage{125mm}
+\tabcolsep1mm\tabular{%
+>{\columncolor{headdark}[\tabcolsep]}p{0mm}%
+>{\columncolor{headbrite}[\tabcolsep]}l%
+>{\columncolor{headdark}[\tabcolsep]}p{0mm}%
+}%
+&\hspace{2mm}\minipage{10.7cm}\vspace*{.5em}}%
+{\vspace*{.5em} \endminipage&\endtabular\endminipage\minipage{2.4cm}\includegraphics[width=10mm]{images/terminal}\endminipage
+\endverbatim}
+
+\newenvironment{consoles*}%
+{%
+\verbatim
+%\hspace{-1.5cm}\minipage{2.4cm}\includegraphics[width=10mm]{images/terminal}\endminipage
+\minipage{125mm}
+\tabcolsep1mm\tabular{%
+>{\columncolor{headdark}[\tabcolsep]}p{0mm}%
+>{\columncolor{headbrite}[\tabcolsep]}l%
+>{\columncolor{headdark}[\tabcolsep]}p{0mm}%
+}%
+&\small\hspace{2mm}\minipage{10.7cm}\vspace*{.5em}}%
+{\vspace*{.5em} \endminipage&\endtabular\endminipage\minipage{2.4cm}\includegraphics[width=10mm]{images/terminal}\endminipage
+\endverbatim}
+
+
+
+\newcommand{\coltblx}[2]{\hspace{-1.\tabcolsep}
+\begin{tabular}{>{\columncolor{headdark}}p{1.1cm}>{\columncolor{headbrite}}p{.97\textwidth}}%
+\vspace{.4cm}\bfseries\Huge\center #1&\vspace{.7cm}\bfseries\Huge#2\\[2cm]
+\end{tabular}}
+
+\newcommand{\coltbly}[2]{\hspace{-1.\tabcolsep}
+\begin{tabular}{>{\columncolor{headdark}}p{1.1cm}>{\columncolor{headbrite}}p{.97\textwidth}}%
+%\vspace{-.1cm}\LARGE#1&\vspace{-.1cm}\LARGE#2\\
+&\\[-.2cm]
+\LARGE#1&\LARGE#2\\[.1cm]
+\end{tabular}}
+
+\newcommand{\coltblz}[2]{\hspace{-1.\tabcolsep}
+\begin{tabular}{>{\columncolor{headdark}}p{1.1cm}p{.97\textwidth}}%
+%\vspace{-.1cm}\large#1&\vspace{-.1cm}\large#2\\
+\\[-.2cm]
+\large#1&\large#2\\[.03cm]
+\end{tabular}}
+
+
+
+\makeatother
+

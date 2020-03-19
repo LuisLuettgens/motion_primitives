@@ -1,0 +1,58 @@
+# Der Projektname
+project(TransWORHP-TUTORIAL)
+
+# Minimal benoetigte CMake-Version wenn z.B. bestimmte CMake-Kommandos benutzt werden
+cmake_minimum_required(VERSION 2.6)
+#set( CMAKE_VERBOSE_MAKEFILE on )
+
+
+# Zusätzliche include-Verzeichnisse
+include_directories(../include/xmlio/ )
+include_directories(/localdata/opt/local/include/ )
+include_directories(../include/glplot/ )
+include_directories(../include/core/ )
+include_directories(../include/ )
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O3")
+
+link_directories(${PROJECT_SOURCE_DIR}/../lib )
+
+
+link_libraries(TransWORHP SDL2 GL)
+add_definitions( -DTRANSWORHP_GRAPHICS )
+
+# Die ausfuehrbare Datei. Anstatt der Variablen koennen auch noch zusaetzliche Dateien angegeben werden
+add_executable (spline0 spline0.cpp)
+add_executable (spline1 spline1.cpp)
+add_executable (spline2 spline2.cpp)
+add_executable (spline3 spline3.cpp)
+add_executable (spline4 spline4.cpp)
+add_executable (spline5 spline5.cpp)
+add_executable (spline_load spline_load.cpp)
+add_executable (spline_ruku spline_ruku.cpp)
+#add_executable (spline_ad spline_ad.cpp)
+add_executable (spline_int spline_int.cpp)
+#add_executable (spline_expl spline_expl.cpp)
+#add_executable (spline_zen spline_zen.cpp)
+add_executable (spline_phase spline_phase.cpp)
+
+
+set_target_properties(
+	spline0
+	spline1
+	spline2
+	spline3
+	spline4
+	spline5
+
+	spline_load
+	spline_ruku
+#	spline_ad
+	spline_int
+#	spline_expl
+#	spline_zen 
+	spline_phase
+
+		PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/../tutorial_release
+)
+

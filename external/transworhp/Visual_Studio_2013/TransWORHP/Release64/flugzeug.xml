@@ -1,0 +1,13 @@
+<?xml encoding="UTF-8" standalone="yes" version="1.0"?>
+<!DOCTYPE LAUFKATZE SYSTEM "krobot.dtd">
+<LAUFKATZE>
+
+	<SCENE>
+        <PATH>./</PATH>
+        <MODEL id="flugzeug" scale="1">landschaft.obj</MODEL>
+        <CAMERA pos="0,1.67,-10" rotx="-20" roty="40" focus="82" />
+	</SCENE>
+
+
+</LAUFKATZE>
+

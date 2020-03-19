@@ -1,0 +1,21 @@
+<!-- Chemischer Reaktor Problem -->
+
+<? xml version ="1.0" encoding =" UTF -8" ?>
+<problem>
+	<objective>-x2(end)</objective>
+	<runtime end="1"/>
+	
+	<state name="x1">
+		<term>-u*x1+u^2*x2</term>
+		<start>1</start>
+	</state>
+
+	<state name="x2">
+		<term>u*x1-3*u^2*x2</term>
+		<start>0</start>
+	</state>
+
+	<control name="u">
+		<boundaries lower="0" upper="1"/>
+	</control>
+</problem>

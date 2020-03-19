@@ -1,0 +1,14 @@
+#! /bin/sh
+
+USER=ftp1159690-transworhp
+PASSWD=Z3F-X029a
+
+ftp -nv www.worhp.de <<SCRIPT
+user $USER $PASSWD
+binary
+cd download
+ls
+put TransWORHP_Linux64_2017_02_02.tgz
+quit
+SCRIPT
+

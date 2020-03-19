@@ -1,0 +1,80 @@
+<!-- Laufkatze ausgeklammert Problem -->
+
+<? xml version ="1.0" encoding =" UTF -8" ?>
+<problem>
+	<!-- Zielobjekt -->
+	<objective>x8(end)+0.1*p0</objective>
+	
+	<!-- Zustaende -->
+	<state name="x0">
+		<term>x1*p0</term>
+		<start>0</start>
+		<final>8</final>
+		<boundaries lower="0" upper="100"/>
+	</state>
+	<state name="x1">
+		<term>x4*p0</term>
+		<start>0</start>
+		<final>0</final>
+		<boundaries lower="-3" upper="3"/>
+	</state>
+	<state name="x2">
+		<term>x3*p0</term>
+		<start>0</start>
+		<final>0</final>
+		<boundaries lower="-2" upper="2"/>
+	</state>
+	<state name="x3">
+		<term>p0*x4-p0*9.81*x2/x5+p0*x7*x2/x5</term>
+		<start>0</start>
+		<final>0</final>
+		<boundaries lower="-10" upper="10"/>
+	</state>
+	<state name="x4">
+		<term>u0*p0</term>
+		<start>0</start>
+		<final>0</final>
+		<boundaries lower="-4" upper="4"/>
+	</state>
+	<state name="x5">
+		<term>x6*p0</term>
+		<start>5</start>
+		<final>4</final>
+		<boundaries lower="0.5" upper="15"/>
+		<initialguess>5</initialguess>
+	</state>
+	<state name="x6">
+		<term>x7*p0</term>
+		<start>0</start>
+		<final>0</final>
+		<boundaries lower="-3" upper="3"/>
+	</state>
+	<state name="x7">
+		<term>u1*p0</term>
+		<start>0</start>
+		<final>0</final>
+		<boundaries lower="-10" upper="10"/>
+	</state>
+	<state name="x8">
+		<term>p0*u0*u0+p0*u1*u1</term>
+		<start>0</start>
+		<boundaries lower="0"/>
+	</state>
+
+	<!-- Steuerungen -->
+	<control name="u0">
+		<boundaries lower="-1" upper="1"/>
+		<initialguess>0</initialguess>
+	</control>
+	<control name="u1">
+		<boundaries lower="-1" upper="1"/>
+		<initialguess>0</initialguess>
+	</control>
+
+	<!-- Parameter -->
+	<param name="p0">
+		<boundaries lower="1" upper="15"/>
+		<initialguess>12</initialguess>
+	</param>
+
+</problem>

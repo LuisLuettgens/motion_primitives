@@ -1,0 +1,42 @@
+matrix:
+  IMAGE:
+    - debian8:2017-02-06
+    - fedora25
+clone:
+  restore-cache:
+    image: drillster/drone-volume-cache
+    restore: true
+    mount:
+      - .git/
+    volumes:
+      - /tmp/cache:/cache
+  git:
+    image: plugins/git
+pipeline:
+  build:
+    image: jhasse/${IMAGE}
+    commands:
+      - waf --color=yes
+      - valgrind --quiet --leak-check=full --error-exitcode=1 ./build/unittest --report_level=detailed
+    environment:
+      - CLICOLOR_FORCE=1
+      - PYTHONUNBUFFERED=1
+      - LANG=C.UTF-8
+  restore-cache:
+    image: drillster/drone-volume-cache
+    rebuild: true
+    mount:
+      - .git/
+    volumes:
+      - /tmp/cache:/cache
+    when:
+      local: false
+  notify:
+    image: drillster/drone-email
+    from: '"Drone" <noreply@worhp.de>'
+    host: vwp12781.webpack.hosteurope.de
+    port: 587
+    username: wp1159690-noreply
+    secrets: [ email_password ]
+    when:
+      status: [ failure ]

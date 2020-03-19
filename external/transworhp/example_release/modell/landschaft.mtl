@@ -1,0 +1,123 @@
+#  ==========================================================================
+#  Wavefront Material file
+#  Exported by Red-i Productions' "Riptide"
+#  (a free plugin for Cinema 4D PC & Mac, R7.3 or later)
+#  
+#  Red-i Productions
+#  http://skinprops.com
+#  
+#  ==========================================================================
+
+newmtl green
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.764706 0.972549 0.858824
+map_Kd boden.png
+
+newmtl water
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.392157 0.658824 1.000000
+
+newmtl default_Mat
+d 1.000000
+illum 2
+Kd 0.800000 0.800000 0.800000
+
+newmtl cherokee-alas
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.000000 0.000000 0.000000
+Ks 1.000000 1.000000 1.000000
+map_Kd C-ALAS.png
+
+newmtl cherokee-tren
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.000000 0.000000 0.000000
+Ks 1.000000 1.000000 1.000000
+map_Kd C-TREN.png
+
+newmtl cherokee-altrase
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.000000 0.000000 0.000000
+Ks 1.000000 1.000000 1.000000
+map_Kd C-ALERON.png
+
+newmtl cherokee-tren1
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.000000 0.000000 0.000000
+Ks 0.898039 0.898039 0.898039
+map_Kd C-TREN.png
+
+newmtl cherokee-ruedas
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.098039 0.098039 0.117647
+Ks 1.000000 1.000000 1.000000
+
+newmtl cherokee-chelice
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.000000 0.000000 0.000000
+Ks 1.000000 1.000000 1.000000
+map_Kd C-HELICE.png
+
+newmtl cherokee-piezas
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 1.000000 0.780392 0.254902
+Ks 0.929412 0.929412 0.929412
+
+newmtl cherokee-lateral
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.000000 0.000000 0.000000
+Ks 1.000000 1.000000 1.000000
+map_Kd C-LADO.png
+
+newmtl Material_#5738
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.698039 0.698039 0.698039
+Ks 0.898039 0.898039 0.898039
+
+newmtl cherokee-helice
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.129412 0.172549 0.223529
+Ks 1.000000 1.000000 1.000000
+
+newmtl cherokee-pilotoi
+Ns 50.781250
+d 0.000000
+illum 2
+Kd 0.811765 0.000000 0.000000
+Ks 1.000000 1.000000 1.000000
+
+newmtl cherokee-cris1
+Ns 50.781250
+d 0.000000
+illum 2
+Kd 0.050980 0.196078 0.003922
+Ks 1.000000 1.000000 1.000000
+
+newmtl B747
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 1.000000 1.000000 1.000000

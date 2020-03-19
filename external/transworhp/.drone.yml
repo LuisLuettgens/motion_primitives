@@ -1,0 +1,43 @@
+clone:
+  restore-cache:
+    image: drillster/drone-volume-cache
+    restore: true
+    mount:
+      - .git/
+    volumes:
+      - /tmp/cache:/cache
+  git:
+    image: plugins/git
+pipeline:
+  build:
+    image: jhasse/fedora25
+    commands:
+      - curl -o /tmp/worhp.rpm https://titan.math.uni-bremen.de/static-files/NSTTWhJ7goUIJI/worhp-1.9-1.fc25.x86_64.rpm
+      - dnf install -y /tmp/worhp.rpm
+      - mkdir -p lib
+      - "[ -e lib/libworhp.so ] || ln -s /usr/lib64/libworhp.so lib/libworhp.so"
+      - mkdir -p build_drone_1 && cd $_
+      - cmake -DBUILD-OPTIONS_TransWORHP_WORKSHOP=YES -DBUILD-OPTIONS_TransWORHP_BETTS=YES -DBUILD-OPTIONS_TransWORHP_UNITTEST=YES -DBUILD-OPTIONS_TransWORHP_BOOST=YES ..
+      - make
+      - cd -
+      - mkdir -p build_drone_2 && cd $_
+      - cmake -DBUILD-OPTIONS_TransWORHP_GRAPHICS=NO -DBUILD-OPTIONS_TransWORHP_BOOST=YES ..
+      - make
+    environment:
+      - CLICOLOR_FORCE=1
+  restore-cache:
+    image: drillster/drone-volume-cache
+    rebuild: true
+    mount:
+      - .git/
+    volumes:
+      - /tmp/cache:/cache
+    when:
+      local: false
+  notify:
+    image: drillster/drone-email
+    from: '"Drone" <noreply@worhp.de>'
+    host: vwp12781.webpack.hosteurope.de
+    port: 587
+    username: wp1159690-noreply
+    secrets: [ email_password ]

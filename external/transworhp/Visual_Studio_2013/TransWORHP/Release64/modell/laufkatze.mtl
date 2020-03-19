@@ -1,0 +1,47 @@
+#  ==========================================================================
+#  Wavefront Material file
+#  Exported by Red-i Productions' "Riptide"
+#  (a free plugin for Cinema 4D PC & Mac, R7.3 or later)
+#  
+#  Red-i Productions
+#  http://skinprops.com
+#  
+#  ==========================================================================
+
+newmtl floor
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.950000 0.830784 0.950000
+
+newmtl blau
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.697059 0.709451 0.746627
+Ks 0.486078 0.488706 0.567529
+
+newmtl rot
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.980000 0.372784 0.326667
+
+newmtl gruen
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.140706 0.920000 0.180392
+
+newmtl gold
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.888392 0.818353 0.353882
+Ks 0.690000 0.110941 0.690000
+
+newmtl schwarz
+Ns 50.781250
+d 1.000000
+illum 2
+Kd 0.222118 0.210824 0.120471

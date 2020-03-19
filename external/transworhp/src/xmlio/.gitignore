@@ -1,0 +1,21 @@
+# build-folder
+Release_Linux/
+
+# Visual Studio
+bin/*.exe
+bin/*.dll
+bin/*.pdb
+bin/*.lib
+bin/*.exp
+bin/*.ilk
+*.sdf
+*.suo
+
+# Visual Studio Code
+/.vscode/*.db*
+/.vscode/c_cpp_properties.json
+
+# Waf
+.lock-waf*
+.waf*
+build/

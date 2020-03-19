@@ -1,0 +1,87 @@
+<?xml encoding="UTF-8" standalone="yes" version="1.0"?>
+<!DOCTYPE TRANSWORHP SYSTEM "krobot.dtd">
+<TRANSWORHP>
+	<WORHP param="worhp.xml">
+		<USERDF>1</USERDF>
+		<USERDG>1</USERDG>
+		<USERHM>1</USERHM>
+	</WORHP>
+
+	<SOLVER ndis="11">fd</SOLVER><!-- fd: volle Disk, expl: Mehrfachschiessen, pm: Pseudospektral -->
+
+	<DISCRETIZATION>1</DISCRETIZATION> <!-- 0: Euler, 1: Trapez, 2: HermiteSimpson, ignoriert fuer ExplTW -->
+
+	<FINITEDIFF>1e-6</FINITEDIFF>
+
+	<BUTCHER stepsize="0.01" abserr="1e-6" relerr="1e-6" linInter="1" parallel='1'>6</BUTCHER>
+
+	<HESSIAN>
+		<STRUCTURE>3</STRUCTURE>
+		<VALUES>0</VALUES>
+	</HESSIAN>
+
+	<MAGIC_HESSIAN>
+		<STRUCTURE>5</STRUCTURE>
+		<VALUES>4</VALUES>
+	</MAGIC_HESSIAN>
+
+	<GUI grid="0">1</GUI>
+
+	<PLOT>
+		<SPARSITY>DF</SPARSITY>
+		<SPARSITY>DG</SPARSITY>
+		<SPARSITY>HM</SPARSITY>
+	</PLOT>
+
+	<!-- Struktur in Konsole. 0=aus, sonst=an -->
+	<SHOWSTRUCTURE>
+		<OBJ>1</OBJ>
+		<ODE>1</ODE>
+		<RAND>1</RAND>
+		<NEBEN>1</NEBEN>
+	</SHOWSTRUCTURE>
+
+	<WINDOW width="800" height="600" mode="normal" resolution="default" x="0" y="0">
+		<OPENGL multisamplebuffers="1" multisamplesamples="4" />
+		<LOGO>ZeTeM</LOGO>
+		<BACKGROUND color_top="255,255,255,255" color_bottom="255,255,255,255" />
+
+		<!--BACKGROUND color_top="153,153,179,255"
+		color_bottom="196,225,255,255" /-->
+		<MENU color_back="153,153,179,255" color_fps="153,153,179,255" />
+	</WINDOW>
+
+	<CONSOLE width="136" height="2000" color="CONSOLE" >
+		<FONT width="6" height="8" />
+	</CONSOLE>
+
+	<PSEUDOSPECTRAL>
+		<NODE_TYPE>2</NODE_TYPE> <!-- 0:chebyshev-lobatto, 1:chebyshev-maxima, 2:legendre-lobatto -->
+		<SMOOTHMODE>1</SMOOTHMODE>
+		<DISPLAYPOINTS>64</DISPLAYPOINTS>
+	</PSEUDOSPECTRAL>
+
+	<MESHREF modus="0" > <!-- 0:Betts, 1:Bueskens, 2:beides -->
+
+		<FEHLER_MOD>0</FEHLER_MOD> <!-- Modus der Fehlerberechnung: 0:Betts, 1:hoeheres Verfahren -->
+		<TOL>1e-8</TOL> <!-- Grenze fuer Fehler -->
+
+		<maxIter>100</maxIter> <!-- max. Anzahl der Verfeinerungsschritte -->
+
+		<!-- Betts Parameter - Anfang -->
+		<M1>5</M1> <!-- maximale Anzahl neue Punkte pro Intervall; Standard: 5 -->
+		<R>0</R> <!-- globale Ordnungsreduktion (falls nicht die gewuenschte Genauigkeit erreicht wird) -->
+		<KAPPA>0.1</KAPPA> <!-- Faktor nach Betts; Standard: 0.1 -->
+		<M></M> <!-- maximale Anzahl neuer Punkte insgesamt; wenn leer: Standard -->
+		<!-- Betts Parameter - Ende -->
+
+		<VERLAUF>1</VERLAUF> <!-- zeigt Zwischenschritte (grafisch) der Verfeinerung an -->
+
+		<PLOTS> <!-- 0:an, 1:aus -->
+			<SCHRITTWEITE>0</SCHRITTWEITE>
+			<FEHLER>1</FEHLER>
+			<GITTERPUNKTE>1</GITTERPUNKTE>
+			<LAMBDA>0</LAMBDA>
+		</PLOTS>
+	</MESHREF>
+</TRANSWORHP>

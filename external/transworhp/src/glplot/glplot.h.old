@@ -1,0 +1,229 @@
+#ifndef glplot_h
+#define glplot_h
+
+class XMLNode;
+
+#ifdef WIN32
+
+#define drawline_ DRAWLINE
+
+#endif
+
+/** @name Function Pointers
+ *  Functions of this type can be provided to implement user defined drawing of
+ *  data. 
+ * @{
+ */
+/**
+ *  Use this typedef to implement your own data drawing routine, see also
+ *  createuserwindow_().
+ *  @param handle Window handle.
+ *  @param frame Current frame to be drawn.
+ *  @param len Number of available data sets.
+ *  @param ndgl Dimension of x data set.
+ *  @param nsteuer Dimension of u data set.
+ *  @param t Time vector (of size len).
+ *  @param x ODE vector (of size len*ndgl).
+ *  @param u Control vector (of size len*nsteuer).
+ *  @param bord Set this double[4]-Vector to provide min/max values for axes.
+ */
+typedef void (*Funktionenzeiger) (int &handle, int &frame,
+                                  int &len, int &ndgl, int &nsteuer, double *t, double *x,
+                                  double *u, double *bord);
+typedef void (*FunktionenzeigerI) (int &handle, int &frame,
+                                   int &len, int &ndgl, int &nsteuer, double *t, double *x,
+                                   double *u, double *bord, int &index);
+typedef void (*FunktionenzeigerU) (int &handle, int &frame,
+                                   int &len, int &ndgl, int &nsteuer, int &nunbe, double *t, double *x,
+                                   double *u, double *unknown, double *bord);
+/**
+ *  Use this typedef to draw more complex data sets by combining values from
+ *  t, x and u, see also createdatawindow_().
+ *  @param len Number of available data sets.
+ *  @param ndgl Dimension of x data set.
+ *  @param nsteuer Dimension of u data set.
+ *  @param t Time vector (of size len).
+ *  @param x ODE vector (of size len*ndgl).
+ *  @param u Control vector (of size len*nsteuer).
+ *  @param i Data at position i (out of len) should be returned.
+ *  @param index Specify type of value.
+ *  @return Calculated data of type index at position i.
+ */
+typedef double (*Funktionenzeiger2) (int &len, int &ndgl, int &nsteuer,
+                                     double *t,double *x, double *u, int &i, int &index);
+/** @} */
+typedef void (*FunktionenzeigerC) (int &button, double &xpos, double &ypos,
+                                   int &len, int &ndgl, int &nsteuer, double *t, double *x, double *u
+                                  );
+typedef void (*action) ();
+
+typedef double (*timefuncf) (int &, double *, double *, double *, int &, int &, int &);
+
+
+typedef void* (*threadf22) (void*);
+
+extern "C" void initdisplay_() ;
+
+extern "C" void createplot_(int &d, int &w, int &h, int &lo, int &hi);
+extern "C" void addcomparecurve_(int &cmpstep, double *cmp);
+extern "C" void addcomparecurve2_(int &cmpstep, double *cmp, double *cmptime);
+extern "C" void createphaseplot_(int &d1,int &d2,int &w,int &h,
+	                                   int &lo1, int &hi1, int &lo2, int &hi2);
+extern "C" void createuserplot_(Funktionenzeiger func,
+	                                  int &w,int &h, int &lo1, int &hi1, int &lo2, int &hi2);
+extern "C" void createuserplotunbe_(FunktionenzeigerU func,
+	                                  int &w,int &h, int &lo1, int &hi1, int &lo2, int &hi2);
+extern "C" void createindexuserplot_(FunktionenzeigerI func,
+	                                       int &w,int &h, int &lo1, int &hi1, int &lo2, int &hi2, int &index);
+extern "C" void createdataplot_(char *s,int &strl,Funktionenzeiger2 func,
+	                                  int &w,int &h, int &lo, int &hi, int &index);
+extern "C" void createdata2plot_(char *s,int &strl,Funktionenzeiger2 func,
+	                                  int &w,int &h, int &lo, int &hi, int &index, int &index2);
+extern "C" void createmultidataplot_(char *s, int &strl,Funktionenzeiger2 func,
+	                                       int &w,int &h, int &lo, int &hi, int *index);
+extern "C" void createtabularplot_(int &n, int &m, double *val, char *heads,
+	                                   int &w,int &h);
+extern "C" void creatematrixplot_(double *s,int &w,int &h, int &dim1, int &dim2);
+
+//#include "worhp/C_cs.h"
+extern "C" void createsparseplot_(/*WorhpMatrix*/ void *s,int &w,int &h);
+extern "C" void createthreedplot_(int &w,int &h);
+
+extern "C" void setheader_(char *s, int mode);
+extern "C" void setmaxtime_(double &mode);
+
+
+extern "C" void run_(threadf22 f);
+extern "C" void run2_(threadf22 f, void *arg);
+
+extern "C" void plot_(int &len, int &ndgl, int &nsteuer, int &nneben,
+	                      double *t, double *x, double *u, double *g);
+extern "C" void ploti_(int &len, int &ndgl, int &nsteuer, int &nneben,
+	                      double *t, double *x, double *u, double *g, int *i);
+extern "C" void plotunbe_(int &len, int &ndgl, int &nsteuer, int &nneben, int &nunbe,
+	                      double *t, double *x, double *u, double *g, double *unknown);
+extern "C" void shareunbe_(int &len, int &ndgl, int &nsteuer, int &nneben, int &nunbe,
+	                      double *t, double *x, double *u, double *g, double *unknown);
+
+extern "C" void waitforever_();
+extern "C" void wait_();
+extern "C" int createfromxml_(XMLNode *xml);
+			      
+			      
+			      
+			      
+			      
+/**
+*  Set time dgl.
+*  @param time dgl.
+*/
+extern "C" void settimedgl_(int &timedgl_);
+extern "C" void settimedglsplit_(int &timedgl_, int &splitd, int &splitl, int &splitd2, int &spliti);
+
+/**
+ *  Set fixed time.
+ */
+extern "C" void setfixedtime_();
+
+/**
+ *  Use simple time axis
+ */
+extern "C" void settimeistime_();
+
+
+/**
+ *  Set time axis as [0,t].
+ *  @param t Upper Value.
+ */
+extern "C" void setfloattime_(double &t);
+/** @} */
+
+extern "C" void settimefunc_();
+extern "C" void settimefunc2_(timefuncf f);
+
+extern "C" double calltimefunc_(int &i,double *X, double *UNBE, double *T,
+	                                int &len, int &ndgl, int &nunbe);
+extern double stopmark;
+
+extern "C" void setepsname_(char *s);
+extern "C" void setepssubname_(char *s);
+//extern "C" void setepstitle_(const char *s);
+extern "C" void setepstitle2_(int len, const char *s);
+extern "C" void controldata_(int &i);
+extern "C" void setusercontrol_(FunktionenzeigerC func);
+extern "C" void setscaledata_(double &s);
+
+/** @name Low-Level Drawing Routines
+ *  Use these basic functions in your drawing routines passed to
+ *  createuserwindow_().
+ *  @{
+ */
+/**
+ *  Draw a dot at (x/y) (in logical coordinates).
+ *  @param handle Window handle.
+ *  @param mode Color mode (0 = red, 1 = white + thick, 2 = green).
+ */
+extern "C" void drawdot_(int &handle, double &x, double &y, int &mode);
+/**
+ *  Draw a line from (x1/y1) to (y2/y2) (in logical coordinates).
+ *  @param handle Window handle.
+ *  @param mode Color mode (0 = red, 1 = white + thick, 2 = green).
+ */
+extern "C" void drawline_(int &handle, double &x1, double &y1, double &x2,
+	                          double &y2, int &mode);
+/**
+ *  Draw a line from (x1/y1) to (y2/y2) (in logical coordinates).
+ *  @param handle Window handle.
+ *  @param mode Color mode (0 = red, 1 = white + thick, 2 = green).
+ */
+extern "C" void drawpolyline_(int &handle, double *x, double *y, int &n, int &mode);
+
+/**
+ * Set color for drawing explicitly.
+ * @param handle Window handle.
+ * @param mode Color
+ */
+extern "C" void setcol_(int &handle, int &mode);
+extern "C" void setlinewidth_(int &handle, int &w);
+
+/**
+ *  Draw rectangle with corners (x1/y1),...(x4/y4) (in logical coordinates).
+ *  @param handle Window handle.
+ *  @param mode Color and fill mode (0 or 1).
+ */
+extern "C" void drawrect_(int &handle, double &x1, double &y1,
+	                          double &x2, double &y2, double &x3, double &y3, double &x4, double &y4,
+	                          int &mode);
+/**
+ *  Draw string text.
+ *  @param handle Window handle.
+ */
+extern "C" void drawtext_(int &handle, char *text, int &strl);
+
+extern "C" void drawtextpos_(int &handle, char *text, int &strl, double &x, double &y);
+extern "C" void drawdoublepos_(int &handle, double &val, double &x, double &y);
+
+/** @} */
+
+extern "C" void tileplots_();
+extern "C" void autoscale_();
+extern "C" int isdisplay_();
+extern "C" void sethue_(double &h);
+
+extern "C" void colormax_(int &h);
+extern "C" void noautochange_();
+extern "C" void update_();
+
+extern "C" void settitle_(char *name);
+extern "C" void redflag_();
+
+extern "C" void closeall_();
+extern "C" void setxml_(XMLNode *xml);
+
+#include "xmlio.h"
+extern XMLNode *DataNode;
+
+/** @} */
+
+
+#endif // glplot_h

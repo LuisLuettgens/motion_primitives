@@ -1,0 +1,286 @@
+
+
+\chapter{Funktionsübersicht}
+
+In diesem Kapitel werden die wichtigsten Funktionen erklärt.
+
+\section{Die Klasse {\tt TransWorhp}}
+
+Von dieser Klasse werden alle Probleme abgeleitet.
+
+\subsection{Systemmethoden}
+
+Konstruktor 
+
+\syntax{TransWorhp(const std::string \&s, int dis, int ode, int ctrl, int param, int rand, int neben);}
+
+Destruktor
+
+\syntax{\textasciitilde TransWorhp();}
+
+WORHP-Arbeitsspeicher anlegen und mit Instanz verknüpfen:
+
+\syntax{int Init(XMLNode *xml, OptVar \&o, Workspace \&w, Params \&p, Control \&c, Viewer *viewer=0);}
+
+XML-Dateien lesen:
+
+\syntax{static XMLNode *ReadParams(const std::string\& filename);}
+
+Optimierungsschleife:
+
+\syntax{int Loop();}
+
+
+\subsection{Zugriffsmethoden}
+
+Die Zustände und Steuerungen werden in den Optimierungsvektor von WORHP geschrieben. Damit komfortabel auf einzelne von ihnen zugegriffen werden kann, stehen verschiedene Funktionen bereit. Steuerung und der Zustand lassen sich zu jedem diskreten Zeitpunkt {\tt dis} mit folgenden Methoden auslesen. Da freie Parameter für alle Zeitpunkte gleich sind, gibt es nur einen Wert.
+
+\syntax{double x(int dis, int ode) const;
+
+	double u(int dis, int ctrl) const;
+
+	double p(int param) const;
+}
+
+Wird das Optimalsteuerungsproblem mit Verfahren höherer Ordnung (z.B Hermite-Simpson) gelöst, werden Zwischenpunkte eingefügt. An diesen Punkten lässt sich ebenfalls der Zustand und die Steuerung auslesen. Die Methoden {\tt x\_\_()} und {\tt u\_\_()} laufen über alle Punkte, wohingegen die Methoden {\tt x()} und {\tt u()} nur an den 'Haupt'punkten auswerten und alle Zwischenpunkte überspringen.
+
+\syntax{double x\_\_(int dis, int ode) const;
+
+double u\_\_(int dis, int ctrl) const;
+}
+
+Indexbestimmung 
+
+\syntax{
+	int x\_index(int dis, int ode);
+
+	int u\_index(int dis, int ctrl);
+
+	int p\_index(int param);
+
+	int p\_indexode(int param);
+}
+	
+\subsection{Implementierung des OCP}
+
+\subsubsection{Überladbare Methoden}
+
+
+Zielfunktion 
+
+	\syntax{double obj();
+
+bool obj\_structure(DiffStructure \&s);
+
+bool obj\_diff(DiffStructure \&s);
+}
+	
+	
+ODE-System
+
+	\syntax{
+void ode(double *dx, double t, const double *x, const double *u, const double *p);
+
+	bool ode\_structure(DiffStructure \&s);
+
+	bool ode\_diff(DiffStructure \&s, double t, const double *x, const double *u, const double *p);
+
+	bool ode\_diff\_p(DiffStructure \&s, double t, const double *x, const double *u, const double *p, int index);
+	}
+
+(letztere Funktion bestimmt ausschließlich die Ableitung nach Parametern!)
+
+
+Box-Beschränkungen
+
+	\syntax{void x\_boundary(double *x\_low, double *x\_upp);
+
+	 void u\_boundary(double *u\_low, double *u\_upp);
+
+	 void p\_boundary(double *p\_low, double *p\_upp);
+
+	 void var\_boundary(double *x\_low, double *x\_upp);
+}
+
+Rand-Bedingungen
+
+\syntax{	 void rand(double *r);
+
+	 void rand\_boundary(double *r\_low, double *r\_upp);
+
+	 bool rand\_structure(DiffStructure \&s);
+
+	 bool rand\_diff(DiffStructure \&s);
+}
+
+	Nebenbedingungen
+
+	\syntax{void neben(double *c, double t, const double *x, const double *u, const double *p);
+
+	 void neben\_boundary(double *c\_low, double *c\_upp);
+
+	 bool neben\_structure(DiffStructure \&s);
+
+	 bool neben\_diff(DiffStructure \&s, double t, const double *x, const double *u, const double *p);
+
+	 bool neben\_diff\_p(DiffStructure \&s, double t, const double *x, const double *u, const double *p, int index);
+	}
+
+	Startschätzung
+
+\syntax{ void init();
+
+	 void p\_init(double *p);
+
+	 void x\_init(double *x, int i, int dis);
+
+	 void u\_init(double *u, int i, int dis);
+}
+
+\subsection{I/O-Methoden}
+
+\subsubsection{Überladbare Methoden}
+
+Aufruf in jedem Iterationschritt für Konsolen- oder Datei-Ausgabe:
+
+\syntax{	
+int step();
+}
+Wird 0 zurückgegeben, wird die Optimierung unterbrochen.
+
+Aufruf am Ende der Optimierung für Konsolen- oder Datei-Ausgabe:
+
+\syntax{	
+void terminate();
+}
+
+
+\subsubsection{Grafisches Interface}
+
+Weitere Plots erzeugen und Plots beschriften:
+
+\syntax{void OpenWindows(Viewer *gr);
+
+std::string GetXTitle(int d);
+
+std::string GetUTitle(int d);
+}
+
+\subsection{Weiterführende Methoden}
+
+Zeitdiskretisierung anpassen, z.B. im Konstruktor:	
+
+\syntax{void TimeAxis(double exponent);}
+oder manuell.
+
+
+
+
+
+Zustand oder Steuerung an beliebigem Zeitpunkt auslesen:
+
+\syntax{
+	void GetState(double *x, double t);
+
+	void GetControl(double *u, double t);
+	}
+
+
+\section{Die Struktur {\tt DiffStructure}}
+
+Einträge in den Ableitungsmatrizen können angelegt und gesetzt werden durch den Klammeroperator:
+
+\syntax{
+	double\& operator()(int i, int j);
+}
+
+\subsection{Zugriff auf DiffStructure}
+
+Mit Hilfsfunktionen wird der richtige Index zugeordnet.
+
+lokale Strukturen (ode, integral, neben):
+Zugriff mit x\_indexode
+
+globale Strukturen (rand, obj):
+Zugriff mit x\_index
+
+TODO: Bild
+
+\section{Die Klasse {\tt Viewer}}
+
+In {\tt OpenWindows()} können neue Plots hinzugefügt werden:
+
+Struktur der Ableitungs-Matrix plotten
+
+\syntax{
+	void Matrix(const std::string \&s, WorhpMatrix *m);
+}
+
+Daten plotten, die in einer Funktion {\tt func} bereitgestellt werden:
+
+\syntax{
+	void Data(const std::string \&s, Funktionenzeiger2 func, int lo, int hi, int index);
+}
+
+Dabei ist {\tt func} von diesem Typ:
+ 
+\syntax{
+typedef double (*Funktionenzeiger2) (int \&len, int \&ndgl, int \&nsteuer,
+                                     double *t,double *x, double *u, int \&i, int \&index);
+}
+{\tt index} kann zur internen Unterscheidung verwendet werden.
+
+Phasen-Diagramm plotten (also Daten {\tt func(..., d1)} gegen {\tt func(..., d2)}).
+
+\syntax{
+	void PhasePlot(const std::string \&s, Funktionenzeiger2 func, int d1, int d2);
+}
+
+OpenGL-Plot hinzufügen.
+
+\syntax{
+	void ThreeD(const std::string \&s, XMLNode *xml, plot3d f);
+}
+
+Dabei ist {\tt f} von diesem Typ:
+
+\syntax{
+typedef void (*plot3d) (glObject *obj, double *x, double t);
+}
+
+\example{Animation von Objekten
+
+Modell mit Cinema4D erstellen und mit riptide exportieren. 
+}
+
+Vergleichswerte hinzufügen:
+
+\syntax{
+	void AddCompareCurve(int \&cmpstep, double* cmp, double* cmptime, int n);
+}
+
+Alle Plots schließen oder neu anordnen:
+
+\syntax{
+	void CloseAll();
+	void TilePlots();
+}
+
+
+%	void SetHeader(char *s, int mode);
+
+%	void AutoScale();
+
+
+%	size_t Size() const;
+
+%	void SetFloatTime(double t);
+%	void SetTimeIsTime();
+
+		
+\section{Die Klasse {\tt MagicDouble}}
+\label{magicdbl}
+
+Automatische Berechnung der 1. und 2. Ableitung.
+
+TODO

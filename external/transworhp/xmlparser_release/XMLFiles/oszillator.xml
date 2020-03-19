@@ -1,0 +1,31 @@
+<!-- Oszillator Problem -->
+
+<? xml version ="1.0" encoding =" UTF -8" ?>
+<problem>
+	<!-- Zielobjekt -->
+	<objective>tf</objective>
+	
+	<!-- Zustaende -->
+	<state name="x">
+		<term>v*tf</term>
+		<start>3</start>
+		<final>0</final>
+	</state>
+
+	<state name="v">
+		<term>u*tf-x*tf</term>
+		<start>1</start>
+		<final>0</final>
+	</state>
+
+	<!-- Steuerungen -->
+	<control name="u">
+		<boundaries lower="-1" upper="1"/>
+	</control>
+
+	<!-- Parameter -->
+	<param name="tf" >
+		<boundaries lower="1" upper="10"/>
+		<initialguess>5.2</initialguess>
+	</param>
+</problem>

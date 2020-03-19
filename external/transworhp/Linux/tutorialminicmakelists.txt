@@ -1,0 +1,32 @@
+# Der Projektname
+project(TransWORHP-TUTORIAL-MINI)
+
+# Minimal benoetigte CMake-Version wenn z.B. bestimmte CMake-Kommandos benutzt werden
+cmake_minimum_required(VERSION 2.6)
+#set( CMAKE_VERBOSE_MAKEFILE on )
+
+
+# Zusätzliche include-Verzeichnisse
+include_directories(../include/xmlio/ )
+include_directories(/localdata/opt/local/include/ )
+include_directories(../include/core/ )
+include_directories(../include/ )
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O3")
+
+link_directories(${PROJECT_SOURCE_DIR}/../lib )
+
+
+link_libraries(TransWORHPmini)
+
+
+# Die ausfuehrbare Datei. Anstatt der Variablen koennen auch noch zusaetzliche Dateien angegeben werden
+
+add_executable (spline4_mini ../tutorial/spline4.cpp)
+
+
+set_target_properties(
+	spline4_mini
+	PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/../tutorial_release
+)
+

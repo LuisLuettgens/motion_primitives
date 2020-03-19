@@ -1,0 +1,28 @@
+\chapter{Grafisches Interface}
+
+Erklärung der Menu-Punkte, Maus- und Tastatursteuerung, etc.
+
+
+
+
+
+\section{Überprüfen der analytischen Ableitungen}
+
+Angabe von analytische Ableitungen bevorzugt, da stabiler.
+
+Wie lassen die sich auf Korrektheit überprüfen?
+
+Man setze in {\tt transworhp.xml}
+\begin{verbatim}
+        <USERDF>-1</USERDF>
+        <USERDG>-1</USERDG>
+        <USERHM>-1</USERHM>
+\end{verbatim}
+um die Ableitungsberechnung von WORHP zu verwenden.
+
+Dann lässt man das Programm normal laufen, und wählt am Ende der Optimierung im erscheinenden Menu am oberen Fensterrand Debug->Check DF bzw. 
+Debug->Check DG (oder drückt einfach F9 bzw. F10).
+
+Dann erscheint eine lange Ausgabe bestehend aus Matrix-Index, numerischem Ableitungswert und dem vorgegebenen Ableitungswert.
+
+Wo sich die Werte stark unterscheiden, erscheint ein Pfeil, und der Text ist rot. 

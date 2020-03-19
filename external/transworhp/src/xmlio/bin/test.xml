@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone = 'yes' ?>
+<?xml-stylesheet type="text/xsl" href="kochbuch.xsl"?>
+<!DOCTYPE SIMULATION SYSTEM "simulation.dtd" [ 
+	<!ELEMENT ulink (#PCDATA)*>  
+	<!ATTLIST ulink  
+       xml-link            CDATA   #FIXED   "SIMPLE"  
+       xml-attributes      CDATA   #FIXED   "HREF URL"  
+       URL                 CDATA   #REQUIRED 
+	> 
+] >
+<!-- Start -->
+<SIMULATION>
+	<RAUM id="Halle1">
+		<DIMENSION x="-10 40" y="-.01 15" z="-20 30"/>
+	</RAUM> 
+<!-- sdf ><>> <<<<<<<<>>>>><<<<kommentar -->
+	<TRANSFASTERTYPE id="Modell 1" lam="hubtisch">
+	<!-- . -->
+		<WIDTH type="katze">3.2</WIDTH>
+		<MOVEMENT   type="leer">8 4 3</MOVEMENT>
+		<MOVEMENT    type="voll"   >1 2 3</MOVEMENT>
+	</TRANSFASTERTYPE>
+
+	<TRANSFASTER id="Homer" schieneid="oben" connectionid="fm1" 
+	typeid="Modell 1"
+	
+	color="10,1,125">
+		<SEILDIFF>	1.5		</SEILDIFF>
+		<HOEHE>1.5</HOEHE>
+	</TRANSFASTER>
+
+
+</SIMULATION>

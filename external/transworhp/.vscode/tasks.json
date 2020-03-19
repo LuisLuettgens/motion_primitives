@@ -1,0 +1,21 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"taskName": "make",
+			"command": "make",
+			"type": "shell",
+			"options": {
+				"cwd": "${workspaceRoot}/build"
+			},
+			"problemMatcher": {
+				"base": "$gcc",
+				"fileLocation": ["absolute"]
+			},
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		}
+	]
+}

@@ -1,0 +1,17 @@
+
+2014.08.08
+Visual Studio 2012 unterstützt jetzt WORHP1.7, SDL2, x64
+
+
+2014.02.19
+rand() kann jetzt auch Hilfs-Stützstellen beschränken via x__(), u__();
+
+<WINDOW mode="quiet"> für Anzeigen nur auf Anfrage
+	Umschalten mit -, einmaliger Plot mit #
+
+
+2014.03.04
+Umstellung der Dateistruktur
+
+Bugfix: neben + Hermitesimpson
+

@@ -1,0 +1,3 @@
+[submodule "src/xmlio"]
+	path = src/xmlio
+	url = https://git.worhp.de/steinbeis/xmlio

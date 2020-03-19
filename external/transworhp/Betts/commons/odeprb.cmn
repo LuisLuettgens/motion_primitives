@@ -1,0 +1,14 @@
+C-------------------------------------------------------------------------------
+      PARAMETER (NTC=300)
+      COMMON /TSTODE/  ITPROB(NTC),ITPODE(NTC),ITPCLS(NTC),ITPMET(NTC),
+     &  ITPSTG(NTC),ITPGRD(NTC),TPSEED(NTC),ITPALG(NTC),PRNAME(NTC),
+     &  IPROB
+      DOUBLE PRECISION TPSEED
+      INTEGER ITPROB,ITPODE,ITPCLS,ITPMET,ITPSTG,ITPGRD,IPROB
+      CHARACTER*4 ITPALG
+      CHARACTER*6 PRNAME
+C
+C         ODE TEST PROBLEM COMMON
+C         CHANGES TO THIS REQUIRE RECOMPILING ALL PROBLEMS AND DRIVERS
+C
+C-------------------------------------------------------------------------------

@@ -1,0 +1,780 @@
+%\documentclass[10pt,a4paper,leqno,oneside]{book}
+\documentclass[10pt,a4paper,leqno]{book}
+\usepackage[ngerman]{babel}
+%\usepackage{umlaut}
+%\usepackage{xypic}
+\newcommand{\indexchap}{}
+\newcommand{\thelstlisting}{}
+\usepackage{listings}
+\usepackage{longtable}
+% \usepackage{multind}
+%\usepackage{amsmidx}
+\usepackage{ifthen}
+\usepackage{fancyhdr}
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage{amssymb}
+\usepackage{graphicx}
+%\usepackage{url}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage{verbatim}
+\usepackage{mk}
+\usepackage{mkchapter2}
+%\usepackage{pictexwd}
+\usepackage{nicefrac}
+\usepackage{theorem}
+\usepackage{mathbbol}
+\usepackage{pstricks}
+\usepackage{textcomp}
+\usepackage{amsmath}
+\usepackage[margin=25pt,font=small,labelfont=bf]{caption}
+\usepackage{stmaryrd}
+\usepackage{float}
+%\usepackage{mathtools}
+%\usepackage{mathrsfs}
+\usepackage[mathscr]{euscript}
+\usepackage{pifont}
+\usepackage[normalem]{ulem}
+\usepackage[ps2pdf=true]{hyperref}
+\usepackage[figure,table]{hypcap}
+\usepackage[numbers,sort&compress]{natbib}
+
+
+%%%%%%%%% Mehrere Bibliotheksverzeichnisse %%%%%
+\usepackage{multibib}
+\newcites{link}{Internet-Ressourcen}
+
+%%%%%%%%%% Schrift %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\usepackage[T1]{fontenc}
+%\usepackage[sc]{mathpazo}
+%\linespread{1.05} 
+
+%\usepackage{showidx}
+
+
+
+
+\definecolor{beweis}{rgb}{.3,.3,.5} %250,235,214
+\definecolor{hicol}{rgb}{.98,.92,.84} %250,235,214
+\definecolor{locol}{rgb}{.776,.886,1.} % 198,226,255
+\definecolor{hicol2}{rgb}{.93,.8,.68} % 237 204 173
+\definecolor{locol2}{rgb}{.27,.51,.71} % 69 130 181
+\definecolor{green2}{rgb}{0,.5,.0}
+\definecolor{expl}{rgb}{.953,.886,1.} % 243,226,255
+\definecolor{exam}{rgb}{.878,.93,1.} % 243,226,255
+\definecolor{ueb}{rgb}{1.,.976,.722} % 198,226,255
+%% gelb fff269
+%% lila d18fff
+
+\hypersetup{pdftitle={TransWORHP},%
+pdfauthor={Matthias Knauer},%
+pdfsubject={TransWORHP},%
+pdfkeywords={Mathematik},%
+colorlinks=true,%
+linktocpage=true,%
+%
+linkcolor={locol2},%
+anchorcolor={black},%
+citecolor={green2},%
+filecolor={magenta},%
+menucolor={red},%
+urlcolor={locol2},%
+%draft=true
+%draft=false
+}
+
+\newcommand{\markpages}[2]{\markboth{\hspace{0.1cm} {Kapitel \thechapter: #1} \hfill \linel}{\liner \thesection \hspace{0.1cm} #2}}
+
+%%%\font\astro=astrosym
+
+
+%\includeonly{Einleitung}
+%\includeonly{Hilbertraeume}
+%\includeonly{BeschrLinOp}
+%\includeonly{LaxMilgram}
+%\includeonly{Fouriertrafo}
+%\includeonly{SchwacheK}
+%\includeonly{KompakteOp}
+%\includeonly{HilbertSchmidtOp}
+%\includeonly{Rellich}
+%\includeonly{Fredholm}
+%\includeonly{Riesz}
+%\includeonly{Spektraltheorie}
+
+\renewcommand{\baselinestretch}{1.05}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%% Abkï¿½rzungen %%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\newcommand\stichwort[1]{\emph{#1}\index{#1}}
+
+%\newcommand{\key}[1]{{\fcolorbox{black}{white}{\tt #1}}\index{#1}}
+%\newcommand{\key}[1]{{\fcolorbox{black}{white}{\tt #1}}}
+
+%\newcommand{\key}[1]{\index{#1}{\fcolorbox{black}{white}{\tt #1}}}
+
+%\newcommand{\Key}[2]{  \index{#2}  .. {\fcolorbox{black}{white}{\tt #1}}  ..  }
+%\newcommand\key[2]{\fcolorbox{black}{white}{\tt #1}}
+\newcommand\keyindex[2]{\index{#2}\fcolorbox{black}{white}{\tt #1}}
+\newcommand\key[1]{{\fcolorbox{black}{white}{\tt #1}}}
+
+
+\newcommand{\ca}{$\sim$}
+%\newcommand{\C}{{C}}
+\newcommand{\cpp}{{C++}}
+
+\newcommand{\goto}{{\tt goto}}
+\newcommand{\cdo}{{\tt do}}
+\newcommand{\while}{{\tt while}}
+\newcommand{\for}{{\tt for}}
+\newcommand{\continue}{{\tt continue}}
+\newcommand{\cbreak}{{\tt break}}
+\newcommand{\cif}{{\tt if}}
+\newcommand{\celse}{{\tt else}}
+\newcommand{\return}{{\tt return}}
+\newcommand{\switch}{{\tt switch}}
+\newcommand{\case}{{\tt case}}
+\newcommand{\default}{{\tt default}}
+\newcommand{\delete}{{\tt delete}}
+\newcommand{\new}{{\tt new}}
+
+%\newcommand\url[1]{\texttt{#1}}
+%\newcommand\path[1]{\texttt{#1}}
+\newcommand\file[1]{\texttt{#1}}
+\newcommand\secref[1]{Abschnitt~\ref{sec:#1}}
+\newcommand\seclabel[1]{\label{sec:#1}}
+\newcommand\code[1]{\lstinline{#1}}
+\newcommand\person[1]{{\sc #1}}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\K}{\mathbb{K}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+
+\renewcommand{\H}{{\mathscr H}}
+\newcommand{\F}{{\mathscr F}}
+\newcommand{\G}{{\mathscr G}}
+\renewcommand{\P}{{\mathscr P}}
+\newcommand{\T}{{\mathscr T}}
+\newcommand{\B}{{\mathscr B}}
+\newcommand{\KK}{{\mathscr K}}
+\newcommand{\D}{{\mathscr D}}
+\newcommand{\ES}{{\mathscr S}}
+\newcommand{\RR}{{\mathscr R}}
+\newcommand{\NN}{{\mathscr N}}
+\renewcommand{\L}{{\mathscr L}}
+
+\newcommand{\arccot}{{\rm arccot}}
+\newcommand{\arsinh}{{\rm arsinh}}
+\newcommand{\arcosh}{{\rm arcosh}}
+\newcommand{\vareps}{\varepsilon}
+\newcommand{\Area}{{\rm Area}}
+\newcommand{\Span}{{\rm span}}
+\newcommand{\supp}{{\rm supp\,}}
+\newcommand{\loc}{{\rm loc}}
+%\newcommand{\LIM}{{\rm l.i.m.}}
+\DeclareMathOperator*{\LIM}{l.i.m.}
+\DeclareMathOperator*{\wlim}{w-lim}
+\DeclareMathOperator*{\rang}{rang}
+\DeclareMathOperator*{\codim}{codim}
+\DeclareMathOperator*{\ind}{ind}
+\DeclareMathOperator*{\Ker}{Ker}
+\DeclareMathOperator*{\dist}{dist}
+\DeclareMathOperator*{\diam}{diam}
+
+\renewcommand{\Re}{{\rm Re\,}}
+\renewcommand{\Im}{{\rm Im\,}}
+
+\newcommand{\TransWORHP}{{\sc TransWORHP}}
+%\newcommand\Key[1]{{\bf\underline{#1}}}
+
+\hyphenation{Ab-schnitt}
+\hyphenation{as-so-zia-tiv}
+\hyphenation{Betriebs-system}
+\hyphenation{Datei-namen}
+\hyphenation{ge-spei-chert}
+\hyphenation{Kom-man-dos}
+\hyphenation{Op-tion}
+\hyphenation{Pro-gram-mie-rung}
+\hyphenation{Pro-gramm-ab-schnitt}
+\hyphenation{seriel-ler}
+\hyphenation{Stan-dard-bib-lio-thek}
+\hyphenation{Zeilen-umbruch}
+\hyphenation{Schlüs-sel-wör-ter}
+\hyphenation{Zei-len-um-bruch}
+\hyphenation{Dereferenzierungs-operator}
+\hyphenation{ge-star-tet}
+\hyphenation{Hilbert-raum}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%% Pagestyle %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pagestyle{fancy}
+
+\fancyhead{}
+\fancyhead[CO]{\rightmark}
+\fancyhead[CE]{\leftmark}
+%\fancyhead[LE,RO]{\bf\thepage}
+
+\fancyfoot{}
+\fancyfoot[C]{
+\ifnum\value{chapter}<1
+\bf\roman{page}
+\else
+\ifnum\value{chapter}=100
+\bf Literaturverzeichnis~-~\thepage
+\else
+\ifnum\value{chapter}=101
+\bf Internet-Ressourcen~-~\thepage
+\else
+%\if\leftmark<1
+%\bf \roman{page}
+%\else
+\bf\thechapter~-~\thepage
+\fi
+\fi
+\fi
+}
+
+%\chead{\ifthenelse{{\value{thechapter}}}{xxx}{\it\nouppercase{\ifthenelse{\isodd{\value{page}}}{\rightmark}{\leftmark}}}}
+
+\chead{\ifnum\value{chapter}<1
+~~
+\else 
+\ifnum\value{chapter}>99
+~~
+\else
+\it\nouppercase{\ifthenelse{\isodd{\value{page}}}{\rightmark}{\leftmark}}
+\fi
+%}
+\fi
+}
+
+
+\renewcommand{\headrulewidth}{.4pt}
+\renewcommand{\headheight}{14.5pt}
+
+%\renewcommand{\chaptermark}[1]{\markboth{\chaptername \ \thechapter.\ #1}{}}
+%\renewcommand{\sectionmark}[1]{\markright{\thesection.\ #1}}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\parindent0cm
+
+\sloppy
+
+
+\theorembodyfont{\upshape}
+%\theoremheaderfont{\scshape}
+
+\newtheorem{dfn}{Definition}[chapter]
+
+%\theorembodyfont{\itshape}
+\newtheorem{stz}[dfn]{Satz}%[chapter]
+\newtheorem{hstz}[dfn]{Hilfssatz} % Lemma
+\newtheorem{lem}[dfn]{Lemma} % Lemma
+%\newtheorem{dfn}{Definition}[chapter]
+\newtheorem{flg}[dfn]{Folgerung}
+%\newtheorem{kor}[stz]{Korollar}
+\newtheorem{bsp}[dfn]{Beispiel}
+
+%\ifplastex
+%\newcommand{\defin}[2]{\begin{dfn}[#1]#2\end{dfn}}}
+%\else
+\newcommand{\defin}[2]{\pagebreak[1]\vspace{.2cm}\hspace{-.75\tabcolsep}
+\begin{tabular}{>{\columncolor[gray]{.8}[.5\tabcolsep]}cl}&\parbox{.96\textwidth}%
+{\vspace{-.4cm}\begin{dfn}[#1]#2\end{dfn}\vspace{-.28cm}}\vspace*{.2cm}
+\end{tabular}\pagebreak[1]}
+%\endif
+
+
+\newcommand{\beweis}[1]{\pagebreak[1]\vspace{.2cm}{\color{beweis}{\bf Beweis:~} 
+#1
+\hfill $\blacklozenge$} \vspace{.2cm}\pagebreak[1]}
+
+\newcommand{\bems}[1]{\pagebreak[1]\vspace{.2cm}{{\bf Bemerkungen:~} 
+#1
+} \vspace{.2cm}\pagebreak[1]}
+
+\newcommand{\bem}[1]{\pagebreak[1]\vspace{.2cm}{{\bf Bemerkung:~} 
+#1
+} \vspace{.2cm}\pagebreak[1]}
+
+
+\newcommand{\beweisa}[1]{\pagebreak[1]\vspace{.2cm}{\color{beweis}
+#1
+} \vspace{.2cm}\pagebreak[1]}
+
+\newcommand{\Def}[1]{\pagebreak[1]\vspace{.2cm}\hspace{-.75\tabcolsep}
+\begin{tabular}{>{\columncolor[gray]{.8}[.5\tabcolsep]}cl}&\parbox{.96\textwidth}%
+{#1}\vspace*{.2cm}
+\end{tabular}\pagebreak[1]}
+%\endif
+
+
+\newcommand{\explain}[1]{\pagebreak[1]\vspace{.2cm}\hspace{-.75\tabcolsep}
+\begin{tabular}{|>{\columncolor{expl}}l|}\hline\parbox{.97\textwidth}%
+{\vspace{.2cm} \sf #1\vspace{.2cm}}\\\hline
+\end{tabular}\pagebreak[1]
+}
+
+
+
+\newcommand{\syntax}[1]{\pagebreak[1]\vspace{.2cm}\hspace{-.75\tabcolsep}
+\begin{tabular}{|>{\columncolor{expl}}l|}\hline\parbox{.97\textwidth}%
+{\vspace{.2cm} \small \tt #1\vspace{.2cm}}\\\hline
+\end{tabular}\pagebreak[1]
+}
+
+\newcommand{\sparams}[1]{\pagebreak[1]\hspace{-.75\tabcolsep}
+\begin{center}
+\begin{tabular}{|>{\columncolor{exam}}p{.15\textwidth}|p{.76\textwidth}|}\hline
+#1 \hline
+\end{tabular}\end{center}
+\pagebreak[1]
+}
+
+\newcommand{\example}[1]{\pagebreak[1]\vspace{.2cm}\hspace{-.75\tabcolsep}
+\marginpar[{\hfill\includegraphics[width=8mm]{images/xmag}}]{{\includegraphics[width=8mm]{images/xmag}}}
+\begin{tabular}{|>{\columncolor{exam}}l|}\hline\parbox{.97\linewidth}%
+{\vspace{.2cm} \sf  #1\vspace{.2cm}}\\\hline
+\end{tabular}\pagebreak[1]
+}
+
+
+\newcommand{\ditem}[1]{\item[]{\hspace{-.9cm}\bf #1~}}
+
+% \newcommand{\uebung}[1]{\pagebreak[1]
+% %
+% \vspace{.2cm}\hspace{-.75\tabcolsep}
+% \begin{tabular}{|>{\columncolor{ueb}}l|l}\cline{1-1}\parbox[b]{.97\linewidth}%
+% {\vspace{.2cm} \small\sf #1\vspace{.2cm}}&~~~\includegraphics[width=10mm]{images/ktip}
+% \\\cline{1-1}
+% \end{tabular}
+% %
+% \pagebreak[1]
+% }
+
+
+\newcommand{\uebung}[1]{\pagebreak[1]
+%
+\vspace{.2cm}\hspace{-.75\tabcolsep}
+\marginpar[{\hfill\includegraphics[width=8mm]{images/ktip}}]{{\includegraphics[width=8mm]{images/ktip}}}
+\begin{tabular}{|>{\columncolor{ueb}}l|}\hline\parbox[b]{.97\linewidth}%
+{\vspace{.2cm} \small\sf #1\vspace{.2cm}}
+\\\hline
+\end{tabular}
+%
+\pagebreak[1]
+}
+
+
+% \newcommand{\bio}[2]{\pagebreak[1]
+% %
+% \vspace{.2cm}\hspace{-.75\tabcolsep}
+% \marginpar[{\hfill\includegraphics[width=8mm]{images/ktip}}]{{\includegraphics[width=8mm]{images/ktip}}}
+% \begin{tabular}{|>{\columncolor{ueb}}l|}\hline\parbox[b]{.97\linewidth}%
+% {
+% \includegraphics[width=4cm]{images/#1}\\
+% \vspace{.2cm} \small\sf #2
+% \vspace{.2cm}}
+% \\\hline
+% \end{tabular}
+% %
+% \pagebreak[1]
+% }
+
+\newfloat{biofloat}{ht}{tmpfile} 
+\floatname{biofloat}{Biographie}
+
+\newcommand{\bio}[3]{\begin{biofloat} \begin{center}
+\parbox[b]{3cm}{
+\includegraphics[width=3cm]{images/#1}
+}~~~
+\parbox[b]{8cm}{
+\vspace{.2cm} {\small\sf\bf #2}\\ \small\sf #3
+}
+%\caption{ertetr}
+\end{center}
+\end{biofloat}
+}
+
+\newcommand{\blatt}[2]{\ding{230}ï¿½bung #1.#2}
+
+
+
+\newcommand{\lectureday}[1]{
+\marginpar[ \hfill \parbox{3cm}{ \color{locol2} ~\\[.4cm] $\overline{\text{~~\sf\small #1~~}}$ } ]{\color{locol2} ~\\[.4cm] $\overline{\text{~~\sf\small #1~~}}$}
+}
+
+
+\newcommand{\myquote}[2]{\vspace*{-.1cm}\hfill\begin{minipage}{8cm}
+{\sl #1}\raggedright\\{\sl\small #2}\raggedleft\end{minipage}\\[.7cm]}
+
+
+
+\renewcommand{\theenumi}{\roman{enumi}}
+\renewcommand{\labelenumi}{\theenumi.}
+
+
+
+\usepackage{eso-pic}
+\newcommand\BackgroundPic{
+\put(0,0){
+\parbox[b][\paperheight]{\paperwidth}{%
+\vfill
+%\centering
+%\hspace{-3.5cm}
+% % % % % % % % % % % \includegraphics[%width=\paperwidth,
+% % % % % % % % % % % %angle=178,
+% % % % % % % % % % % height=.85\paperheight,
+% % % % % % % % % % % %width=\paperwidth,
+% % % % % % % % % % % keepaspectratio]{images/wordle1}%
+%\includegraphics[height=.98\paperheight,keepaspectratio]{Titelbild/titel2}%
+\vfill
+}}}
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+\pagenumbering{roman}
+\thispagestyle{empty}
+
+\begin{titlepage} % ist bei Buch Standard und muï¿½ nicht benutzt werden
+
+\Huge\bf
+\hspace{-1.\tabcolsep}
+\begin{tabular}{>{\columncolor{headdark}}p{1.1cm}>{\columncolor{headbrite}}p{.97\textwidth}}%
+&\vspace{.3cm}\TransWORHP\\[4.5em]
+%\vspace{-.95cm}\center 1& Einfï¿½hrung in UNIX\\
+%\vspace{-.95cprogramm}\center 2&Algorithmen\\
+%\vspace{-.95cm}\center 3&Einfï¿½hrung in C++\\
+%\vspace{-.95cm}\center 4&Objektorientiertes C++\\
+%\vspace{-.95cm}\center 5&Die C++-Standardbibliothek\\
+%\vspace{-.95cm}\center 6&Einfï¿½hrung in Matlab\\[1.5cm]
+%&\normalsize 2012\\
+&\normalsize Universität Bremen
+% Raumfahrt ist teuer, Mathematik unbezahlbar
+\end{tabular}
+
+
+
+\vfill
+
+\end{titlepage} % ist bei Buch Standard und muï¿½ nicht benutzt werden
+
+
+
+
+
+%   \begin{titlepage} % ist bei Buch Standard und muï¿½ nicht benutzt werden
+% % 
+% \AddToShipoutPicture*{\BackgroundPic}
+% % 
+% %  ~
+% %  \vfill
+% %  \hspace*{10cm}\parbox{6cm}{
+% %  \bf\large
+% %  Wintersemester 2011/2012\\
+% %  Universitï¿½t Bremen\\
+% %  %\includegraphics[width=4cm]{images/logo_4c}
+% %  %\includegraphics[width=4cm]{images/zetemlogo}
+% %   Matthias Knauer\\[.1cm]
+% %  
+% %  Version: \today}
+% 
+% {
+% ~\\[4.2cm]
+% \hfill
+% \parbox{14.1cm}{
+% \raggedleft Wintersemester 2011/2012\\
+% \raggedleft Universitï¿½t Bremen\\[.4cm]
+% \raggedleft Matthias Knauer\\[10.8cm]
+% }
+% \Huge
+% \centerline{~~~~$\G:f\mapsto u$}
+% }
+% 
+%  \end{titlepage} % ist bei Buch Standard und muï¿½ nicht benutzt werden
+
+
+
+
+
+\newpage\thispagestyle{empty}
+~\vfill
+
+%Matthias Knauer\\
+Version: \today
+\newpage
+
+%\chapter*{Vorwort}
+%~\\
+% \myquote{
+% Die Mathematik ist doch die angenehmste Wissenschaft; sie und die Astronomie vertreten bei mir Tanzgesellschaften, Konzerte und andere derartige Belustigungen, die ich nur dem Namen nach kenne.}{Friedrich Wilhelm Bessel, im Alter von 18 Jahren}
+
+% \myquote{Weyl, eine Sache mï¿½ssen Sie mir erklï¿½ren: Was ist das, ein Hilbertscher
+% Raum? Das habe ich nicht verstanden.
+% }{ David Hilbert\raggedleft\\ nach einem Vortrag von Hermann Weyl}
+
+% Der Blick zu den Sternen brachte die Menschen schon immer dazu, ergrï¿½nden zu wollen, wie sich die Mechanik des Himmels beschreiben lï¿½sst. Kapitel~\ref{kap1} stellt einige der mathematischen Konzepte dar, die aus diesem Wissensdrang ï¿½ber Jahrhunderte entwickelt wurden, und die sowohl aus der reinen wie der angewandten Mathematik stammen.\\
+% 
+% Mi\index{math}{Eigenwert}
+
+%\index{math}{Eigenvektor}t den ersten Schritten ins Weltall ï¿½nderte sich auch der Blick auf die Erde. Eine prï¿½zise Beschreibung der Erde wurde nï¿½tig, um Satelliten in der Erdumlaufbahn zu halten. Die Mathematik, die dahinter steckt, um in der Anwendung einen ï¿½berschaubaren Rechenaufwand nicht zu ï¿½berschreiten, reiï¿½t Kapitel~\ref{kap2} an.\\
+% 
+% Bei erfolgreichen Missionen zu anderen Himmelskï¿½rpern steht die Ingenieursleistung auï¿½er Frage. Doch wie effizient sind diese Missionen eigentlich? 
+% Kapitel~\ref{kap3} zeigt anhand einiger Beispiele, wie sich mit dem Einsatz mathematischer Methoden Missionen planen lassen, die vielleicht ressourcenschonenender oder sicherer sind.\\[2cm]
+
+
+
+%$ $\\[2.0cm]\thispagestyle{empty}
+%{\Huge\bf Vorwort}\\[1.0cm]
+% Das vorliegende Skript entstand im Rahmen einer Vorlesung, die
+% ich im Wintersemester 2011/2012 am Zentrum f\"ur Technomathematik der Universit\"at Bremen gehalten habe.
+% 
+% Groï¿½e Teile entstammen einer Vorlesung, die ich bei PD Hans-Christoph Grunau an der Uni Bayreuth gehï¿½rt habe. Ergï¿½nzt wurde es durch ein Vorlesungsskript von Prof. von Wahl (Uni Bayreuth), sowie weitere Aufzeichnungen von Prof. Schmidt (Uni Bremen).
+% 
+% Ich m\"ochte mich bei allen Teilnehmerinnen und Teilnehmern f\"ur ihr reges Interesse und ihre aktive Mitarbeit bedanken.
+% \\[1.0cm]
+% Bremen, im Februar 2012 \hfill { Matthias Knauer}
+
+
+
+%Standort Bremen
+
+%\vfill
+%\hspace*{-1.8cm}
+%\small \sf
+%\begin{tabular}{>{\columncolor{headdark}}p{1.1cm}>{\columncolor{headbrite}}p{.97\textwidth}}%
+%&\\
+%& This introduction may be freely distributed under the terms of
+%the GNU general public license. --- Copyright \copyright 2006 by Matthias Knauer
+%\verb+<+matthias@tulio.de\verb+>+. \\
+%& }The author assumes no responsability for any errors in this introduction.
+%\\[.4cm]
+%\end{tabular}
+
+% % %$ $\\
+%\newpage%\thispagestyle{empty}
+
+
+% \explain{Einleitende sowie weiterfï¿½hrende Erklï¿½rungen finden sich in diesen Kï¿½sten.}
+% 
+% \example{Beispiele werden mit diesen Kï¿½sten hervorgehoben.}
+% 
+% \uebung{Diese Kï¿½sten verweisen auf ï¿½bungsaufgaben, die den Stoff direkt ergï¿½nzen.}
+
+%\newpage%\thispagestyle{empty}
+%\maketitle
+%\markboth{\hspace{0.1cm} {Inhaltsverzeichnis} \hfill \linel}{\liner Inhaltsverzeichnis}
+{
+%\renewcommand{\baselinestretch}{2.5}
+\renewcommand{\baselinestretch}{1.4}
+%\addcontentsline{toc}{chapter}{Inhaltsverzeichnis}
+\pdfbookmark[0]{Inhaltsverzeichnis}{inhalt}
+
+\tableofcontents
+}
+
+
+% % % \cleardoublepage
+% % % % 
+% % % \phantomsection
+% % % %%\pdfbookmark[0]{Abbildungsverzeichnis}{abbildungsverzeichnis}
+% % % \addcontentsline{toc}{chapter}{\numberline{}Abbildungsverzeichnis}
+% % % \listoffigures
+% % % % 
+% % % \cleardoublepage
+% % % % 
+% % % \phantomsection
+% % % \addcontentsline{toc}{chapter}{\numberline{}Tabellenverzeichnis}
+% % % \listoftables
+
+%\addtocontents{toc}{Eintrag}
+
+%\addtocontents{lof}{\vspace*{.5cm}{\bf 1~~Ein Blick ins All\\}}
+%\addtocontents{lot}{\vspace*{.5cm}{\bf 1~~Ein Blick ins All\\}}
+
+
+\pagenumbering{arabic}
+
+
+\include{ocp}
+\include{tutorial}
+
+
+
+
+
+
+
+
+
+
+
+%\phantomsection
+%\addcontentsline{toc}{chapter}{\numberline{}Programmverzeichnis}
+%\lstlistoflistings
+
+%\cleardoublepage
+
+
+%\setcounter{page}{1}
+
+
+
+% Der Hauptteil
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \chapter*{Einfï¿½hrung}
+% 
+% 
+% \section{Standort Bremen}
+% 
+% 
+% \section{Zeitungsartikel}
+
+%\include{Spektraltheorie}
+%6 Seiten
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\addtocontents{lof}{\vspace*{.5cm}{\bf 2~~Ein Blick zurï¿½ck zur Erde\\}}
+%\addtocontents{lot}{\vspace*{.5cm}{\bf 2~~Ein Blick zurï¿½ck zur Erde\\}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\addtocontents{lof}{\vspace*{.5cm}{\bf 3~~Aufbruch ins All\\}}
+%\addtocontents{lot}{\vspace*{.5cm}{\bf 3~~Aufbruch ins All\\}}
+
+%\include{Erde}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\include{All}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\include{Leben}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \chapter{Der Ursprung des Universums}
+% 
+% \section{Supernova}
+% \section{Pulsar Winde}
+% 
+%\section{Lichtbrechung schwarzes Loch}
+% \section{Einstein}
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \clearpage
+% \begin{appendix}
+% 
+% % Die Anhï¿½nge
+% \setcounter{chapter}{0}
+% \renewcommand{\thechapter}{\Alph{chapter}}
+% \def\chaptername{Anhang}
+% 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %\include{Mathematiker}
+% %\include{Schmidt}
+% 
+% \end{appendix}
+
+
+\cleardoublepage
+
+
+%\nocite{Werner2007}
+%\nocite{Alt2006}
+%\nocite{Wussing2009}
+%\nocite{vonWahl2009}
+
+%\nocite{Meuss1988}
+%\nocite{Meuss1998}
+%\nocite{Colwell1993}
+%\nocite{Foster1999}
+%\nocite{Danby1997}
+%%\nocite{Moulton2009}
+%\nocite{Battin1999}
+%\nocite{Vallado2007}
+%\nocite{Tatum}
+
+%%\nocitelink{CalSky}
+
+
+
+
+%\cleardoublepage
+
+% % \value{chapter}=100
+% % \setcounter{page}{1}
+% % 
+% % \phantomsection
+% % \addcontentsline{toc}{chapter}{\numberline{}Literaturverzeichnis}
+% % 
+% % \bibliographystyle{matthias}
+% % \bibliography{mybib}
+
+% \chapter*{Stichwortverzeichnis}
+% \printindex{math}{zzz}
+% \printindex{name}{zzz}
+%\clearpage
+%\addcontentsline{toc}{chapter}{Index}
+%\printindex
+
+% % \clearpage
+% % 
+% % \value{chapter}=101
+% % \setcounter{page}{1}
+% % 
+% % \phantomsection
+% % \addcontentsline{toc}{chapter}{\numberline{}Internet Ressourcen}
+% % 
+% % \bibliographystylelink{mylinks}
+% % \bibliographylink{mylinks}
+% 
+% \clearpage
+% 
+% %\value{chapter}=100
+% %\setcounter{page}{1}
+% 
+% \phantomsection
+% \chapter*{Stichwortverzeichnis}
+% %\renewcommand{\indexname}{}
+% % % 	 
+% % % 	% Stichwortverzeichnis soll im Inhaltsverzeichnis auftauchen
+% %\addcontentsline{toc}{chapter}{Stichwortverzeichnis}
+% % % 	 
+% \printindex
+
+\end{document}

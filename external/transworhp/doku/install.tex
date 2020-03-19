@@ -1,0 +1,363 @@
+\chapter{Starting with TransWORHP}
+
+\begin{paracol}{2}
+
+Für Anwender wird TransWORHP als Bibliothek mit mehreren einfachen und einigen größeren Beispielen ausgeliefert. Um eigene Optimalsteuerprobleme zu implementieren muss von der Klasse {\tt TransWORHP} abgeleitet werden.
+
+Für Entwickler steht der gesamte Quellcode zur Verfügung.
+
+\switchcolumn
+{\color{english}
+For users TransWORHP is generally shipped as a library, with some trivial and advanced examples. You have to overload the base class {\tt TransWorhp} in order to implement your own optimal control problems.
+
+For developers there is also the full source code available.
+}
+\end{paracol}
+
+\section{TransWORHP for linux users}
+
+\begin{paracol}{2}
+
+Laden Sie sich die aktuelle Version von TransWORHP von der Homepage herunter und entpacken Sie die tgz Dateien. Die Bibliotheken für WORHP und TransWORHP befinden sich im Order {\tt lib} und die header-Dateien liegen im Ordner {\tt include}.
+
+Kompilieren Sie die Beispiel-Probleme und das Tutorial:
+
+\switchcolumn
+{\color{english}
+Download the current version from the TransWORHP web page and extract the tgz file. You find the libraries for WORHP and TransWORHP in the {\tt lib} folder, and the relevant header files in the {\tt include} folder.
+
+Compile the examples from the folders {\tt example} and {\tt tutorial}:
+}
+
+\end{paracol}
+
+\syntax{make}\\
+
+\begin{paracol}{2}
+
+Wenn keine Fehler auftraten, liegen die fertig kompilierten Dateien in den Ordnern {\verb+example_release+} and {\verb+tutorial_release+}.
+
+\switchcolumn
+{\color{english}
+If everything works fine, you will get the executables in the folders {\verb+example_release+} and {\verb+tutorial_release+}.
+}
+
+\end{paracol}
+
+\explain{
+If the SDL2 library is missing, you will have to install the package libsdl2-dev or compile it on your own from https://www.libsdl.org/download-2.0.php.
+}\\
+
+\begin{paracol}{2}
+
+Wenn Sie keine grafische Ausgabe benötigen, benutzen Sie die TransWORHP Version ohne Grafik. Kompilieren Sie:
+
+\switchcolumn
+{\color{english}
+If you don't care about the output, there is a smaller version of TransWORHP which has no graphical output. Just compile our standard example:
+}
+
+\end{paracol}
+
+\syntax{make make-tutorial-mini}\\
+
+\begin{paracol}{2}
+
+Dieser Befehle erstellt die Datei {\verb+tutorial_release/spline4_mini+}, welche nicht OpenGL oder SDL2 benötigt.
+
+\switchcolumn
+{\color{english}
+You'll get the file {\verb+tutorial_release/spline4_mini+}, which does not depend on OpenGL or SDL2.
+}
+
+\end{paracol}
+
+\begin{paracol}{2}
+
+\begin{itemize}
+ \item tutorial: schrittweise Entwicklung des Spline-Problems
+ \item example: größere Beispiele (z.B die Laufkatze), vgl. Kapitel 6
+\end{itemize}
+
+\switchcolumn
+{\color{english}
+\begin{itemize}
+ \item tutorial: sources for stepwise example of a spline problem
+ \item example: advanced examples (try the container crane = laufkatze), see chapter 6
+\end{itemize}
+}
+
+\end{paracol}
+
+
+\section{TransWORHP for linux developers}
+
+TODO.
+
+\section{Running TransWORHP}
+
+\begin{paracol}{2}
+
+Welchen Sie ins Verzeichnis {\verb+example_release+} und tippen Sie
+
+\switchcolumn
+{\color{english}
+Change into {\verb+example_release+} and try
+}
+
+\end{paracol}
+
+
+\syntax{laufkatze}
+
+\explain{Don't forget to copy your license file {\tt worhp.lic} to this folder!}\\
+
+\begin{paracol}{2}
+
+Das Programm kann über die XML-Dateien von WORHP und TransWORHP angepasst werden.
+
+Jedes Programm versteht den Parameter
+
+ohne grafische Ausgabe:
+
+\switchcolumn
+{\color{english}
+The program behavouir can be modified using {\tt worhp.xml} and {\tt transworhp.xml}
+ 
+Each program understands these parameters:
+ 
+no graphics:
+}
+
+\end{paracol}
+
+\syntax{laufkatze -p}
+
+\begin{paracol}{2}
+
+Anzahl der diskreten Punkte verändern (hier 100 Gitterpunkte)
+
+\switchcolumn
+{\color{english}
+Change number of discrete points (here to 100)
+}
+
+\end{paracol}
+
+\syntax{laufkatze -n 100   }
+
+
+\subsection{Structure}
+Have a look at the DG-Window of any run, where you can see best, how constraints and variables are ordered!
+
+\begin{itemize}
+\item blue = any value
+ \item grey = 0
+ \item red = -1
+ \item green = +1
+\end{itemize}
+
+Variables are ordered like:
+     \begin{itemize}
+      \item states of first discrete point,\footnote{if using hermite simpson you will have the additional point (states and controls) inbetween}
+     \item controls of first discrete point,
+     \item states of second discrete point,
+     \item controls of second discrete point,
+     \item ...
+     \item free parameters
+ \end{itemize}
+ 
+ 
+ Constraints are ordered like:
+     \begin{itemize}
+      \item ode constraints connecting first and second point \footnote{if using hermite simpson you will have hermite equation of 1. ode, simpson eq. of 1. ode, herm. eq. of 2. ode and so on.}
+     \item ode constraints connecting second and 3rd point
+     \item ...
+     \item non-trivial boundary values in given order (using the rand-function) rand is german for boundary :-(
+     \item mixed state and control constraints for first point (using neben) 
+     \item mixed state and control constraints for 2nd point
+     ...
+\end{itemize}
+
+ 
+ 
+If you move the mouse to the top of the window, a menu appears. Try selecting Data->NLP Constraints (and press RETURN to activate... it's a bug) and you will see all WORHP-variables and constraints with their boundaries on the console.
+
+
+\subsection{Classes}
+The class TWfolder contains all worhp-objects. In WorhpLoop() you will find the reverse communication, where objective and constraints and their derivatives are provided.
+ 
+Optimal Control Problems are implemented as subclass of class TransWorhp. An instance is then added to the TWfolder. Note, that you can add several problems to the folder and generate huge problems.
+ 
+\verb+example_release+/\verb+laufkatze_phase+ does this nicely!
+ 
+In the reverse communication then, the objective is calculated as the sum of all problems in the folder.
+ 
+\subsection{XML}
+In {\tt transworhp.xml} we also modify some worhp-parameters:
+
+\begin{verbatim} 
+     <WORHP param="worhp.xml">
+         <USERDF>1</USERDF>
+         <USERDG>1</USERDG>
+         <USERHM>1</USERHM>
+     </WORHP>
+\end{verbatim}
+ 
+Set everything to 0 to keep worhp.xml-settings.
+
+
+
+% 
+% 
+% I suppose you already got the repository:
+% git clone git@code.worhp.de:transworhp
+% 
+% I just did some updates and removed the png lib dependency.
+% 
+% Compiling
+% For Linux:
+% Change into the transworhp folder and have a look at the Makefile. You need it to get worhp:
+% 
+% make get-worhp
+% 
+% copies the worhp library and headers to the appropriate place. Please adjust the path in the Makefile:
+% 
+% get-worhp: include lib
+%         cp -r ~/git/worhp-develop/release/Linux/lib/include/* include/
+%         cp -r ~/git/worhp-develop/release/Linux/lib/lib/* lib
+% 
+% 
+% Compile everything with
+% 
+% make
+% 
+% If the SDL2 library is missing, you will have to install it, e.g. from https://www.libsdl.org/download-2.0.php
+% 
+% If you don't care about the output, just compile everything with
+% 
+% make mini
+% 
+% Directories
+% 
+%     src: the TransWORHP code, I will explain details later
+%     tutorial: sources for stepwise example of a spline problem
+%     example: advanced examples (try the container crane = "laufkatze")
+%     workshop: another set of examples
+%     xmlparser: program to define problem in xml instead of c++
+%     *-mini: alternative CMakefile's without graphics
+%     *_release: place for binaries and config_files
+%     lib: worhp and TransWORHP dll
+%     include: worhp headers
+%     Visual Studio 2012: VS2012 project (with batch scripts to generate precompiled win version)
+%     doku: TransWORHP.pdf (mostly in german, I am sorry, but I suppose you know more or less how transcription works)
+% 
+% 
+% Change into example_release and try
+% 
+% laufkatze
+% 
+% (don't forget to copy your worhp.lic here!)
+% 
+% 
+% The program behavouir can be modified using worhp.xml and transworhp.xml
+% 
+% Each program understands these parameters:
+% 
+% laufkatze -p   # no graphics
+% laufkatze -n 100   # 100 discrete points
+% 
+% 
+% Structure
+% 
+% Have a look at the DG-Window of any run, where you can see best, how constraints and variables are ordered!
+% 
+% blue = any value
+% grey = 0
+% red = -1
+% green = +1
+% 
+% Variables are ordered like:
+%     states of first discrete point,*
+%     controls of first discrete point,
+%     states of second discrete point,
+%     controls of second discrete point,
+%     ...
+%     free parameters
+% 
+% (* if using hermite simpson you will have the additional point (states and controls) inbetween)
+% 
+% Constraints are ordered like:
+%     ode constraints connecting first and second point**
+%     ode constraints connecting second and 3rd point
+%     ...
+%     non-trivial boundary values in given order (using the rand-function) rand is german for boundary :-(
+%     mixed state and control constraints for first point (using neben) 
+%     mixed state and control constraints for 2nd point
+%     ...
+% 
+% (** if using hermite simpson you will have hermite equation of 1. ode, simpson eq. of 1. ode, herm. eq. of 2. ode and so on.)
+% 
+% 
+% 
+% If you move the mouse to the top of the window, a menu appears. Try selecting Data->NLP Constraints (and press RETURN to activate... it's a bug) and you will see all WORHP- Variables and Constraints with their boundaries on the console.
+% 
+% Classes
+% The class TWfolder contains all worhp-objects. In WorhpLoop() you will find the reverse communication, where objective and constraints and their derivatives are provided.
+% 
+% Optimal Control Problems are implemented as subclass of class TransWorhp. An instance is then added to the TWfolder. Note, that you can add several problems to the folder and generate huge problems.
+% 
+% ( example_release/laufkatze_phase does this nicely! )
+% 
+% In the rev. comm. then, the objective is calculated as the sum of all problems in the folder...
+% 
+% 
+% XML
+% 
+% In transworhp.xml we also modify some worhp-parameters:
+% 
+%     <WORHP param="worhp.xml">
+%         <USERDF>1</USERDF>
+%         <USERDG>1</USERDG>
+%         <USERHM>1</USERHM>
+%     </WORHP>
+% 
+% Set everything to 0 to keep worhp.xml-settings.
+% 
+% 
+% 
+% 
+% Ok, so much for today!
+% 
+% I hope this introduction helps a little. Don't hesitate to ask me if you have any questions!
+% 
+% Best regards
+% Matthias
+% 
+% 
+% 
+% Am 27.08.2014 um 17:10 schrieb Dennis Wassel:
+% > Hi,
+% >
+% > this is to get the two of you in touch.
+% >
+% > @Marek:
+% > You can clone transworhp from git@code.worhp.de:transworhp (i.e. exactly
+% > like the worhp repo). You have read access to master and read-write to a
+% > branch multi-obj that does not exist, yet.
+% >
+% > The repo contains documentation, but I think it is more aimed at users
+% > then developers.
+% > @Matthias: Maybe give Marek a small jump-start?
+% >
+% > Once Marek is able to build and run TW examples, and has roughly
+% > understood his way around the TW infrastructure, we can talk about
+% > whether and how to go multi-thread to solve multiple objectives.
+% >
+% > Please keep me posted!
+% >
+% > Cheers,
+% > Dennis
+% >
+% 
+% 

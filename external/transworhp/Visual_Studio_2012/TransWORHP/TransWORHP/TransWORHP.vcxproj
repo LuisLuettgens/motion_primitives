@@ -1,0 +1,357 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{799A8FBA-F152-42BC-8A9E-A65A1BAE322B}</ProjectGuid>
+    <RootNamespace>TransWORHP</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)..\..\src;$(SolutionDir)..\..\src\glplot;$(SolutionDir)..\..\src\xmlio;$(SolutionDir)..\..\src\base;$(SolutionDir)include;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)..\..\src;$(SolutionDir)..\..\src\glplot;$(SolutionDir)..\..\src\xmlio;$(SolutionDir)..\..\src\base;$(SolutionDir)include;$(SolutionDir)include\freetype;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)..\..\src;$(SolutionDir)..\..\src\glplot;$(SolutionDir)..\..\src\xmlio;$(SolutionDir)..\..\src\base;$(SolutionDir)include;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)..\..\src;$(SolutionDir)..\..\src\glplot;$(SolutionDir)..\..\src\xmlio;$(SolutionDir)..\..\src\base;$(SolutionDir)include;$(SolutionDir)include\freetype;$(SolutionDir)..\..\..\worhp\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LibraryPath>$(SolutionDir)\lib64;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)\$(Configuration)64\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LibraryPath>$(SolutionDir)\lib64;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)\$(Configuration)64\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;EXP_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libworhp.lib;libpng.lib;SDL.lib;SDLmain.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;EXP_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libworhp.lib;libpng16.lib;SDL2.lib;SDL2main.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;EXP_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libworhp.lib;libpng.lib;SDL.lib;SDLmain.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;EXP_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libworhp.lib;SDL2.lib;SDL2main.lib;libpng16.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ResourceCompile Include="TransWORHP.rc">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)\..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)\..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)\..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)\..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\base\color4.cpp" />
+    <ClCompile Include="..\..\..\src\base\exception.cpp" />
+    <ClCompile Include="..\..\..\src\base\language.cpp" />
+    <ClCompile Include="..\..\..\src\base\matrix.cpp" />
+    <ClCompile Include="..\..\..\src\base\point.cpp" />
+    <ClCompile Include="..\..\..\src\base\progressbar.cpp" />
+    <ClCompile Include="..\..\..\src\base\sharedmem.cpp" />
+    <ClCompile Include="..\..\..\src\base\vectortools.cpp" />
+    <ClCompile Include="..\..\..\src\base\vectortools2.cpp" />
+    <ClCompile Include="..\..\..\src\base\vektor.cpp" />
+    <ClCompile Include="..\..\..\src\core\butcher.cpp" />
+    <ClCompile Include="..\..\..\src\core\diffstructure.cpp" />
+    <ClCompile Include="..\..\..\src\core\ExplTransWORHP.cpp" />
+    <ClCompile Include="..\..\..\src\core\MagicTransWORHP.cpp" />
+    <ClCompile Include="..\..\..\src\core\MyStatus.cpp" />
+    <ClCompile Include="..\..\..\src\core\newdouble.cpp" />
+    <ClCompile Include="..\..\..\src\core\rkf45.cpp" />
+    <ClCompile Include="..\..\..\src\core\timing.cpp" />
+    <ClCompile Include="..\..\..\src\core\TransWORHP.cpp" />
+    <ClCompile Include="..\..\..\src\core\TWconsole.cpp" />
+    <ClCompile Include="..\..\..\src\core\TWcount.cpp" />
+    <ClCompile Include="..\..\..\src\core\TWdebug.cpp" />
+    <ClCompile Include="..\..\..\src\core\TWfolder.cpp" />
+    <ClCompile Include="..\..\..\src\core\TWparameter.cpp" />
+    <ClCompile Include="..\..\..\src\core\TWsharedmemory.cpp" />
+    <ClCompile Include="..\..\..\src\core\TWspline.cpp" />
+    <ClCompile Include="..\..\..\src\core\TWstrings.cpp" />
+    <ClCompile Include="..\..\..\src\core\Viewer.cpp" />
+    <ClCompile Include="..\..\..\src\core\worhp_info.cpp" />
+    <ClCompile Include="..\..\..\src\glbase\font.cpp" />
+    <ClCompile Include="..\..\..\src\glbase\glfont.cpp" />
+    <ClCompile Include="..\..\..\src\glbase\globject.cpp" />
+    <ClCompile Include="..\..\..\src\glbase\joystick.cpp" />
+    <ClCompile Include="..\..\..\src\glbase\light.cpp" />
+    <ClCompile Include="..\..\..\src\glbase\model.cpp" />
+    <ClCompile Include="..\..\..\src\glbase\smoothmovement.cpp" />
+    <ClCompile Include="..\..\..\src\glbase\texture.cpp" />
+    <ClCompile Include="..\..\..\src\glbase\viewport.cpp" />
+    <ClCompile Include="..\..\..\src\glplot\adjPlot.cpp" />
+    <ClCompile Include="..\..\..\src\glplot\dataplot.cpp" />
+    <ClCompile Include="..\..\..\src\glplot\generalplot.cpp" />
+    <ClCompile Include="..\..\..\src\glplot\gitterPlot.cpp" />
+    <ClCompile Include="..\..\..\src\glplot\lambdaPlot.cpp" />
+    <ClCompile Include="..\..\..\src\glplot\matrixplot.cpp" />
+    <ClCompile Include="..\..\..\src\glplot\phaseplot.cpp" />
+    <ClCompile Include="..\..\..\src\glplot\plot.cpp" />
+    <ClCompile Include="..\..\..\src\glplot\punktPlot.cpp" />
+    <ClCompile Include="..\..\..\src\glplot\sparseplot.cpp" />
+    <ClCompile Include="..\..\..\src\glplot\tabularplot.cpp" />
+    <ClCompile Include="..\..\..\src\glplot\threedplot.cpp" />
+    <ClCompile Include="..\..\..\src\glplot\userplot.cpp" />
+    <ClCompile Include="..\..\..\src\glplot\xopt_data.cpp" />
+    <ClCompile Include="..\..\..\src\glplot\xopt_eps.cpp" />
+    <ClCompile Include="..\..\..\src\gui\sdlcursor.cpp" />
+    <ClCompile Include="..\..\..\src\gui\sdlframe.cpp" />
+    <ClCompile Include="..\..\..\src\gui\sdlscreen.cpp" />
+    <ClCompile Include="..\..\..\src\gui\sdlthread.cpp" />
+    <ClCompile Include="..\..\..\src\imaging\imageformat.cpp" />
+    <ClCompile Include="..\..\..\src\imaging\imagewriter.cpp" />
+    <ClCompile Include="..\..\..\src\toolbase\tool.cpp" />
+    <ClCompile Include="..\..\..\src\toolbase\tooledit.cpp" />
+    <ClCompile Include="..\..\..\src\toolbase\toolfloating.cpp" />
+    <ClCompile Include="..\..\..\src\toolbase\toolmenu.cpp" />
+    <ClCompile Include="..\..\..\src\toolbase\toolmenuentry.cpp" />
+    <ClCompile Include="..\..\..\src\toolbase\toolmenukey.cpp" />
+    <ClCompile Include="..\..\..\src\toolbase\toolrect.cpp" />
+    <ClCompile Include="..\..\..\src\toolbase\toolstatus.cpp" />
+    <ClCompile Include="..\..\..\src\toolbase\toolwindow.cpp" />
+    <ClCompile Include="..\..\..\src\tool\toolregister.cpp" />
+    <ClCompile Include="..\..\..\src\xmlio\conversion.cpp" />
+    <ClCompile Include="..\..\..\src\xmlio\textout.cpp" />
+    <ClCompile Include="..\..\..\src\xmlio\xmlerror.cpp" />
+    <ClCompile Include="..\..\..\src\xmlio\xmlnode.cpp" />
+    <ClCompile Include="..\..\..\src\xmlio\xmlparser.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\base\color4.h" />
+    <ClInclude Include="..\..\..\src\base\dynloader.h" />
+    <ClInclude Include="..\..\..\src\base\exception.h" />
+    <ClInclude Include="..\..\..\src\base\language.h" />
+    <ClInclude Include="..\..\..\src\base\matrix.h" />
+    <ClInclude Include="..\..\..\src\base\point.h" />
+    <ClInclude Include="..\..\..\src\base\progressbar.hpp" />
+    <ClInclude Include="..\..\..\src\base\sharedmem.h" />
+    <ClInclude Include="..\..\..\src\base\status.h" />
+    <ClInclude Include="..\..\..\src\base\vectortools.h" />
+    <ClInclude Include="..\..\..\src\base\vectortools2.h" />
+    <ClInclude Include="..\..\..\src\base\vektor.h" />
+    <ClInclude Include="..\..\..\src\core\butcher.h" />
+    <ClInclude Include="..\..\..\src\core\diffstructure.h" />
+    <ClInclude Include="..\..\..\src\core\newdouble.h" />
+    <ClInclude Include="..\..\..\src\core\rkf45.hpp" />
+    <ClInclude Include="..\..\..\src\core\tex_steinbeis.h" />
+    <ClInclude Include="..\..\..\src\core\tex_unihb.h" />
+    <ClInclude Include="..\..\..\src\core\tex_zetem.h" />
+    <ClInclude Include="..\..\..\src\core\TransWORHP.h" />
+    <ClInclude Include="..\..\..\src\core\transworhp_version.h" />
+    <ClInclude Include="..\..\..\src\core\TWconsole.h" />
+    <ClInclude Include="..\..\..\src\core\TWcount.h" />
+    <ClInclude Include="..\..\..\src\core\TWdebug.h" />
+    <ClInclude Include="..\..\..\src\core\TWfolder.h" />
+    <ClInclude Include="..\..\..\src\core\TWparameter.h" />
+    <ClInclude Include="..\..\..\src\core\TWsharedmemory.h" />
+    <ClInclude Include="..\..\..\src\core\TWspline.h" />
+    <ClInclude Include="..\..\..\src\core\TWstrings.h" />
+    <ClInclude Include="..\..\..\src\core\Viewer.h" />
+    <ClInclude Include="..\..\..\src\core\worhp_info.h" />
+    <ClInclude Include="..\..\..\src\defines.h" />
+    <ClInclude Include="..\..\..\src\glbase\font.h" />
+    <ClInclude Include="..\..\..\src\glbase\glfont.h" />
+    <ClInclude Include="..\..\..\src\glbase\globject.h" />
+    <ClInclude Include="..\..\..\src\glbase\joystick.h" />
+    <ClInclude Include="..\..\..\src\glbase\light.h" />
+    <ClInclude Include="..\..\..\src\glbase\model.h" />
+    <ClInclude Include="..\..\..\src\glbase\smoothmovement.h" />
+    <ClInclude Include="..\..\..\src\glbase\texture.h" />
+    <ClInclude Include="..\..\..\src\glbase\tex_font.h" />
+    <ClInclude Include="..\..\..\src\glbase\ttfont.h" />
+    <ClInclude Include="..\..\..\src\glbase\viewport.h" />
+    <ClInclude Include="..\..\..\src\glbase\xmlfont.h" />
+    <ClInclude Include="..\..\..\src\glbase\xmlfont2.h" />
+    <ClInclude Include="..\..\..\src\glplot\functions.h" />
+    <ClInclude Include="..\..\..\src\glplot\plot.h" />
+    <ClInclude Include="..\..\..\src\glplot\xopt_data.h" />
+    <ClInclude Include="..\..\..\src\glplot\xopt_eps.h" />
+    <ClInclude Include="..\..\..\src\gui\icon-transworhp.h" />
+    <ClInclude Include="..\..\..\src\gui\sdlcursor.h" />
+    <ClInclude Include="..\..\..\src\gui\sdlframe.h" />
+    <ClInclude Include="..\..\..\src\gui\sdlscreen.h" />
+    <ClInclude Include="..\..\..\src\gui\sdlthread.h" />
+    <ClInclude Include="..\..\..\src\imaging\cderror.h" />
+    <ClInclude Include="..\..\..\src\imaging\imageformat.h" />
+    <ClInclude Include="..\..\..\src\imaging\imagewriter.h" />
+    <ClInclude Include="..\..\..\src\imaging\jinclude.h" />
+    <ClInclude Include="..\..\..\src\toolbase\tool.h" />
+    <ClInclude Include="..\..\..\src\toolbase\toolbox.h" />
+    <ClInclude Include="..\..\..\src\toolbase\toolbutton.h" />
+    <ClInclude Include="..\..\..\src\toolbase\toolcheck.h" />
+    <ClInclude Include="..\..\..\src\toolbase\tooledit.h" />
+    <ClInclude Include="..\..\..\src\toolbase\toolfloating.h" />
+    <ClInclude Include="..\..\..\src\toolbase\toolitem.h" />
+    <ClInclude Include="..\..\..\src\toolbase\toollist.h" />
+    <ClInclude Include="..\..\..\src\toolbase\toollistview.h" />
+    <ClInclude Include="..\..\..\src\toolbase\toolmenu.h" />
+    <ClInclude Include="..\..\..\src\toolbase\toolmenuentry.h" />
+    <ClInclude Include="..\..\..\src\toolbase\toolmenukey.h" />
+    <ClInclude Include="..\..\..\src\toolbase\toolplot.h" />
+    <ClInclude Include="..\..\..\src\toolbase\toolrect.h" />
+    <ClInclude Include="..\..\..\src\toolbase\toolscale.h" />
+    <ClInclude Include="..\..\..\src\toolbase\toolslider.h" />
+    <ClInclude Include="..\..\..\src\toolbase\toolstatus.h" />
+    <ClInclude Include="..\..\..\src\toolbase\tooltextbutton.h" />
+    <ClInclude Include="..\..\..\src\toolbase\toolview.h" />
+    <ClInclude Include="..\..\..\src\toolbase\toolwindow.h" />
+    <ClInclude Include="..\..\..\src\tool\toolregister.h" />
+    <ClInclude Include="..\..\..\src\xmlio\conversion.h" />
+    <ClInclude Include="..\..\..\src\xmlio\textout.h" />
+    <ClInclude Include="..\..\..\src\xmlio\xmlerror.h" />
+    <ClInclude Include="..\..\..\src\xmlio\xmlio.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

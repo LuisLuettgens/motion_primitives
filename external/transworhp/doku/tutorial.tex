@@ -1,0 +1,589 @@
+\chapter{Tutorial}
+
+\addtocontents{lof}{\vspace*{.5cm}{\bf 3~~Tutorial\\}}
+\addtocontents{lot}{\vspace*{.5cm}{\bf 3~~Tutorial\\}}
+
+
+\begin{paracol}{2}
+
+Die Beispielprogramme zu diesem Tutorial finden sich im Ordner {\tt tutorial}.
+
+\switchcolumn
+{\color{english}
+The example files for this tutorial can be found in the folder {\tt tutorial}.
+}
+\end{paracol}
+
+\section{Beispielaufgabe}
+
+\begin{paracol}{2}
+Als einfaches Optimalsteuerungsproblem soll das Spline-Problem gelöst werden. Die mathematische Aufgabenstellung lautet: 
+
+\switchcolumn
+{\color{english}
+
+The spline problem serves as a simple example for an optimal control problem. Its mathematical formulation is:
+}
+\end{paracol}
+
+$$\begin{array}{lrclllll}
+ \text{Zielfunktional} & \min\limits_{u,x} &\multicolumn{3}{l}{\displaystyle \int\limits_0^1 u_0^2(t)\, dt} && \text{\color{english} objective functional}\\
+\text{Differentialgleichungssystem} &\text{unter} & \dot x_0(t) &=& x_1(t) & \text{für } t\in[0,1] & \text{\color{english} ode system} \\
+            && \dot x_1(t) &=& u_0(t)  & \text{für } t\in[0,1] \\[.2cm]
+\text{Randbedingungen}  && x_0(0) &=& 0   && \text{\color{english} boundary conditions}  \\
+	    && x_1(0) &=& 1 \\
+	    && x_0(1) &=& 0 \\
+	    && x_1(1) &=& 1 \\[.2cm]
+\text{Beschränkungen}&& u_0(t) &\in& [-6,6]     & \text{für } t\in[0,1]~~~~~~~ & \text{\color{english} constraints} \\
+\end{array}
+$$
+
+\begin{paracol}{2}
+Wir geben zunächst das Zielfunktional in Mayer-Form an, und transformieren das Problem daher um. Siehe ... für Angabe in Lagrange-Form.
+\switchcolumn
+{\color{english}
+For the Mayer formulation of the objective functional, we have to transform the problem. See ... for Lagrange formulation.
+}
+\end{paracol}
+
+$$\begin{array}{rclllll}
+  \min\limits_{u,x} &x_2(1) \\
+\text{unter} & \dot x_0(t) &=& x_1(t) & \text{für } t\in[0,1]  \\
+            & \dot x_1(t) &=& u_0(t)  & \text{für } t\in[0,1] \\
+            & \dot x_2(t) &=& u_0(t)^2  & \text{für } t\in[0,1] \\[.2cm]
+            & x_0(0) &=& 0     \\
+	    & x_1(0) &=& 1 \\
+	    & x_2(0) &=& 0 \\
+	    & x_0(1) &=& 0 \\
+	    & x_1(1) &=& 1 \\[.2cm]
+	    & u_0(t) &\in& [-6,6]     & \text{für } t\in[0,1]~~~~~~~  \\
+\end{array}
+$$
+
+\begin{paracol}{2}
+\TransWORHP\ diskretisiert dieses Optimalsteuerproblem, und gibt das so erhaltene nichtlineare Optimierungsproblem an die Routine WORHP weiter.
+\switchcolumn
+{\color{english}
+\TransWORHP\ diskretisiert dieses Optimalsteuerproblem, und gibt das so erhaltene nichtlineare Optimierungsproblem an die Routine WORHP weiter.
+
+}
+\end{paracol}
+
+\section{Erste Implementierung mit \TransWORHP}
+
+Ein Optimalsteuerungsproblem wird mit \TransWORHP\ als Ableitung der Klasse {\tt TransWorhpProblem} implementiert. Die einzelnen Komponenten des Optimalsteuerungsproblems werden dabei als Methoden der abgeleiteten Klasse zur Verfügung gestellt.
+
+
+{\footnotesize
+\ccccode{spline0.cpp}{Minimalbeispiel Optimalsteuerungsproblem: spline0.cpp}{11}{50}
+}
+
+\subsection{\tt TWdimension}
+
+Über das Struct {\tt TWdimension} lassen sich alle benötigten Problemgrößen setzen. Werden einzelne Einträge nicht gesetzt, so werden diese mit sinnvollen Standardwerten belegt.
+
+\sparams{
+ {\tt ID} & Text zur kurzen Beschreibung des Problems \\
+ {\tt n\_dis}& Anzahl der diskreten Punkte $n$ \\
+ {\tt n\_ode} & Anzahl der Zustandsgrößen $x$ (d.h. Anzahl der Gleichungen im Differentialgleichungssystem) \\
+ {\tt n\_ctrl} & Anzahl der Steuergrößen $u$ \\
+ {\tt n\_param} & Anzahl der freien Parameter (z.B. Prozesszeit) \\
+ {\tt n\_rand} & Anzahl der Randbedingungen \\
+ {\tt n\_neben} & Anzahl der (nichttrivialen) Steuer- und Zustandsbeschränkungen \\
+ {\tt n\_integral} & Anzahl an Integraltermen \\
+ {\tt n\_zen} &  d \\
+}
+
+Für die Mehrziel-Methode lassen sich weitere Parameter setzen.
+
+\sparams{
+ {\tt multinode} & Vektor mit Indezies der Mehrzielknoten \\
+ {\tt BOXneben} & Vektor mit Indezies der beschränkten Zustände \\
+}
+
+Eine äquidistante Verteilung der Mehrzielknoten lässt sich weiterhin mit
+
+\syntax{void setMultinodes(int multi);}
+
+erzielen.
+
+\subsection{Konstruktor}
+
+Im Konstruktor von {\tt TransWorhp} wird die Anzahl der Diskretisierungspunkte festgelegt, sowie die Problemgrößen des Optimalsteuerungsproblems.
+
+Die Syntax lautet:
+
+\syntax{TransWorhpProblem(const TWdimension \&TWdata);}
+\sparams{
+ {\tt TWdata} & Struct mit den Problemgrößen \\
+ }
+
+
+\subsection{Zielfunktional}
+\label{zf}
+
+In dieser zu überladenden Methode wird das Zielfunktional berechnet. Hierfür stehen die Steuerungen und Zustände zu allen diskreten Zeitpunkten $\{t_0, \dots, t_{n - 1}\} $ zur Verfügung.
+
+\syntax{double obj();}
+
+Der Zugriff auf die Zustände erfolgt über:
+
+\syntax{double x(int dis, int i);}
+\sparams{
+{\tt dis} & Index des diskreten Punkts \\
+{\tt i}   & Koordinate des Zustandsvektors \\
+}
+
+Analog lässt sich auf die Steuerungen zugreifen:
+
+\syntax{double u(int dis, int i);}
+\sparams{
+{\tt dis} & Index des diskreten Punkts \\
+{\tt i}   & Koordinate des Steuervektors \\
+}
+
+Auf freie Parametern, lässt sich zugreifen mit
+
+\syntax{double p(int i);}
+\sparams{
+{\tt i}   & Koordinate des Parametervektors \\
+}
+
+\subsection{Differentialgleichungssystem}
+
+In dieser zu überladenden Methode wird rechte Seite des Differentialgleichungssystems berechnet. Hierfür stehen Zustand und Steuerung zu einem festen Zeitpunkt zur Verfügung.
+
+\syntax{
+void ode(double *dx, double t, const double *x, const double *u,
+			 const double *p);
+}
+\sparams{
+{\tt dx} & Rückgabewert: Berechnung der rechten Seite \\
+{\tt t  } & Zeitpunkt \\
+{\tt x  } & Zustandsvektor \\
+{\tt u } & Steuervektor \\
+{\tt p}  & Parametervektor \\
+}
+
+\subsection{Box-Beschränkungen}
+
+In diesen zu überladenden Methoden werden 
+Beschränkungen für Zustände, Steuerungen oder Parameter angegeben:
+
+\syntax{void x\_boundary(double *x\_low, double *x\_upp);
+
+void u\_boundary(double *u\_low, double *u\_upp);
+
+   void p\_boundary(double *p\_low, double *p\_upp);
+}
+\sparams{
+{\tt x\_low} & Untergrenzen des Zustandsvektors \\
+{\tt x\_upp}   & Obergrenzen des Zustandsvektors \\
+{\tt u\_low} & Untergrenzen des Steuervektors \\
+{\tt u\_upp }  & Obergrenzen des Steuervektors \\
+{\tt p\_low} & Untergrenzen des Parametervektors \\
+{\tt p\_upp }  & Obergrenzen des Parametervektors \\
+}
+
+In diesem Beispiel wurde zusätzlich $x_2(t)\ge 0$ vorgeben, um die Konvergenz zu beschleunigen.
+
+\subsection{Anfangs- und Endbedingungen}
+
+In dieser zu überladenden Methode können Anfangs- und Endbedingungen für Zustände angegeben werden. Ebenso können auch Box-Beschränkungen, die vom diskreten Punkt abhängen, formuliert werden.
+
+\syntax{void var\_boundary(double *x\_low, double *x\_upp);}
+\sparams{
+{\tt x\_low} & Untergrenzen des Optimierungsvektors \\
+{\tt x\_upp}  & Obergrenzen des Optimierungsvektors \\
+}
+
+Die anzugebenden Grenzen beziehen sich auf den gesamten Optimierungsvektor, der an WORHP übergeben wird. Um auf die einzelnen Einträge zuzugreifen, sollten Index-Funktionen verwendet werden.
+
+Der Index der Zustandsgrößen bestimmt sich mit:
+
+\syntax{int x\_index(int dis, int i);}
+\sparams{
+{\tt dis} & Index des diskreten Punkts \\
+{\tt i}   & Koordinate des Zustandsvektors \\
+}
+
+Analog lässt sich der Index der Steuerungen bestimmen:
+
+\syntax{int u\_index(int dis, int i);}
+\sparams{
+{\tt dis} & Index des diskreten Punkts \\
+{\tt i}   & Koordinate des Steuervektors \\
+}
+
+Auf freie Parameter lässt sich mit diesem Index zugreifen:
+
+\syntax{\tt double p\_index(int param);}
+\sparams{
+{\tt param}   & Koordinate des Parametervektors \\
+}
+
+\subsection{Hauptprogramm}
+\label{tut1}
+
+{\footnotesize
+\cccode{spline0.cpp}{Minimalbeispiel Aufruf: spline0.cpp}{54}
+}
+
+Viele Einstellungen von \TransWORHP\ und WORHP werden über XML-Dateien angegeben (vgl. \ref{sec:xml}). Im Hauptprogramm wird zunächst die Datei {\tt transworhp.xml} geöffnet und die XML-Datei geparst.
+
+Das von uns implementierte Optimalsteuerungsproblem besteht aus drei Zuständen und einer Steuerung wird mit einer Anzahl an diskreten Punkten instanziert und mit {\tt Add()} dem {\tt TWfolder} hinzugefügt. Zuvor wird mittels {\tt setSolver()} dem Problem ein Löser zugeteilt. Die Anzahl der diskreten Punkte wird dabei aus den Parametern ausgelsen ({\tt twparameter.NDIS}). Mit der Funktion {\tt Init()} wird der Arbeitsspeicher für WORHP angelegt und mit \TransWORHP\ verbunden. Anschließen wird mit {\tt Loop()} die Standard-Optimierung gestartet.
+
+Da keine feste Anzahl von diskreten Punkten vorgegeben wird, lässt sich die Diskretisierung über den Konsolenaufruf einstellen:
+
+Mit {\tt spline0 -n 31} werden z.B. 31 diskrete Punkte verwendet.
+
+
+
+\section{Grafische Ausgabe der Optimierung}
+
+\TransWORHP\ besitzt ein Interface für grafische Ausgabe, um den Optimierungsfortschritt oder Systemmatrizen bequem beobachten zu können. Das Ausgabefenster wird Viewer genannt.
+
+{\footnotesize
+\cccode{spline1.cpp}{Grafische Ausgabe: spline1.cpp}{52}
+}
+
+Zunächst muss ein {\tt *viewer} erstellt werden. Nach der Initialisierung von \TransWORHP\ mit {\tt Init()} muss {\tt Init(viewer)} aufgerufen werden, damit das Anzeigefenster mit \TransWORHP\ verbunden wird. Die Einstellungen des Viewers werden ebenfalls über die XML-Datei angepasst.
+
+Wenn das Programm ausgeführt wird, erscheint neben der Konsolenausgabe ein Fenster mit den Zustands- und Steuerfunktionen, vgl. Abb. \ref{abb1}.
+\begin{figure}[t]
+\begin{center}
+\includegraphics[width=10cm]{images/spline1}
+\caption{Grafische Ausgabe}
+\label{abb1}
+\end{center}
+\end{figure}
+
+Zusätzlich werden die für die Optimierung mit WORHP benötigte Jacobi-Matrix {\tt DG} und Hesse-Matrix {\tt HM} angezeigt (sparsity). Die Bedeutung der verwendeten Farben zeigt Tab.~\ref{tabfarbe}.
+
+
+\begin{table}[b]
+\begin{center}
+\begin{tabular}{r|l}
+blau & zufälliger Wert\\
+rot & $-1$\\
+rosa & $-\frac{1}{2}$ \\
+grün & $1$ \\
+grau & Null 
+\end{tabular}
+\caption{Bedeutung der Farben der angezeigten Matrizen}
+\label{tabfarbe}
+\end{center}
+\end{table}
+
+Nicht eingefärbte Einträge werden in der Matrix nicht angelegt, und sparen so Speicherplatz und Rechenzeit.
+
+Die Blöcke der Jacobi-Matrix entstehen dadurch, dass Zustände zu diskreten Zeitpunkten nur von benachbarten Zuständen abhängen.
+
+\explain{Abspeichern der Abbildungen als eps mit F1.}
+
+\section{Ableitungsstrukturen in \TransWORHP}
+
+\subsection{Angabe von Ableitungs-Strukturen}
+\label{abl1}
+Die Rechenzeit kann verringert werden, wenn die Struktur der Jacobi-Matrix besser bekannt ist. In diesem Beispiel lässt sich die Struktur der Ableitung der rechten Seite leicht angeben.
+
+Die rechte Seite lautete:
+
+$$
+\begin{array}{rcl}
+	     dx_0 &=& x_1  \\
+             dx_1 &=& u_0   \\
+             dx_2 &=& u_0^2   \\
+\end{array}
+$$
+
+Damit hängt $dx_0$ nur von $x_1$ ab, $dx_1$ und $dx_2$ nur von $u_0$. 
+
+Diese Struktur wird durch überladen dieser Methode angegeben:
+
+\syntax{bool ode\_structure(DiffStructure \&s);}
+
+In {\tt DiffStructure} wird angegeben, welche Gleichung von welchen Zuständen, Steuerungen und Parametern abhängt. Dazu dient der Klammer-Operator
+
+\syntax{double\& DiffStructure::operator()(int eq, int var);}
+\sparams{
+{\tt eq} & Index der zu definierenden Gleichung \\
+{\tt var} & Index der Optimierungsgröße. Dieser wird mit {\tt x\_indexode}, {\tt u\_indexode} oder {\tt p\_indexode} bestimmt. \\
+}
+
+\syntax{int p\_indexode(int param);}
+\sparams{
+{\tt param}   & Koordinate des Parametervektors \\
+}
+
+Der Rückgabewert von {\tt ode\_structure} bestimmt, ob die Struktur auch verwendet wird.
+
+{\footnotesize
+\ccccode{spline2.cpp}{Ableitungsstrukturen der rechten Seite: spline2.cpp}{35}{41}
+}
+
+Die entstehende Jacobi-Matrix ist in Abb. \ref{fig2} dargestellt.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=10cm]{images/spline2}
+\caption{Jacobi-Matrix mit optimaler Ausnutzung der Sparsity}
+\label{fig2}
+\end{center}
+\end{figure}
+
+
+
+Analog wird in diesem Beispiel auch die Struktur der Ableitung der Zielfunktion angegeben. Hier ist diese Methode zu überladen:
+
+\syntax{bool obj\_structure(DiffStructure \&s);}
+
+Da die Zielfunktion nur aus einer Gleichung besteht, ist hier der Parameter {\tt eq} auf 0 zu setzen.
+
+
+
+{\footnotesize
+\ccccode{spline2.cpp}{Ableitungsstrukturen der Zielfunktion: spline2.cpp}{21}{25}
+}
+
+
+
+\subsection{Angabe der ersten Ableitungen}
+
+Um numerische Ableitungen mit finiten Differenzen zu umgehen -- diese werden bei sehr vielen  diskreten Punkten ungenauer als der Diskretisierungsabstand -- bietet sich die analytische Angabe von Ableitungen an.
+
+Die rechte Seite lautete:
+$$
+\begin{array}{rcl}
+	     dx_0 &=& x_1  \\
+             dx_1 &=& u_0   \\
+             dx_2 &=& u_0^2   \\
+\end{array}
+$$
+
+Die nicht verschwindenden analytischen Ableitungen sind
+
+$$
+\begin{array}{rcl}
+	    \displaystyle \frac{\partial dx_0}{\partial x_1} &=& 1  \\
+            \displaystyle \frac{\partial dx_1}{\partial u_0} &=& 1   \\
+             \displaystyle\frac{\partial dx_2}{\partial u_0} &=& 2 u_0   \\
+\end{array}
+$$
+
+Um diese in \TransWORHP\ anzugeben, wird wieder eine Methode überladen:
+
+\syntax{bool ode\_diff(DiffStructure \&s, double t, const double *x, const double *u, const double *p);}
+
+{\tt t}, {\tt x}, {\tt u} und {\tt p} entspricht der Bedeutung aus der Funktion {\tt ode}. 
+
+Der Klammer-Operator aus Abschnitt \ref{abl1} gibt eine Referenz auf einen Speicherplatz zurück, der mit den berechneten Ableitungen beschrieben wird.
+
+{\footnotesize
+\ccccode{spline3.cpp}{Analytische Ableitungen der rechten Seite: spline3.cpp}{49}{56}
+}
+
+Analog für die Zielfunktion:
+
+\syntax{bool obj\_diff(DiffStructure \&s);}
+
+
+{\footnotesize
+\ccccode{spline3.cpp}{Analytische Ableitungen der Zielfunktion: spline3.cpp}{27}{31}
+}
+
+
+\section{Allgemeine Optimalsteuerprobleme mit \TransWORHP}
+\subsection{Angabe von Startschätzungen}
+
+Bei komplexeren Optimierungsproblemen ist die Angabe von sinnvollen Startschätzungen wichtig, um Konvergenz zu sichern oder die Konvergenzgeschwindigkeit zu verbessern.
+
+
+Hierfür werden wieder Methoden überladen:
+
+\syntax{
+void x\_init(double *x, int i, int dis)
+
+void u\_init(double *u, int i, int dis)
+
+void p\_init(double *p)}
+
+{\tt x\_init} und {\tt p\_init} werden für jeden diskreten Punkt aufgerufen. Der aktuelle Index {\tt i} sowie die Gesamtzahl der Punkte {\tt dis} stehen bereit.
+
+Anmerkung: Je nach gewählter Diskretisierungsmethode (Trapez, Hermite-Simpson) kann {\tt dis} variieren.
+
+{\footnotesize
+\ccccode{spline4.cpp}{Startschätzung der Steuerung: spline4.cpp}{80}{83}
+}
+
+\subsection{Randwerte}
+
+Einfache Anfangs- und Endwerte, bzw. beliebige Werte dazwischen können mit {\tt var\_boundary} angegeben werden.
+
+Um komplexere Randbedingungen für einzelne Zeitpunkte zu formulieren, können Gleichungen der Form $$r(x,u)=0$$ hinzugefügt werden. Die Anzahl der Gleichungen ist im Konstruktor von \TransWORHP\ anzugeben.
+
+Die Randbedingungen können mit {\tt x()}, {\tt u()}, {\tt p()} wie in Abschnitt \ref{zf} formuliert werden.
+
+\syntax{void rand(double *r);}
+
+Analog lassen sich auch wieder die Ableitung der Randwerte sowie deren Struktur angeben:
+
+\syntax{bool rand\_structure(DiffStructure \&s);}
+
+\syntax{bool rand\_diff(DiffStructure \&s)}
+
+Es können Ober- und Untergrenzen angegeben werden für Bedingungen der Form:
+$$ r_{low} \le r(x,u) \le r_{upp}$$
+
+\syntax{void rand\_boundary(double *r\_low, double *r\_upp);}
+	
+
+Auf diese Weise lassen sich auch (weniger effizient) die gegebenen Anfangs- und Endbedingungen festlegen:
+{\footnotesize
+\ccccode{spline5.cpp}{Randwerte: spline5.cpp}{82}{127}
+}
+
+%Achtung: Derzeit muss bei Verwendung von rand auch die Struktur angegeben werden!
+
+\subsection{Nebenbedingungen}
+
+\explain{Einfache Steuer- und Zustandsbeschränkungen (Box-Beschränkungen) können mit 
+{\tt x\_boundary}, {\tt u\_boundary} und {\tt p\_boundary} formuliert werden. Diese Funktionen sollte man auch benutzen, da sie effektiver sind.}
+
+Die Anzahl der Nebenbedingungen ({\tt n\_neben}) muss im Konstruktor von \TransWORHP\ angegeben werden. Für komplexere Beschränkungen wird diese Methode überladen:
+	
+\syntax{void neben(double *c, double t, const double *x, 
+			   const double *u, const double *p)}
+
+
+{\tt t}, {\tt x}, {\tt u} und {\tt p} entsprechen dem Aufruf von {\tt ode()} in Abschnitt \ref{zf}.
+
+Es müssen Ober- und Untergrenzen angegeben werden:
+
+\syntax{void neben\_boundary(double *c\_low, double *c\_upp);}
+
+	
+Die Struktur und die Werte der Ableitungen der Nebenbedingungs-Gleichungen kann zusätzlich angegeben werden:
+
+\syntax{bool neben\_structure(DiffStructure \&s);
+
+bool neben\_diff(DiffStructure \&s, double t, const double *x, 
+                 const double *u, const double *p);}
+
+
+
+Im Beispiel wird zusätzlich 
+$$-0.4 \le x_0 + x_1 \le 1 $$
+gefordert. Diese Gleichung hängt von $x_0$ und $x_1$ ab, was in der Struktur vorgegeben wird.
+	
+{\footnotesize
+\ccccode{spline5.cpp}{Nebenbedingungen: spline5.cpp}{130}{155}
+}
+
+
+\section{Nächste Schritte}
+
+Optionale Erweiterungen zur Lösung von Optimalsteuerungsproblemen werden hier vorgestellt. Grundlage ist jeweils das Spline-Problem in der Version spline4.cpp.
+
+
+\subsection{Startschätzung durch Integration}
+
+Sind die ungefähre Struktur der Steuerung und die Anfangswerte der Zustände bekannt, kann dieses als Startschätzung angegeben und damit die Zustände für alle Zeitpunkte hochintegriert werden. Dadurch entsteht eine Startschätzung für die Zustände. Hierzu wird die Funktion
+
+\syntax{int Integrate(int btableau);}
+
+genutzt, welcher durch den Löser ({\tt solver}) bereitgestellt wird.
+
+{\footnotesize
+\ccccode{spline_ruku.cpp}{Startschätzung durch Integration: spline\_ruku.cpp}{105}{118}
+}
+
+\subsection{Ergebnisse zwischenspeichern}
+
+Genauere Lösungen lassen sich durch eine höhere Anzahl an Diskretisierungspunkten erreichen. Da eine Lösung auf einem sehr feinen Gitter viel Rechenzeit in Anspruch nimmt, ist eine gute Startschätzung nötig. Diese lässt sich beispielsweise durch eine Lösung auf einem gröberen Gitter erzeugen. Zum Speichern einer Lösung wird die Funktion {\tt ToMatlab()} benutzt. Anschließen kann vor der erneuten Optimierung (vor {\tt Loop()}) die zuvor erstellte Lösung mit {\tt FromMATLAB()} eingelesen werden. Beide Methoden werden vom {\tt solver} bereitgestellt. Hierbei werden Zwischenpunkte interpoliert.
+
+\syntax{void ToMATLAB(const std::string\& filename);\\
+void FromMATLAB(const std::string\& filename);}
+
+{\footnotesize
+\ccccode{spline_load.cpp}{schreiben und laden einer Startschätzung: spline\_load.cpp}{88}{126}
+}
+
+\subsection{Automatische Differentiation}
+
+Experimentell. Bereitstellen der Funktionen obj und ode für MagicDoubles. 
+
+Beispiel:
+
+TODO spline\_ad.cpp
+
+Details später in Abschnitt \ref{magicdbl}.
+
+
+\subsection{Lagrange-Term im Zielfunktional}
+
+Experimentell. Angabe von Integrandenfunktionen (mit Ableitungen) und Gewichtung, die zum Mayer-Zielfunktional obj() hinzuaddiert wird.
+
+Vgl. \ref{intlag1}
+
+TODO spline\_int.cpp
+
+
+\subsection{Explizite Integrationsverfahren}
+
+TODO spline\_expl.cpp
+
+
+\subsection{Sensitivitätsanalyse mit WORHP Zen}
+
+TODO spline\_zen.cpp
+
+\subsection{Adaptive Gitteranpassung}
+
+Für die adaptive Gitteranpassung muss lediglich {\tt Loop()} durch {\tt meshRef()} ersetzt werden. Einstellungen können in der XML-Datei vorgenommen werden (vgl. \ref{meshRef}).
+
+\syntax{int meshRef();}
+
+\explain{Es ist darauf zu achte, dass während die Gitteranpassung mit grafischer Ausgabe (also mit aktiviertem {\tt viewer}) läuft, das Fenster nicht via Klick auf Schließen geschlossen wird. Dies könnte Speicherfehler hervorbringen! Nach jedem Anpassungsschritt schließt und öffnet sich das Fenster selbstständig.}
+
+{\footnotesize
+\ccccode{../example/rakete_meshRef.cpp}{adaptive Gitteranpassung: rakete\_meshRef.cpp}{95}{123}
+}
+
+\subsection{Mehrere Phasen}
+
+Es ist möglich mehrere Optimalsteuerprobleme (Phasen) in einem TWfolder zu vereinen. Dies ist exemplarisch in spline\_phase.cpp dargestellt. Hier wurde das Splineproblem in zwei Phasen aufgeteilt. So wurden in der ersten Phase die Anfangswerte angegeben, aber die Endwerte frei gelassen. In der zweiten Phasen entsprechend andersherum. Dies lässt sich mit Fallunterscheidungen in {\tt var\_boundary()} realisieren.
+
+{\footnotesize
+\ccccode{spline_phase.cpp}{mehrere Phasen: spline\_phase.cpp}{69}{80}
+}
+
+Damit Stetigkeit zwischen beiden Phasen herrscht, müssen weitere Nebenbedingungen angegeben werden. Hierzu muss zunächst von {\tt TWfolder} geerbt und die Anzahl der Nebenbedingungen angegeben werden. Hierzu stehen folgende Methoden zur Verfügung:
+
+\syntax{void g\_boundary(double *x\_low, double *x\_upp);\\
+void con(double *C);\\
+bool con\_structure(DiffStructure \&s);\\
+bool con\_diff(DiffStructure \&s, int colindex);}
+
+Diese Methoden verhalten sich analog zu den bereits beschriebene (vgl. z.B. {\tt neben()}). Allerdings ist es (bis jetzt) nur möglich lineare Nebenbedingungen anzugeben. Zugriff auf die Phasen besteht über den Vektor {\tt phases}:
+
+\syntax{std::vector<TransWorhp*> phases;}
+
+Zu beachten ist, dass beim Zugriff auf Zustände oder Steuerungen aus einzelnen Phasen ein Offset ({\tt Delta1}) addiert werden muss. Weiterhin muss beachtet werden, dass der Zugriff direkt auf dem WORHP Optimierungsvektor erfolgt.
+
+{\footnotesize
+\ccccode{spline_phase.cpp}{mehrere Phasen: spline\_phase.cpp}{105}{114}
+}
+
+\subsubsection*{Internes zusammensetzen mehrere Phasen}
+
+Werden mehrere Phasen verbunden, so erstellt \TransWORHP\ intern ein einziges (großes) Problem daraus. Hierzu werden die einzelnen Phasen nacheinander in den Optimierungsvektor von WORHP geschrieben. Dies ist in Abbildung \ref{abb:splinePhase} anhand der Struktur von {\tt DF} bzw. {\tt DG} gut zu erkennen.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=7cm]{images/spline/pix_5_DF_phase}
+\includegraphics[width=7cm]{images/spline/pix_6_DG_phase}
+\caption{Spline-Problem mit zwei Phasen}
+\label{abb:splinePhase}
+\end{center}
+\end{figure}

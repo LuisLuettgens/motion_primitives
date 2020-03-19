@@ -1,0 +1,736 @@
+\chapter{Konfiguration von \TransWORHP}
+
+%\addtocontents{lof}{\vspace*{.5cm}{\bf 2~~Tutorial\\}}
+\addtocontents{lot}{\vspace*{.5cm}{\bf 7~~Konfiguration von \TransWORHP\\}}
+
+\section{XML-Datei {\tt transworhp.xml}} \label{sec:xml}
+
+Einige Einstellungen von TransWORHP lassen sich über eine XML-Datei konfigurieren, vgl. Abschnitt \ref{tut1}. 
+
+Es kann {\tt id} oder {\tt text-id} angegeben werden.
+
+
+\subsection{<WORHP>}
+Das Tag {\tt <WORHP>} beschreibt, wie WORHP aufgerufen wird.
+Mit dem Attribut {\tt param} wird die WORHP-Parameterdatei angegeben, z.B. {\tt worhp.xml}.
+
+Mit den Unter-Tags {\tt USERDF}, {\tt USERDF} und {\tt USERHM} lassen sich Setzungen aus der WORHP-Parameterdatei überschreiben:
+
+\begin{itemize}
+\item +1 Ableitungen werden von TransWORHP berechnet. Entweder numerisch oder analytisch, falls vorhanden.
+\item -1 Ableitungen werden von WORHP numerisch bestimmt.
+\item 0 Setzung aus Paramterdatei übernehmen.
+\end{itemize}
+
+Steht USERHM auf -1, so wird z.B. die Hesse-Matrix von WORHP berechnet, je nach dortiger Setzung mit finiten Differenzen oder BFGS-Methoden. 
+
+Steht USERHM auf 1, berechnet TransWORHP die Hesse-Matrix. Möglicherweise längere Rechenzeit pro Iteration, aber insgesamt weniger Iterationen.
+
+
+Beispiel:
+\begin{verbatim}
+<WORHP param="worhp.xml">
+    <USERDF>1</USERDF>
+    <USERDG>1</USERDG>
+    <USERHM>-1</USERHM>
+</WORHP>
+\end{verbatim}
+
+
+
+ 
+\subsection{<DISCRETIZATION>}
+Zur Auswahl stehen die Optionen aus Tab. \ref{xmldis}
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{lll}
+{\tt id} & {\tt text-id} & Beschreibung \\\hline
+{\tt 1} & {\tt Trapez} & Trapezverfahren (\ref{int1})\\
+{\tt 2} & {\tt HermiteSimpson} & Hermite-Simpson-Verfahren (\ref{int2})
+\end{tabular}
+\caption{Optionen für <DISCRETIZATION>}
+\label{xmldis}
+\end{center}
+\end{table}
+
+Die erstgenannte Option wird verwendet.
+
+
+Beispiel:
+\begin{verbatim}
+<DISCRETIZATION>Trapez</DISCRETIZATION>
+\end{verbatim}
+
+
+
+\subsection{<FINITEDIFF>}
+Parameter zur Berechnung der finiten Differenzen in \TransWORHP, wenn keine expliziten analytischen Ableitungen angegeben werden.
+
+Beispiel:
+\begin{verbatim}
+<FINITEDIFF>1e-6</FINITEDIFF>
+\end{verbatim}
+
+
+
+
+\subsection{<BUTCHER>}
+Eine Vorabintegration kann mit expliziten Integrationsverfahren (mit Schrittweitensteuerung) durchgeführt werden. Dazu müssen die Anfangswerte, die freien Parameter und die Steuerungen sinnvoll belegt werden. Siehe {\tt spline\_ruku.cpp} für ein Beispiel.
+
+Zur Auswahl stehen die Optionen aus Tab. \ref{xmlbut}.
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{lll}
+{\tt id} & {\tt text-id} & Beschreibung \\\hline
+{\tt 0} & {\tt HeunEuler} &       $s=2$,  $p=2$, $q=1$\\
+{\tt 1} & {\tt BogackiShampine} & $s=4$,  $p=3$, $q=2$ \\
+{\tt 2} & {\tt Uebung} &          $s=4$,  $p=2$, $q=3$ \\
+{\tt 3} & {\tt Fehlberg} &        $s=6$,  $p=4$, $q=5$ \\
+{\tt 4} & {\tt CashKarp} &        $s=6$,  $p=5$, $q=4$ \\
+{\tt 5} & {\tt DormandPrince} &   $s=7$,  $p=4$, $q=5$ \\
+
+\end{tabular}
+\caption{Optionen für <BUTCHER>}
+\label{xmlbut}
+\end{center}
+\end{table}
+
+
+
+
+Beispiel:
+\begin{verbatim}
+<BUTCHER>1</BUTCHER>
+\end{verbatim}
+
+
+
+
+\subsection{<HESSIAN>}
+
+Die Struktur <STRUCTURE> und Berechnungsweise <VALUES> der Hessematrix kann unabhängig voneinander festgelegt werden.
+
+
+Zur Auswahl der Struktur stehen die Optionen 0-3 aus Tab. \ref{xmlhmstr}.
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{llp{7cm}}
+{\tt id} & {\tt text-id} & Beschreibung \\\hline
+{\tt 0} & {\tt Diagonal} &   Nur Diagonalmatrix\\
+{\tt 1} & {\tt Full} &      Volle untere Dreiecksmatrix \\
+{\tt 2} & {\tt Odeblocks2} & Für Optimalsteuerungsproblem geeignete Sparsity mit Verbindung benachbarter Blöcken\\
+{\tt 3} & {\tt Odeblocks} &  Für Optimalsteuerungsproblem geeignete Sparsity \\
+{\tt 4} & {\tt } &  Verwendung der analytischen Ableitung bei AD\\
+{\tt 5} & {\tt } &  Verwendung der analytischen Ableitung bei AD (schneller)\\
+
+\end{tabular}
+\caption{Optionen für <STRUCTURE>}
+\label{xmlhmstr}
+\end{center}
+\end{table}
+
+
+Um die gegebene Struktur zu erhalten, sollte in der WORHP-Parameterdatei
+
+\begin{itemize}
+ \item entweder BFGS ausgeschaltet sein,
+\begin{verbatim}
+<BOOL name="FidifHM">True</BOOL>
+\end{verbatim}
+\item oder strukturerhaltendes BFGS eingeschaltet sein.
+\begin{verbatim}
+<BOOL name="FidifHM">True</BOOL>
+<INT name="BFGSmethod">100</INT>
+\end{verbatim}
+
+\end{itemize}
+
+Zur Auswahl der Werte stehen die Optionen 0-2 aus Tab. \ref{xmlhmval}.
+	
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{llp{7cm}}
+{\tt id} & {\tt text-id} & Beschreibung \\\hline
+{\tt 0} & {\tt DiffDiff} &  Berechnung der 2. Ableitung von $F + \mu\cdot G$\\
+{\tt 1} & {\tt DiffDG} &     Berechnung der 1. Ableitung von DF + mu*DG \\
+{\tt 2} & {\tt } &          schnellere Berechnung der 1. Ableitung von DF + mu*DG \\
+{\tt 3} & {\tt } &          Berechnung der analytischen Ableitung von F + mu*G\\
+{\tt 4} & {\tt } &          Berechnung der analytischen Ableitung von F + mu*G, 2. Version\\
+
+
+\end{tabular}
+\caption{Optionen für <VALUES>}
+\label{xmlhmval}
+\end{center}
+\end{table}
+
+
+
+Beispiel:
+\begin{verbatim}
+<HESSIAN>
+    <STRUCTURE>3</STRUCTURE>
+    <VALUES>2</VALUES>
+</HESSIAN>
+\end{verbatim}
+
+Bei Verwendung der analytischen Ableitungen wird lässt sich die Berechnung der Hessematrix durch <MAGIC\_HESSIAN> parametrisieren.
+
+Beispiel:
+\begin{verbatim}
+<MAGIC_HESSIAN>
+    <STRUCTURE>5</STRUCTURE>
+    <VALUES>4</VALUES>
+</MAGIC_HESSIAN>
+\end{verbatim}
+
+\subsection{<PLOT>}
+Die Struktur von DF, DG und HM kann beobachtet werden.
+
+Beispiel:
+\begin{verbatim}
+<PLOT>
+    <!--SPARSITY>DF</SPARSITY-->
+    <SPARSITY>DG</SPARSITY>
+    <SPARSITY>HM</SPARSITY>
+</PLOT>
+\end{verbatim}
+
+\subsection{<WINDOW>}
+
+Diese Einstellungen betreffen die grafische Darstellung.
+
+Beispiel:
+\begin{verbatim}
+<WINDOW width="800" height="600">
+    <OPENGL multisamplebuffers="1" multisamplesamples="4" />
+    <LOGO>ZeTeM</LOGO>
+    <BACKGROUND color_top="153,153,179,255" color_bottom="196,225,255,255" />
+    <MENU color_back="153,153,179,255" color_fps="153,153,179,255" />
+</WINDOW>
+\end{verbatim}
+
+width und height setzt die Fensterbreite.
+
+In OPENGL können multisamplebuffers aktiviert werden, um Anti-Aliasing bei der 3d-Darstellung zu erhalten. multisamplesamples legt die Qualität fest (erlaubte Werte abhängig von der Grafikkarte)
+
+LOGO kann ZeTeM, UniBremen oder Steinbeis sein.
+
+Die Farben für BACKGROUND und MENU sind im Format RGBA anzugeben.
+
+\subsection{<TERMINAL>}
+
+Dieses Tag betrifft Einstellungen der Ausgabekonsole unter Windows.
+
+Wenn dieses Tag vorhanden ist, wird die Schriftart und Puffergröße des Konsolenfensters angepasst.
+
+Beispiel:
+\begin{verbatim}
+<TERMINAL width="132" height="2000" >
+    <FONT width="6" height="8" />
+</TERMINAL>
+\end{verbatim}
+
+\subsection{<MESHREF>} \label{meshRef}
+
+Hiermit lassen sich Änderungen an der adaptiven Gitteranpassung vornehmen. Es stehen drei Modi bereit: neue Punkte in Intervall einfügen, in welchem der Fehler am größten ist (modus="0"), gezielt Auf-/Absprungpunkte der Steuerung finden (modus="1") oder beides (modus="2"). Weitere Einstellungen aus Tabelle \ref{meshrefEinstellungen} stehen zu Verfügung.
+
+\begin{table}
+\begin{center}
+	\begin{tabular}{ll}
+	Allgemein & \\
+	\hline\\
+	FEHLER\_MOD & Art der Fehlerberechnung: 0:Betts, 1:über höhere Diskretisierung\\
+	TOL & Fehlerschranke\\
+	maxIter & maximale Anzahl an Iterationsschritten\\
+	(VERLAUF & Zwischenschritte anzeigen ein (1) oder aus (0)) \textbf{zur Zeit nicht verfügbar}\\
+	\hline \hline\\
+	Betts-Parameter & \\
+	\hline\\
+	M1 & maximale Anzahl neuer Punkte pro Intervall. Standard: 5\\
+	R & globale Ordnungsreduktion (falls nicht die gewünschte Genauigkeit erreicht wird)\\
+	KAPPA & Faktor nach Betts für Fehlerreduktion. Standard: 0.1\\
+	M & maximale Anzahl neuer Punkte über alle Intervalle; wenn leer: Standard\\
+	\hline \hline\\
+	Plots (0=aus, 1=an) & \\
+	\hline
+	SCHRITTWEITE & Anzeige für Schrittweite pro Intervall\\
+        FEHLER & Anzeige für Fehler pro Intervall\\
+        GITTERPUNKTE & Position der Gitterpunkte\\
+        LAMBDA & Plot der Lambda-Multiplikatoren\\
+        MU & Plot der Adjungierten\\
+	\end{tabular}
+\end{center}
+\caption{Optionen für <MESHREF>}
+\label{meshrefEinstellungen}
+\end{table}
+
+Beispiel:
+\begin{verbatim}
+<MESHREF modus="0" >
+    <FEHLER_MOD>0</FEHLER_MOD>
+    <TOL>1e-10</TOL>
+    <maxIter>100</maxIter>
+    <!-- Betts Parameter - Anfang -->
+    <M1>5</M1>
+    <R>0</R>
+    <KAPPA>0.1</KAPPA>
+    <M></M>
+    <!-- Betts Parameter - Ende -->
+    <VERLAUF>1</VERLAUF>
+    <PLOTS>
+        <SCHRITTWEITE>0</SCHRITTWEITE>
+        <FEHLER>1</FEHLER>
+        <GITTERPUNKTE>1</GITTERPUNKTE>
+        <LAMBDA>1</LAMBDA>
+        <MU>1</MU>
+    </PLOTS>
+</MESHREF>
+\end{verbatim}
+
+
+
+
+
+\chapter{Weiteres}
+\section{Verwenden der XML-Bibliothek}
+
+TODO.
+
+
+\section{Verwenden von Shared Memory}
+
+TODO Beschreibung der Funktionen
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+\section{Optimale Steuerung}
+
+
+
+
+
+\newpage
+
+\subsection{Parametrische Sensitivitätsanalyse}
+
+\explain{
+Stehen für eine zu optimierende Größe einer praxisbezogenen Anwendung ausreichend Informationen zur Verfügung, lässt sich daraus ein mathematisches Optimierungsproblem modellieren und im günstigsten Fall lösen.
+
+Oft wird man sich jedoch mit der alleinigen Angabe der optimalen Lösung nicht zufrieden geben, sondern wünscht oder benötigt Informationen darüber, wie die berechnete Lösung auf kleine Störungen im System reagiert.}
+ 
+Mit einem Störparameter $p\in \R^{n_p}$ sollen Störungen, denen das System möglicherweise unterworfen ist, im {\em gestörten Problem der nichtlinearen Optimierung} berücksichtigt werden. 
+\begin{equation}
+\begin{array}{rrcl}
+\min\limits_x& f(x,p)\\
+\text{unter}& g_i(x,p) & = & 0, \quad i\in\{1,\dots,m_e\},\\
+& g_i(x,p) & \leq & 0, \quad i\in\{m_e+1,\dots,m\}.\\
+\end{array}
+\label{eq:nlp2}
+\end{equation}
+Dabei hängen die Funktionen $f:\R^n\times\R^{n_p}\rightarrow\R$ und $g:\R^n\times\R^{n_p}\rightarrow\R^m$ nun zusätzlich
+von diesem Störparameter ab. 
+Wegen letzterem ist auch die zulässige Menge $X(p)$ abhängig vom Parameter $p$.
+%\[
+%X(p) = \{x\in\real^n~ |~
+%  g_i(x,p) = 0,    i=1,\dots,m_e,\quad 
+%       g_j(x,p) \le 0,  j=m_e+1,\dots,m\}
+%\]
+
+Für einen Referenzwert $p=p_0\in\R^{n_p}$ wird (\ref{eq:nlp2}) als
+das {\em ungestörte} oder {\em nominelle Problem} bezeichnet.
+
+
+\explain{
+Das Ziel einer {\em parametrischen Sens.A.} ist die Untersuchung der Auswirkungen, die kleine Abweichungen vom Referenzwert auf die berechnete optimale Lösung des nominellen Problems haben. Dazu werden die totalen Ableitungen der Systemgleichungen nach dem Störparameter benötigt.
+}
+
+
+Ließe sich die Lösung des gestörten Problems (\ref{eq:nlp2}) explizit in Abhängigkeit vom Störparameter $p$ in der Form $x(p)\in\R^n$ angeben, hätte man eine umfassende Auskunft über den Einfluss des Störparameters.
+
+Für kleine Störungen lässt sich das lokale Verhalten der optimalen Lösung $x^\star$ des ungestörten Problems unter wesentlich geringerem Rechenaufwand durch Bestimmen der Sensitivitätsableitungen $\frac{dx}{dp}(p_0)$ und $\frac{d\lambda}{dp}(p_0)$ untersuchen,
+%
+die nach Fiacco \cite{Fiacco1983} durch Differentiation der KKT-Bedingungen und nach dem Störparameter gewonnen werden. 
+
+
+
+Es seien mit $m_0\le m$ die aktiven Indizes der 
+Referenzlösung $x^\star$ ohne Einschränkung so sortiert, dass 
+\[ {\cal I}(x^\star) = \{i\in\{m_e+1,\dots,m\} ~|~ g_i(x^\star,p_0)=0\}=\{m_e+1,\dots,m_0\}.\]
+
+%%$$ J(x^*) := I(x^*) \cup \{1,\dots,m_e\} =\{1,\dots,m_0\}.$$
+
+
+Wurde ein Lösungskandidat $x^\star$ des Problems (\ref{eq:nlp2}) gefunden, können 
+inaktive Ungleichungsnebenbedingungen in (\ref{eq:nlp2}) gestrichen, und
+aktive Ungleichungsnebenbedingungen durch Gleichungsnebenbedingungen ersetzt werden, ohne dass die Lösung $x^\star$ davon beeinflusst wird. 
+
+Mit der Funktion $ \tilde g : \R^n \times \R^{n_p} \rightarrow \R^{m_0}$ mit 
+$\tilde g_i(x,p) = g_i(x,p),~i=1,\dots,m_0$
+ lässt sich das so entstehende nichtlineare Optimierungsproblem formulieren als
+\begin{equation}
+\begin{array}{rlcr}
+\min& f(x,p)\\
+\text{unter}& \tilde g(x,p) & = & 0.\\
+\end{array}
+\label{eq:nlp3}
+\end{equation}
+
+In der entsprechenden Lagrange-Funktion
+\[ L(x,\tilde\lambda,p) = f(x,p) + \tilde\lambda(p)^T \tilde g(x,p),\]
+werden nur die zu den Gleichungsbeschränkungen eindeutig bestimmten Lagrange-Multiplikatoren 
+$ \tilde\lambda :  \R^{n_p} \rightarrow \R^{m_0} $
+berücksichtigt.
+
+Analog zum KKT-System (4.13) erhält man
+\begin{equation}
+\left ( \begin{array}{cc}
+\nabla_x^2 L(x^\star,\tilde\lambda^\star,p_0) & \nabla_x \tilde g(x^\star,p_0)^T\\
+\nabla_x \tilde g(x^\star,p_0) & 0 
+\end{array} \right )
+\left( \begin{array}{c}
+\frac{dx}{dp}(p_0)\\
+\frac{d\tilde\lambda}{dp}(p_0) 
+\end{array} \right )
++
+\left ( \begin{array}{c}
+\nabla_{xp} L(x^\star,\tilde\lambda^\star,p_0)\\
+\nabla_p \tilde g(x^\star,p_0)  
+\end{array} \right )
+=0,
+\label{dxdp}
+\end{equation}
+woraus sich aufgrund der Invertierbarkeit der Jacobi-Matrix
+mit den Abkürzungen 
+$L:= L(x^\star,\tilde\lambda^\star,p_0)$ und $\tilde g:= \tilde g(x^\star,p_0)$
+explizite Formeln zur Bestimmung der Sensitivitätsableitungen ablesen lassen:
+
+\begin{flg}\label{senseres}
+Unter Voraussetzungen an Differenzierbarkeit und Regularität gilt für die
+Funktionen $x$ und $\tilde\lambda$ 
+\[
+\left( \begin{array}{c}
+\frac{dx}{dp}(p_0)\\
+\frac{d\tilde\lambda}{dp}(p_0) 
+\end{array} \right )
+=-
+\left ( \begin{array}{cc}
+\nabla_x^2 L & \nabla_x \tilde g^T\\
+\nabla_x \tilde g & 0 
+\end{array} \right )^{-1}
+\left ( \begin{array}{c}
+\nabla_{xp} L\\
+\nabla_p \tilde g  
+\end{array} \right ).
+\]
+\end{flg}
+
+Damit lassen sich die Sensitivitätsableitungen der Optimierungsvariablen $\frac{dx}{dp}(p_0)$ 
+und der Lagrange-Multiplikatoren 
+$\frac{d\tilde\lambda}{dp}(p_0)$
+direkt aus der Nominallösung ermitteln.
+%
+%
+
+
+
+
+
+
+\subsubsection{Approximation gestörter Lösungen}%\label{approxgest}
+
+Mit der optimalen Lösung $x^\star$ und $\tilde\lambda^\star$ und den nach Folgerung \ref{senseres} berechneten Sensitivitätsableitungen lassen sich Schätzwerte für die optimale Lösung des gestörten Problems angeben.
+
+Wird der Parameter $p$ im gestörten Problem (\ref{eq:nlp2}) nur in einer kleinen Umgebung um $p_0$ variiert, verändert sich die Menge der aktiven Indizes nicht, und (\ref{eq:nlp3}) bleibt eine kompaktere Darstellung des Problems, bei der die nicht aktiven Ungleichungsbedingungen eliminiert werden.
+Die Taylor-Entwicklungen erster Ordnung liefern dann Schätzungen der Optimierungsvariablen und der Lagrange-Multiplikatoren:
+\[
+\begin{array}{rcl}
+x(p) & \approx & x^\star + \frac{dx}{dp}(p_0)\cdot(p-p_0) \\[.1cm]
+\tilde\lambda(p) &\approx& \tilde\lambda^\star + \frac{d\tilde\lambda}{dx}(p_0)\cdot(p-p_0) 
+\end{array}	
+%\label{naehx}
+\]
+
+Die Gleichungsbeschränkungen von (\ref{eq:nlp3}) werden durch die Approximation von $x(p)$ im Allgemeinen mit kleinen Fehlern $\varepsilon\in \R^{m_0}$ verletzt:
+\[g\left(x^\star + \frac{dx}{dp}(p_0)\cdot(p-p_0),p\right) = \varepsilon \neq 0\]
+ 
+Wird dieser Fehler ebenfalls als Störparameter aufgefasst, lässt sich die Verletzung der Beschränkungen nach Büskens \cite{Bueskens2001} schrittweise reduzieren.
+Dazu formuliert man ein unter den Parametern 
+$(p,\varepsilon)\in\R^{n_p\times m_0}$ gestörtes Problem
+\[
+\begin{array}{rlcl}
+\min& f(x,p)\\
+\text{unter}& g(x,p)-\varepsilon & = & 0,\\
+\end{array}
+\]
+dessen Lösung $x(p,\varepsilon)$ für $\varepsilon = \varepsilon_0=0$ der Lösung von (\ref{eq:nlp3}) entspricht.
+
+Für Störungen $(p,\varepsilon)\neq (p_0,0)$ lassen sich mit den Sensitivitätsableitungen $\frac{dx}{d\varepsilon}(\varepsilon)$ iterativ Lösungen $x(p,\tilde\varepsilon)$ berechnen, die gegen einen Fixpunkt $x(p,0)$ konvergieren.
+
+
+
+\subsubsection{Übertragen auf Optimalsteuerungsprobleme}%\label{approxgest}
+
+Die diskretisierten Steuer- und Zustandsvariablen entsprechen genau den Optimierungsvaraibalen des Nichtlinearen Problems. Damit stehen für die diskretisierten Variablen die Sensitivitätsableitungen zur Verfügung.
+
+
+
+\subsubsection{Beispiel: Notlandung}
+\explain{
+Mit einem Trägersystem wird ein Raumgleiter auf circa 30 km Höhe gebracht. Nach dem Abkoppeln des Gleiters wird sein Antrieb aktiviert, um eigenständig einen Orbit zu erreichen. Versagt der Antrieb, muss der Raumgleiter kontrolliert wieder zur Erde zurückgebracht werden.
+
+In diesem Optimierungsproblem muss die Startgeschwindigkeit des Raumgleiters nach einer missglückten Abkopplung so gut ausgenutzt werden, dass er möglichst weit fliegt. (Modell nach Mayrhofer/Sachs)
+}
+
+\newcommand{\CL}{\textcolor{blue}{C_L}}
+\newcommand{\mux}{\textcolor{blue}{\mu}}
+
+\newcommand{\vx}{\textcolor{green}{v}}
+\newcommand{\gammax}{\textcolor{green}{\gamma}}
+\newcommand{\chix}{\textcolor{green}{\chi}}
+\newcommand{\hx}{\textcolor{green}{h}}
+\newcommand{\Lambdax}{\textcolor{green}{\Lambda}}
+\newcommand{\Thetax}{\textcolor{green}{\Theta}}
+
+\newcommand{\dvx}{\textcolor{green}{\dot v}}
+\newcommand{\dgammax}{\textcolor{green}{\dot\gamma}}
+\newcommand{\dchix}{\textcolor{green}{\dot\chi}}
+\newcommand{\dhx}{\textcolor{green}{\dot h}}
+\newcommand{\dLambdax}{\textcolor{green}{\dot\Lambda}}
+\newcommand{\dThetax}{\textcolor{green}{\dot\Theta}}
+
+
+$$
+\begin{array}{llrcl}
+{\rm\bf Steuerungen}\\[.1cm]
+{\rm Luftwiderstand}& \CL\\
+{\rm Rollwinkel}& \mux\\[.3cm]
+{\rm\bf Zust"ande}\\[.1cm]
+{\rm Geschwindigkeit} & \vx \\
+{\rm Inklination} & \gammax\\
+{\rm Azimut}&\chix \\
+{\rm H"ohe}& \hx\\
+{\rm Breitengrad}&\dLambdax \\
+{\rm L"angengrad}& \dThetax
+\end{array}
+$$
+
+
+Optimalsteuerungsproblem:
+$$
+\begin{array}{lrcl}
+
+\displaystyle\min_{\CL,\mux,t_f}  &\multicolumn{3}{l}{-c_1 (\Lambdax(t_f)-\Lambdax(0))^2 -c_2(\Thetax(t_f)-\Thetax(0))^2}\\
+{\rm unter}&\dvx &=& -D(\vx,\hx;\CL)\frac{1}{m} - g(\hx)\sin\gammax   +\omega^2 \cos\Lambdax(\sin\gammax \cos\Lambdax-\cos\gammax\sin\chix\sin\Lambdax)R(\hx)  \\
+
+ &\dgammax &=& L(\vx,\hx;\CL)\frac{\cos\mux}{m\vx} - \left(\frac{g(\hx)}{\vx}-\frac{\vx}{R(\hx)}\right)\cos\gammax\\
+&&&+2\omega\cos\chix\cos\Lambdax +\omega^2\cos\Lambdax(\sin\gammax\sin\chix\sin\Lambdax+\cos\gammax\cos\Lambdax)\frac{R(\hx)}\vx\\
+
+&\dchix &=& L(\vx,\hx;\CL)\frac{\sin\mux}{m\vx\cos\gammax}-\cos\gammax\cos\chix\tan\Lambdax\frac{\vx}{R(\hx)}\\
+&&&+2\omega(\sin\chix\cos\Lambdax\tan\gammax-\sin\Lambdax)-\omega^2\cos\Lambdax\sin\Lambdax\cos\chix\frac{R(\hx)}{\vx\cos\gammax}\\
+
+& \dhx &=& \vx \sin\gammax \\
+&\dLambdax &=& \cos\gammax\sin\chix\frac{\vx}{R(\hx)}\\
+& \dThetax &=& \cos\gammax\cos\chix\frac{\vx}{R(\hx)\cos\Lambdax}\\[.3cm]
+
+&0 &=& \frac{\vx \cos\gammax}{R(\hx)}(\sin\chix+\frac{\cos\chix}{\cos\Lambdax})\\
+&q_{\max} &\ge& c\vx^3 \sqrt{\varrho(\hx)}
+\end{array}
+$$
+
+Anwendung der Sensitivitätsanalyse zur Echtzeitsteuerung:
+$$
+\begin{array}{c}
+
+{\rm\bf Pr"adiktor}\\[.2cm]
+
+p = \left(\begin{array}{l}
+{\rm Starth"ohe} ~ h(0)\\
+{\rm Luftdichte} ~\rho(\hx)
+\end{array}
+\right)\\[.2cm]
+
+\frac{d \CL(t)}{dp}\\
+
+\frac{d \mux(t)}{dp}\\[.5cm]
+
+{\rm\bf Korrektor}\\[.2cm]
+ \epsilon= (500- h(t_f))\\[.2cm]
+
+\frac{d \CL(t)}{d\epsilon}\\
+
+\frac{d \mux(t)}{d\epsilon}
+
+\end{array}
+$$
+
+
+
+\begin{figure}[h!]
+\begin{center}
+%\includegraphics[width=10cm]{images/aquarium}
+\caption{Sensitivitätsableitungen und nachkorrigierte Bahn für das Notlandemanöver}
+\end{center}
+\end{figure}
+
+
+
+
+
+\lectureday{30. Januar 2013}
+
+\subsubsection{Beispiel: Spline mit Störparameter $p$}
+
+
+$$\begin{array}{rclllll}
+  \min\limits_{u,x} &\multicolumn{3}{l}{\displaystyle \int\limits_0^1 u_1^2(t)\, dt} && \\
+\text{unter} & \dot x_1(t) &=& x_2(t) + p_3 & \text{für } t\in[0,1]  \\
+            & \dot x_2(t) &=& u_1(t)  & \text{für } t\in[0,1] \\[.2cm]
+            & x_1(0) &=& p_1   &&   \\
+	    & x_2(0) &=& p_2 \\
+	    & x_1(1) &=& 0 \\
+	    & x_2(1) &=& 1 
+	    
+\end{array}
+$$
+
+
+
+\begin{figure}[h!]
+\begin{center}
+%\includegraphics[width=9cm]{images/sens1}
+\caption{Zur Interpretation der Sensitivitätsableitungen für Optimalsteuerungsprobleme}
+\end{center}
+\end{figure}
+
+
+
+
+
+
+
+\subsection{Regelung}
+
+\explain{Die Trajektorie wurde erzeugt. Dank der Sensitivitätsanalyse kann man auch auf Störungen reagieren.}
+
+
+Fehler im Modell oder äußere Störungen lassen sich auch durch eine Regelung kompensieren:
+
+$$ u_f(t) = u_\text{ref}(t) - K(x(t) - x_\text{ref}(t)), \quad t\in[t_0,t_f] $$
+
+Die Matrix $K$ berechnet sich dabei aus der Lösung der algebraischen Riccati-Gleichung
+$$A^T S + SA - PBR^{-1}B^T S + Q= 0$$
+als
+$$K=R^{-1} B^T S$$
+mit den Gewichtungsmatrizen $Q$ und $R$ für Zustand und Steuerung, und den  Matrizen des
+linearisierten Systems $A$ und $B$:
+$$A|_t = \frac{\partial }{\partial x} f(x_\text{ref}(t), u_\text{ref}(t)) $$
+$$B|_t = \frac{\partial }{\partial u} f(x_\text{ref}(t), u_\text{ref}(t)) $$
+
+
+Mit einer geeigneten Wahl der Gewichtungsmatrizen, lassen sich auf diese Weise große Störungen reduzieren, während der zusätzliche Energieverbrauch klein bleibt.
+
+
+\begin{figure}[h!]
+\begin{center}
+%\includegraphics[width=9cm]{images/moonregler}
+\caption{Mit Hilfe der Regelung lassen sich Störungen in der Anfangsposition ausgleichen.}
+\end{center}
+\end{figure}
+
+
+
+\subsection{Schwierigkeiten}
+
+\explain{Hier soll nur eine Problematik dargestellt werden.}
+
+Diese Optimalsteuerungsproblem mit freier Endzeit führt zu einer unstetigen Steuerung, einer sogenannten 
+bang-bang-Steuerung.
+
+
+$$\begin{array}{rclllll}
+  \min\limits_{u,x} &\multicolumn{3}{l}{\displaystyle t_f} && \\
+\text{unter} & \dot x_1(t) &=& x_2(t) & \text{für } t\in[0,1]  \\
+            & \dot x_2(t) &=& u_1(t)  & \text{für } t\in[0,1] \\[.2cm]
+            & x_1(0) &=& 4   &&   \\
+	    & x_2(0) &=& -1 \\
+	    & x_1(1) &=& 0 \\
+	    & x_2(1) &=& 0 \\
+& \multicolumn{3}{l}{ -1 \le u \le 1}
+\end{array}
+$$
+
+Die Steuerung ist zuerst -1, dann 1, vgl. Abb. \ref{bangbang}.
+
+\begin{figure}[h!]
+\begin{center}
+%\includegraphics[width=9cm]{images/rakete}
+\caption{Typische bang-bang-Steuerung}
+\label{bangbang}
+\end{center}
+\end{figure}
+
+Für eine genauere Lösung müssen weitere Zwischenpunkte in der Nähe des Schaltpunktes eingeführt werden.
+
+
+Das ganze Problem ist aber trivial lösbar, wenn das Optimierungsproblem nur den Umschalt-Zeitpunkt und die freie Endzeit optimieren soll.
+
+
+
+\subsection{TransWORHP}
+
+\explain{Das Transkriptionsverfahren TransWORHP kann Optimalsteuerungsprobleme zufriedenstellend lösen. Grafische Ausgabe für Iterationsverlauf hilft, die Lösung einzuschätzen.
+}
+
+Welche weiteren Anforderungen gibt es an ein Transkriptionsverfahren?
+
+\begin{itemize}
+\item[]{\hspace{-.85cm}\bf Automatische Skalierung.~}
+Für jede Steuerung und jeden Zustand kann ein typischer Bereich angegeben werden, zu dem skaliert wird. Gleichzeitig müssen auch die Gleichungsnebenbedingungen aus dem Trapez- bzw. Hermite-Simpson-Verfahren skaliert werden, ebenso wie alle weiteren Neben- und Randbedingungen.
+
+\item[]{\hspace{-.85cm}\bf  DAE Systeme.~}
+Bisher werden Nebenbedingungen dieser Form berücksichtigt:
+$$\dot x(t) = f(x(t), u(t), t) $$
+
+Zusätzlich lassen sich noch algebraische Gleichungen einhalten:
+$$ 0 = a(x(t), u(t), t) $$
+
+\item[]{\hspace{-.85cm}\bf  Mehrphasen-Systeme.~}
+Stufen von Raketen, Längere Missionen in Erdnähe/Mondnähe unterschiedliche DGls, erfordern phasenweise Formulierung und Verbinden der Phasen mit Zusatzbedingungen
+
+Zusätzlich auch komplexe Fragestellungen lösbar: Bilevel-Probleme: Wie muss man fliegen, um stets ein sicheres Alternativ-Manöver (z.B. Brems-Manöver) zu garantieren.
+
+%Laufkatze - Film!!!
+
+
+\item[]{\hspace{-.85cm}\bf Vektorwertige Zielfunktion.~}
+Oft unterschiedliche Gütekriterien in Konkurrenz: Zeit, Energie, Verschleiß. Bestimmung der Gewichtungsfaktoren nicht intuitiv. Alle Gewichtungen ausprobieren, um eine ``Pareto-Front'' zu erzeugen, anhand derer die Auswahl leichter fällt.
+
+%BILD!!
+
+Wie lässt sich diese Pareto-Front leicht finden? Nachbar-Lösung als Startschätzung, Sensitivitätsableitung bzgl. Gewichtungen.
+
+\end{itemize}
+
+
+
+
+
+
+
